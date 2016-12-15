@@ -1,0 +1,17 @@
+MASTER TODO LIST:
+  -CHECK License compatability with portaudio
+  -FILL OUT README and other helpful files
+  -Write more tests
+
+
+  -work on s24 sample class, make sure it works
+  -add synchronization to user callback swaps
+
+
+
+LONGTERM GOALS LIST:
+  -begin work on libsndfile api backend
+  -enable use of different api's for input and output
+  -enable use of multiple api's at the same time
+  -consider sample rate conversion functionality via libsamplerate for platforms where a certain sample rate isn't available
+  -replace use of portaudio with platform specific apis, ALSA, COREAUDIO, ASIO, WASAPI, JACK, ... (use portaudio as a reference if needed)
