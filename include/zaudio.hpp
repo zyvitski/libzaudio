@@ -845,7 +845,7 @@ namespace zaudio
         }
         virtual void on_error(const stream_error& err) noexcept
         {
-            throw stream_exception(err);
+            default_stream_error_callback()(err);
         }
         callback get_callback() noexcept
         {
