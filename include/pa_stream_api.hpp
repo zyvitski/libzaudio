@@ -21,7 +21,7 @@ This file is part of zaudio.
 #include "zaudio.hpp"
 #include <portaudio.h>
 #include <tuple>
-#include <future>
+
 
 
 namespace zaudio
@@ -218,26 +218,28 @@ namespace zaudio
 
             //gather call data
             internal::callback_info<sample_t>* callbacks = static_cast<internal::callback_info<sample_t>*>(userData);
-            stream_callback<sample_t>* cb = std::get<0>(*callbacks);
-            stream_error_callback* ecb = std::get<1>(*callbacks);
+            stream_callback<sample_t>* cb = nullptr;
+            stream_error_callback* ecb = nullptr;
+            stream_params<sample_t>* params = nullptr;
 
+            std::tie(cb,ecb,params) = *callbacks;
             try
             {
                 //invoke the function;
-                const stream_error ret = (*cb)(in,out,audio_clock::now() - start_time,*std::get<2>(*callbacks));
+                const stream_error ret = (*cb)(in,out,audio_clock::now() - start_time,*params);
 
                 //evaluate if there is an error
                 if(ret != no_error)
                 {
-                    //TODO: replace with better method of error handling
-                    std::async(std::launch::async,[&](){(*ecb)(ret);});
+                    //invoke user error callback
+                    (*ecb)(ret);
                     return -1;
                 }
                 else return 0;
             }
             catch(std::exception& e)
             {
-                std::async(std::launch::async,[&](){(*ecb)(make_stream_error(stream_status::system_error,e.what()));});
+                (*ecb)(make_stream_error(stream_status::system_error,e.what()));
                 return -1;
             }
         }

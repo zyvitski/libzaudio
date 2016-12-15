@@ -1,7 +1,6 @@
 MASTER TODO LIST:
   -CHECK License compatability with portaudio
   -FILL OUT README and other helpful files
-  -Touch up build system, make sure install target works as expected (installs headers, we want zsound/*)
   -Write more tests
 
   -enable error reporting from audio thread to be piped to non audio thread
