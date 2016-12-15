@@ -1,0 +1,49 @@
+sudo: required
+dist: xenial
+language: cpp
+
+notifications:
+  slack: cpp-daw:ad7IjeqBRb146uzudG9KaAXZ
+matrix:
+  include:
+    - compiler: gcc
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-5
+      env: COMPILER=g++-5
+
+    - compiler: clang
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-xenial-3.9
+          packages:
+            - clang-3.7
+      env: COMPILER=clang++-3.9
+
+before_install:
+  - sudo apt-get update -qq
+  #- git clone https://github.com/zyvitski/thread_pool_cpp.git thread_pool
+  #- cd thread_pool
+  #- make install
+  #- cd ..
+  #- git clone https://github.com/zyvitski/signals.git signals
+  #- cd signals
+  #- make install
+  #- cd ..
+  - curl -o portaudio.tgz http://www.portaudio.com/archives/pa_stable_v190600_20161030.tgz
+  - tar -xvzf portaudio.tgz
+  - cd portaudio
+  - ./configure && make && sudo make install
+  - cd ..
+  #- curl -o libsndfile-1.0.27.tar.gz http://mega-nerd.com/libsndfile/files/libsndfile-1.0.27.tar.gz
+  #- tar -xvzf libsndfile-1.0.27.tar.gz
+  #- cd libsndfile-1.0.27
+  #- ./configure && make && sudo make install
+  #- cd ..
+script:
+  - ./autogen.sh && ./configure && make -e
