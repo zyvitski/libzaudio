@@ -126,7 +126,10 @@ libzaudio.lo: libzaudio.cpp /usr/include/stdc-predef.h \
  /usr/include/c++/5/ext/aligned_buffer.h \
  /usr/include/c++/5/bits/shared_ptr_atomic.h \
  /usr/include/c++/5/bits/atomic_base.h \
- /usr/include/c++/5/backward/auto_ptr.h ../include/pa_stream_api.hpp \
+ /usr/include/c++/5/backward/auto_ptr.h /usr/include/c++/5/future \
+ /usr/include/c++/5/mutex /usr/include/c++/5/thread \
+ /usr/include/c++/5/condition_variable /usr/include/c++/5/atomic \
+ /usr/include/c++/5/bits/atomic_futex.h ../include/pa_stream_api.hpp \
  ../include/zaudio.hpp /usr/local/include/portaudio.h
 
 /usr/include/stdc-predef.h:
@@ -472,6 +475,18 @@ libzaudio.lo: libzaudio.cpp /usr/include/stdc-predef.h \
 /usr/include/c++/5/bits/atomic_base.h:
 
 /usr/include/c++/5/backward/auto_ptr.h:
+
+/usr/include/c++/5/future:
+
+/usr/include/c++/5/mutex:
+
+/usr/include/c++/5/thread:
+
+/usr/include/c++/5/condition_variable:
+
+/usr/include/c++/5/atomic:
+
+/usr/include/c++/5/bits/atomic_futex.h:
 
 ../include/pa_stream_api.hpp:
 

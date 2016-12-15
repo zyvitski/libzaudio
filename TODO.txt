@@ -3,8 +3,7 @@ MASTER TODO LIST:
   -FILL OUT README and other helpful files
   -Write more tests
 
-  -enable error reporting from audio thread to be piped to non audio thread
-    -std::async :( should be replaced
+
   -work on s24 sample class, make sure it works
   -add synchronization to user callback swaps
 

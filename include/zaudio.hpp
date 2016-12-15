@@ -30,6 +30,7 @@ This file is part of zaudio.
 #include <sstream>
 #include <memory>
 #include <ostream>
+#include <future>
 
 /*
 TODO: Documentation on everything, testing on lots of things
@@ -295,7 +296,7 @@ namespace zaudio
      *\typedef
      *\brief
      */
-    using stream_error_callback = std::function<void(const stream_error&)>;
+    using stream_error_callback = std::function<void(const stream_error&) noexcept>;
 
 
 
@@ -307,7 +308,11 @@ namespace zaudio
     {
         return [](const stream_error& err)
         {
-            throw stream_exception(err);
+            std::async(std::launch::async, [](const stream_error& err)
+            {
+                throw stream_exception(err);
+            }, err);
+
         };
     }
 
