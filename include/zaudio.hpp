@@ -223,7 +223,7 @@ namespace zaudio
      *\namespace
      *\brief
      */
-    namespace
+    namespace detail
     {
         //a workaround for c++11 std::pair not having a constexpr contructor
         struct stream_error_type
@@ -249,7 +249,7 @@ namespace zaudio
      *\brief
      */
     //use std pair if c++14 else use stream_error_type
-    using stream_error = std::conditional<__cplusplus == 201402L,std::pair<stream_status, stream_error_message>,stream_error_type>::type;
+    using stream_error = std::conditional<__cplusplus == 201402L,std::pair<stream_status, stream_error_message>,detail::stream_error_type>::type;
 
     std::ostream& operator<<(std::ostream& os, const stream_error& err);
 
@@ -790,7 +790,7 @@ namespace zaudio
         {
             _context.get().api()->set_callback(_callback);
             _context.get().api()->set_error_callback(_error_callback);
-            auto&& is_compat = is_configuration_supported(params());
+            auto&& is_compat = _context.get().is_configuration_supported(params());
             if(is_compat != no_error)
             {
                 throw stream_exception(is_compat);
@@ -859,7 +859,7 @@ namespace zaudio
 }
 
 
-#include <pa_stream_api.hpp>
+#include "pa_stream_api.hpp"
 
 namespace zaudio
 {
