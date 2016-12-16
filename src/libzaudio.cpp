@@ -156,6 +156,16 @@ namespace zaudio
              return os;
          }
 
+         std::ostream& operator<<(std::ostream& os, const std::vector<device_info>& vinfo)
+         {
+             for(auto idx = 0; idx < vinfo.size(); ++idx)
+             {
+                 os<<"@index: "<<idx<<std::endl<<"\t";
+                 os<<vinfo[idx]<<std::endl;
+             }
+             return os;
+         }
+
 
 
 }

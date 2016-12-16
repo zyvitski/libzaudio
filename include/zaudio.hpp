@@ -462,6 +462,7 @@ namespace zaudio
 
         friend std::ostream& operator<<(std::ostream& os, const device_info& info);
     };
+    std::ostream& operator<<(std::ostream& os, const std::vector<device_info>& vinfo);
 
     template<typename... args_t>
     device_info make_device_info(args_t&&... args) noexcept

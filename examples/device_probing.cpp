@@ -7,9 +7,6 @@ int main(int argc,char** argv)
 
     std::cout<<"Probing Devices: "<<std::endl;
     std::cout<<"Found "<<context.get_device_count()<<" devices!"<<std::endl;
+    std::cout<<context.get_device_info_list()<<std::endl;
 
-    for(auto&& device: context.get_device_info_list())
-    {
-        std::cout<<device<<std::endl;
-    }
 }
