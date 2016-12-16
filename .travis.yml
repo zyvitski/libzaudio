@@ -46,4 +46,4 @@ before_install:
   #- ./configure && make && sudo make install
   #- cd ..
 script:
-  - libtoolize && ./autogen.sh && ./configure && make -e
+  - libtoolize && ./autogen.sh && ./configure && make -e && sudo make install

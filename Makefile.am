@@ -1,3 +1,2 @@
 SUBDIRS = \
-    src \
-    examples
+    src 
