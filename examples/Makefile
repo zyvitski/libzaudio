@@ -88,7 +88,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = x86_64-pc-linux-gnu
 host_triplet = x86_64-pc-linux-gnu
-bin_PROGRAMS = sine_example$(EXEEXT)
+bin_PROGRAMS = sine_example$(EXEEXT) device_probing$(EXEEXT)
 subdir = examples
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -100,13 +100,20 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_sine_example_OBJECTS = sine.$(OBJEXT)
-sine_example_OBJECTS = $(am_sine_example_OBJECTS)
-sine_example_LDADD = $(LDADD)
+am_device_probing_OBJECTS = device_probing.$(OBJEXT)
+device_probing_OBJECTS = $(am_device_probing_OBJECTS)
+device_probing_LDADD = $(LDADD)
 AM_V_lt = $(am__v_lt_$(V))
 am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
 am__v_lt_0 = --silent
 am__v_lt_1 = 
+device_probing_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
+	$(AM_CXXFLAGS) $(CXXFLAGS) $(device_probing_LDFLAGS) \
+	$(LDFLAGS) -o $@
+am_sine_example_OBJECTS = sine.$(OBJEXT)
+sine_example_OBJECTS = $(am_sine_example_OBJECTS)
+sine_example_LDADD = $(LDADD)
 sine_example_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(sine_example_LDFLAGS) $(LDFLAGS) -o $@
@@ -144,8 +151,8 @@ AM_V_CXXLD = $(am__v_CXXLD_$(V))
 am__v_CXXLD_ = $(am__v_CXXLD_$(AM_DEFAULT_VERBOSITY))
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
-SOURCES = $(sine_example_SOURCES)
-DIST_SOURCES = $(sine_example_SOURCES)
+SOURCES = $(device_probing_SOURCES) $(sine_example_SOURCES)
+DIST_SOURCES = $(device_probing_SOURCES) $(sine_example_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -293,9 +300,12 @@ target_alias =
 top_build_prefix = ../
 top_builddir = ..
 top_srcdir = ..
+device_probing_SOURCES = device_probing.cpp
 sine_example_SOURCES = sine.cpp
-AM_CXXFLAGS = --std=c++11 -g -O3 -pthread -fpic  -MP -Wall -pedantic -I/usr/local/include -I../include -L/usr/local/lib 
+AM_CXXFLAGS = --std=c++11 -g -O3 -pthread -fpic  -MP -Wall -pedantic -I/usr/local/include -I../include
+AM_LDFLAGS = -L/usr/local/lib
 sine_example_LDFLAGS = -lzaudio -lportaudio
+device_probing_LDFLAGS = -lzaudio -lportaudio
 all: all-am
 
 .SUFFIXES:
@@ -379,6 +389,10 @@ clean-binPROGRAMS:
 	echo " rm -f" $$list; \
 	rm -f $$list
 
+device_probing$(EXEEXT): $(device_probing_OBJECTS) $(device_probing_DEPENDENCIES) $(EXTRA_device_probing_DEPENDENCIES) 
+	@rm -f device_probing$(EXEEXT)
+	$(AM_V_CXXLD)$(device_probing_LINK) $(device_probing_OBJECTS) $(device_probing_LDADD) $(LIBS)
+
 sine_example$(EXEEXT): $(sine_example_OBJECTS) $(sine_example_DEPENDENCIES) $(EXTRA_sine_example_DEPENDENCIES) 
 	@rm -f sine_example$(EXEEXT)
 	$(AM_V_CXXLD)$(sine_example_LINK) $(sine_example_OBJECTS) $(sine_example_LDADD) $(LIBS)
@@ -389,6 +403,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+include ./$(DEPDIR)/device_probing.Po
 include ./$(DEPDIR)/sine.Po
 
 .cpp.o:

@@ -45,10 +45,6 @@ int main(int agrc, char** argv)
     {
         using sample_type = sample<sample_format::f32>;
         auto&& context = make_stream_context<sample_type>();
-        for(auto&& dev: context.get_device_info_list())
-        {
-            std::cout<<dev<<std::endl;
-        }
         auto&& params = make_stream_params<sample_type>(44100,512,0,2);
         if(context.is_configuration_supported(params) == no_error)
         {
