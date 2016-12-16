@@ -325,7 +325,10 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 SUBDIRS = \
-    src 
+    src
+
+EXTRA_DIST = COPYING.lesser \
+             examples 
 
 all: all-recursive
 
