@@ -9,5 +9,5 @@ LT_INIT
 AC_PROG_CXX
 
 
-AC_CONFIG_FILES([Makefile src/Makefile examples/Makefile])
+AC_CONFIG_FILES([Makefile src/Makefile])
 AC_OUTPUT

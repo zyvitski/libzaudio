@@ -1,6 +1,5 @@
 SUBDIRS = \
-    src \
-    examples
+    src 
 
 EXTRA_DIST = COPYING.lesser \
              examples
