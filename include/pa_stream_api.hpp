@@ -103,6 +103,7 @@ namespace zaudio
         }
         virtual stream_error start() noexcept
         {
+            start_time = audio_clock::now();
             return _pa_invoke(Pa_StartStream,stream);
         }
         virtual stream_error pause() noexcept
