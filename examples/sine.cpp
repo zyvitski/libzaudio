@@ -27,11 +27,13 @@ template<typename sample_t>
 class example : public audio_process<sample_t>
 {
 public:
-    example():phs(0.0)
+    using base =  audio_process<sample_t>;
+    using audio_clock = typename base::audio_clock;
+    example():phs(0.0),start(audio_clock::now())
     {}
-    virtual stream_error on_process(const sample_t* input, sample_t* output,duration stream_time, stream_params<sample_t>& params) noexcept
+    virtual stream_error on_process(const sample_t* input, sample_t* output,time_point stream_time, stream_params<sample_t>& params) noexcept
     {
-        std::cout<< stream_time.count()<<std::endl;
+        std::cerr<<"Time: "<<duration_in_samples<44100>(stream_time-start).count()<<std::endl;
         constexpr sample_t _2pi = M_PI * 2.0;
         stp = hz / params.sample_rate() * _2pi;
 
@@ -51,9 +53,11 @@ public:
     }
 
 private:
-    float hz = 55.0;
+
+    float hz = 440.0;
     sample_t phs;
     sample_t stp;
+    time_point start;
 };
 
 
@@ -72,7 +76,7 @@ int main(int agrc, char** argv)
 
             stream.start();
             std::cout<<stream.playback_state().first<<std::endl;
-            std::this_thread::sleep_for(std::chrono::seconds(1));
+            sleep(std::chrono::seconds(1));
             stream.stop();
             std::cout<<stream.playback_state().first<<std::endl;
         }

@@ -74,6 +74,7 @@ namespace zaudio
     class pa_stream_api : public stream_api<sample_t>
     {
         using base = stream_api<sample_t>;
+        using audio_clock = typename base::audio_clock;
     public:
         static_assert(internal::_type_to_pa_sample_format<sample_t>() != -1, "Requested Sample Format Not Supported By PortAudio API");
         pa_stream_api()
@@ -93,17 +94,14 @@ namespace zaudio
         using base::id;
         virtual std::string name() const noexcept
         {
-            //TODO: implement me
-            return "PortAudio Stream API";
+            return "LibZaudio: PortAudio Stream API";
         }
         virtual std::string info() const noexcept
         {
-            //TODO: implement me
             return Pa_GetVersionText();
         }
         virtual stream_error start() noexcept
         {
-            start_time = audio_clock::now();
             return _pa_invoke(Pa_StartStream,stream);
         }
         virtual stream_error pause() noexcept
@@ -149,7 +147,6 @@ namespace zaudio
                 const PaStreamParameters* ip = params.input_frame_width() == 0 ? nullptr: &_inparams;
                 const PaStreamParameters* op = params.output_frame_width() == 0 ? nullptr: &_outparams;
 
-                start_time = audio_clock::now();
                 return _pa_invoke(Pa_OpenStream,&stream,
                                   ip,
                                   op,
@@ -227,7 +224,7 @@ namespace zaudio
             try
             {
                 //invoke the function;
-                const stream_error ret = (*cb)(in,out,audio_clock::now() - start_time,*params);
+                const stream_error ret = (*cb)(in,out,audio_clock::now(),*params);
 
                 //evaluate if there is an error
                 if(ret != no_error)
@@ -316,12 +313,9 @@ namespace zaudio
         }
         PaStreamParameters _inparams;
         PaStreamParameters _outparams;
-        static time_point start_time;
 
     };
-    template<typename sample_t>
 
-    time_point pa_stream_api<sample_t>::start_time;
 
 }
 

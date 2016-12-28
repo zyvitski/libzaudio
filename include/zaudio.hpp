@@ -182,15 +182,82 @@ namespace zaudio
 
 
     /*!
-    *\typedef audio_clock
+    *\typedef monotonic_clock
     *\brief a clock guarenteed to be monotonic.
     *\note std::chrono::high_resolution_clock will be used only when std::chrono::high_resolution_clock::is_steady == true
     */
-    using audio_clock = typename std::conditional<std::chrono::high_resolution_clock::is_steady,
-                                                  std::chrono::high_resolution_clock,
-                                                  std::chrono::steady_clock>::type;
-    using duration = std::chrono::duration<double>;
-    using time_point = audio_clock::time_point;
+    using monotonic_clock = typename std::conditional<std::chrono::high_resolution_clock::is_steady,
+                                                      std::chrono::high_resolution_clock,
+                                                      std::chrono::steady_clock>::type;
+
+
+    struct stream_time_base
+    {
+        using audio_clock = monotonic_clock;
+        using duration = std::chrono::duration<double>;
+        using time_point = audio_clock::time_point;
+    };
+
+    using duration = stream_time_base::duration;
+    using time_point = stream_time_base::time_point;
+
+    template<unsigned long SRATE,typename D>
+    std::chrono::duration<double,std::ratio<1,SRATE>> duration_in_samples(D&& duration) noexcept
+    {
+        return std::chrono::duration_cast<std::chrono::duration<double,std::ratio<1,SRATE>>>(std::forward<D&&>(duration));
+    }
+
+    enum class use_thread_sleep
+    {
+        enable,
+        disable
+    };
+
+    template<typename C,use_thread_sleep TS = use_thread_sleep::disable>
+    struct sleep_type;
+
+    template<typename C>
+    struct sleep_type<C , use_thread_sleep::enable>
+    {
+
+        template<typename D>
+        void operator()(D&& duration) noexcept
+        {
+            auto&& start = C::now();//timestamp in
+
+            std::this_thread::sleep_for( duration * 0.95 );//sleep for most of the time requested
+
+            while ( ( C::now() - start ) < duration ) { continue; }//spin for the rest to ensure accuracy
+        }
+    };
+
+
+    template<typename C>
+    struct sleep_type<C , use_thread_sleep::disable>
+    {
+        template<typename D>
+        void operator()(D&& duration) noexcept
+        {
+            auto&& start = C::now();//timestamp in
+
+            while ( ( C::now() - start ) < duration ) { continue; }//spin for the rest to ensure accuracy
+        }
+    };
+
+    template<typename D>
+    inline void sleep(D&& duration) noexcept
+    {
+        static sleep_type<monotonic_clock,use_thread_sleep::disable> _sleep;
+        _sleep(std::forward<D&&>(duration));
+    }
+    template<typename D>
+    inline void thread_sleep(D&& duration) noexcept
+    {
+        static sleep_type<monotonic_clock,use_thread_sleep::enable> _sleep;
+        _sleep(std::forward<D&&>(duration));
+    }
+
+
 
 
     /*!
@@ -432,7 +499,7 @@ namespace zaudio
     /*------------------------------------------------------------------------*/
 
     template<typename sample_t>
-    using stream_callback  = std::function<stream_error(const sample_t*, sample_t*,duration, stream_params<sample_t>&) noexcept>;
+    using stream_callback  = std::function<stream_error(const sample_t*, sample_t*,time_point, stream_params<sample_t>&) noexcept>;
 
 
 
@@ -480,6 +547,7 @@ namespace zaudio
     class stream_api : public detail::fail_if_type_is_not_sample<sample_t>
     {
     public:
+        using audio_clock = stream_time_base::audio_clock;
         using callback = stream_callback<sample_t>;
         using error_callback = stream_error_callback;
 
@@ -836,11 +904,11 @@ namespace zaudio
     template<typename sample_t>
     struct audio_process : public detail::fail_if_type_is_not_sample<sample_t>
     {
-
+        using audio_clock = stream_time_base::audio_clock;
         using callback = stream_callback<sample_t>;
         using error_callback = stream_error_callback;
 
-        virtual stream_error on_process(const sample_t*,sample_t*,duration,stream_params<sample_t>&) noexcept
+        virtual stream_error on_process(const sample_t*,sample_t*,time_point,stream_params<sample_t>&) noexcept
         {
             return no_error;
         }

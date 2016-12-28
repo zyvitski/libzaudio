@@ -35,7 +35,7 @@ int main(int argc, char** argv)
         sample_type phs =0 ;
         sample_type stp = hz / params.sample_rate() * _2pi;
 
-        auto&& callback = [&](const sample_type* input, sample_type* output, duration stream_time, stream_params<sample_type>& params) noexcept
+        auto&& callback = [&](const sample_type* input, sample_type* output, time_point stream_time, stream_params<sample_type>& params) noexcept
         {
             for(std::size_t i = 0; i < params.frame_count(); ++i)
             {
@@ -54,7 +54,7 @@ int main(int argc, char** argv)
 
         auto&& stream = make_audio_stream<sample_type>(params,context,callback);
         stream.start();
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        thread_sleep(std::chrono::seconds(1));
         stream.stop();
     }
     catch (std::exception& e)

@@ -94,7 +94,11 @@ namespace zaudio
 
     std::ostream& operator<<(std::ostream& os, const stream_error& err)
     {
-        os<<"Stream Error, type:"<<err.first<<" code:  "<<err.second;
+        os<<"Stream Error, type: "<<err.first;
+        if(std::string(err.second) != "" && err.second != stream_status_string(err.first))
+        {
+            os<<" code: "<<err.second;
+        }
         return os;
     }
 
