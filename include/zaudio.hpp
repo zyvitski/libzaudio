@@ -227,7 +227,7 @@ namespace zaudio
 
             std::this_thread::sleep_for( duration * 0.95 );//sleep for most of the time requested
 
-            while ( ( C::now() - start ) < duration ) { continue; }//spin for the rest to ensure accuracy
+            while ( std::chrono::duration_cast<D>( C::now() - start ) < duration ) { continue; }//spin for the rest to ensure accuracy
         }
     };
 
@@ -240,7 +240,7 @@ namespace zaudio
         {
             auto&& start = C::now();//timestamp in
 
-            while ( ( C::now() - start ) < duration ) { continue; }//spin for the rest to ensure accuracy
+            while ( std::chrono::duration_cast<D>( C::now() - start ) < duration ) { continue; }
         }
     };
 
