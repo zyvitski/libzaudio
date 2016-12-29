@@ -379,7 +379,6 @@ namespace zaudio
             {
                 throw stream_exception(err);
             }, err);
-
         };
     }
 

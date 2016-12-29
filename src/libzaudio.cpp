@@ -151,7 +151,7 @@ namespace zaudio
 
      std::ostream& operator<<(std::ostream& os, const device_info& info)
      {
-         os<<"Device: "<<info.name<<", id: "<<info.device_index<<std::endl;
+         os<<"Device: "<<info.name<<", ID: "<<info.device_index<<std::endl;
          os<<"\tMax Input Count: "<<info.max_input_count<<std::endl;
          os<<"\tMax Ouput Count: "<<info.max_output_count<<std::endl;
          os<<"\tDefault Sample Rate: "<<info.default_sample_rate<<std::endl;
