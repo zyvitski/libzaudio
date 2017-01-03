@@ -292,7 +292,7 @@ namespace zaudio
             inparams.hostApiSpecificStreamInfo=nullptr;
             outparams.hostApiSpecificStreamInfo=nullptr;
 
-            if (params.input_device_id()==-1)
+            if (params.input_device_id() < 0)
             {
                 inparams.device = Pa_GetDefaultInputDevice();
             }
@@ -301,7 +301,7 @@ namespace zaudio
                 inparams.device = params.input_device_id();
             }
 
-            if(params.output_device_id()==-1)
+            if(params.output_device_id() < 0)
             {
                 outparams.device = Pa_GetDefaultOutputDevice();
             }
