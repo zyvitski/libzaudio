@@ -29,9 +29,6 @@ namespace zaudio
     namespace internal
     {
 
-        template<typename sample_t>
-        using callback_info = std::tuple<stream_callback<sample_t>*,stream_error_callback*,stream_params<sample_t>*>;
-
 
         template<typename sample_t>
         constexpr PaSampleFormat _type_to_pa_sample_format() noexcept
@@ -138,9 +135,7 @@ namespace zaudio
 
             if(compat == no_error)
             {
-                std::get<0>(calls) = _callback;
-                std::get<1>(calls) = _error_callback;
-                std::get<2>(calls) = &const_cast<stream_params<sample_t>&>(params);
+                _callback_info = callback_info(_callback,_error_callback,&const_cast<stream_params<sample_t>&>(params));
                 double srate=0;
                 std::tie(_inparams,_outparams,srate) = _native_params_to_pa(params);
 
@@ -154,7 +149,7 @@ namespace zaudio
                                   params.frame_count(),
                                   paNoFlag,
                                   &_pa_stream_api_callback,
-                                  (void*)&calls);
+                                  (void*)&_callback_info);
             }
             else
             {
@@ -206,6 +201,7 @@ namespace zaudio
             return Pa_GetDefaultOutputDevice();
         }
     private:
+        using callback_info =typename  base::callback_info;
         static int _pa_stream_api_callback( const void *input,void *output,unsigned long frameCount,const PaStreamCallbackTimeInfo* timeInfo,PaStreamCallbackFlags statusFlags,void *userData )
         {
 
@@ -215,7 +211,7 @@ namespace zaudio
 
 
             //gather call data
-            internal::callback_info<sample_t>* callbacks = static_cast<internal::callback_info<sample_t>*>(userData);
+            callback_info* callbacks = static_cast<callback_info*>(userData);
             stream_callback<sample_t>* cb = nullptr;
             stream_error_callback* ecb = nullptr;
             stream_params<sample_t>* params = nullptr;
@@ -241,7 +237,7 @@ namespace zaudio
                 return -1;
             }
         }
-        internal::callback_info<sample_t> calls;
+        using base::_callback_info;
         PaStream* stream;
         using base::_error_callback;
         using base::_callback;

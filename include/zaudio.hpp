@@ -632,8 +632,13 @@ namespace zaudio
         NOTE: INTERFACE TBD
         */
     protected:
+        using callback_info = std::tuple<stream_callback<sample_t>*,stream_error_callback*,stream_params<sample_t>*>;
+
+
         callback* _callback;
         error_callback* _error_callback;
+
+        callback_info _callback_info;
     };
 
     /*!
