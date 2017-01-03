@@ -31,6 +31,7 @@ This file is part of zaudio.
 #include <memory>
 #include <ostream>
 #include <future>
+#include <mutex>
 
 /*
 TODO: Documentation on everything, testing on lots of things
@@ -373,7 +374,7 @@ namespace zaudio
      */
     inline stream_error_callback default_stream_error_callback() noexcept
     {
-        return [](const stream_error& err)
+        return [](const stream_error& err) noexcept
         {
             std::async(std::launch::async, [](const stream_error& err)
             {
@@ -626,19 +627,23 @@ namespace zaudio
         {
             _error_callback = &cb;
         }
-
+        std::mutex& callback_mutex() noexcept
+        {
+            return _callback_mutex;
+        }
 
         /*
         NOTE: INTERFACE TBD
         */
     protected:
-        using callback_info = std::tuple<stream_callback<sample_t>*,stream_error_callback*,stream_params<sample_t>*>;
+        using callback_info = std::tuple<stream_callback<sample_t>*,stream_error_callback*,stream_params<sample_t>*,std::mutex*>;
 
 
         callback* _callback;
         error_callback* _error_callback;
 
         callback_info _callback_info;
+        std::mutex _callback_mutex;
     };
 
     /*!
@@ -842,15 +847,31 @@ namespace zaudio
         {
             return _context.get().api()->playback_state();
         }
-        callback exchange_callback(callback&& cb) noexcept
+        callback exchange_callback(callback&& cb,std::chrono::milliseconds duration = std::chrono::milliseconds(1000))
         {
-            std::swap(_callback,cb);
-            return cb;
+            std::unique_lock<std::mutex> lk{_context.get().api()->callback_mutex(),std::defer_lock};
+            if(lk.try_lock_for(duration))
+            {
+                std::swap(_callback,cb);
+                return cb;
+            }
+            else
+            {
+                throw std::runtime_error("Unable to aquire lock to exchange user callback!");
+            }
         }
-        stream_error_callback exchange_error_callback(stream_error_callback&& cb) noexcept
+        stream_error_callback exchange_error_callback(stream_error_callback&& cb,std::chrono::milliseconds duration = std::chrono::milliseconds(1000))
         {
-            std::swap(_error_callback,cb);
-            return cb;
+            std::unique_lock<std::mutex> lk{_context.get().api()->callback_mutex(),std::defer_lock};
+            if(lk.try_lock_for(duration))
+            {
+                std::swap(_error_callback,cb);
+                return cb;
+            }
+            else
+            {
+                throw std::runtime_error("Unable to aquire lock to exchange user error callback!");
+            }
         }
 
         const stream_params_type& params() noexcept
