@@ -1,11 +1,14 @@
 MASTER TODO LIST:
+  -Documentation
   -CHECK License compatability with portaudio
   -FILL OUT README and other helpful files
   -Write more tests
 
 
   -work on s24 sample class, make sure it works
-  -add synchronization to user callback swaps
+
+  //done but needs testing
+  //-add synchronization to user callback swaps
 
 
 

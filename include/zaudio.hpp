@@ -32,6 +32,7 @@ This file is part of zaudio.
 #include <ostream>
 #include <future>
 #include <mutex>
+#include <tuple>
 
 /*
 TODO: Documentation on everything, testing on lots of things
@@ -907,7 +908,21 @@ namespace zaudio
     };
     /*------------------------------------------------------------------------*/
 
-
+    template<typename stream>
+    stream_error start_stream(stream&& s) noexcept
+    {
+        return s.start();
+    }
+    template<typename stream>
+    stream_error pause_stream(stream&& s) noexcept
+    {
+        return s.pause();
+    }
+    template<typename stream>
+    stream_error stop_stream(stream&& s) noexcept
+    {
+        return s.stop();
+    }
 
     /*!
      *\fn make_audio_stream
