@@ -100,7 +100,7 @@ namespace zaudio
         template<> struct format_id_to_type<sample_format::f32> { using type = float;        };
         template<> struct format_id_to_type<sample_format::f64> { using type = double;       };
         template<> struct format_id_to_type<sample_format::i8>  { using type = std::int8_t;  };
-        template<> struct format_id_to_type<sample_format::u8>  { using type = std::uint8_t;  };
+        template<> struct format_id_to_type<sample_format::u8>  { using type = std::uint8_t; };
         template<> struct format_id_to_type<sample_format::i16> { using type = std::int16_t; };
         template<> struct format_id_to_type<sample_format::i24> { using type = s24;          };
         template<> struct format_id_to_type<sample_format::i32> { using type = std::int32_t; };
@@ -225,11 +225,12 @@ namespace zaudio
         template<typename D>
         void operator()(D&& duration) noexcept
         {
-            auto&& start = C::now();//timestamp in
-
-            std::this_thread::sleep_for( duration * 0.95 );//sleep for most of the time requested
-
-            while ( std::chrono::duration_cast<D>( C::now() - start ) < duration ) { continue; }//spin for the rest to ensure accuracy
+            //timestamp in
+            auto&& start = C::now();
+            //sleep for most of the time requested
+            std::this_thread::sleep_for( duration * 0.95 );
+            //spin for the rest to ensure accuracy
+            while ( std::chrono::duration_cast<D>( C::now() - start ) < duration ) { continue; }
         }
     };
 
@@ -319,7 +320,10 @@ namespace zaudio
      *\brief
      */
     //use std pair if c++14 else use stream_error_type
-    using stream_error = std::conditional<__cplusplus == 201402L,std::pair<stream_status, stream_error_message>,detail::stream_error_type>::type;
+    using stream_error = std::conditional<__cplusplus == 201402L,
+                                          std::pair<stream_status,
+                                          stream_error_message>,
+                                          detail::stream_error_type>::type;
 
     std::ostream& operator<<(std::ostream& os, const stream_error& err);
 
@@ -405,13 +409,43 @@ namespace zaudio
     class stream_params : public detail::fail_if_type_is_not_sample<sample_t>
     {
     public:
-        constexpr stream_params() noexcept: _input_frame_width(2),_output_frame_width(2),_frame_count(512),_sample_rate(44100),_input_device_id(-1),_output_device_id(-1)
+        constexpr stream_params() noexcept: _input_frame_width(2),
+                                            _output_frame_width(2),
+                                            _frame_count(512),
+                                            _sample_rate(44100),
+                                            _input_device_id(-1),
+                                            _output_device_id(-1)
         {}
-        constexpr stream_params(double sr, std::size_t fc, std::size_t fw) noexcept: _input_frame_width(fw),_output_frame_width(fw),_frame_count(fc),_sample_rate(sr),_input_device_id(-1),_output_device_id(-1)
+        constexpr stream_params(double sr,
+                                std::size_t fc,
+                                std::size_t fw) noexcept: _input_frame_width(fw),
+                                                          _output_frame_width(fw),
+                                                          _frame_count(fc),
+                                                          _sample_rate(sr),
+                                                          _input_device_id(-1),
+                                                          _output_device_id(-1)
         {}
-        constexpr stream_params(double sr, std::size_t fc, std::size_t ifw, std::size_t ofw) noexcept : _input_frame_width(ifw),_output_frame_width(ofw),_frame_count(fc),_sample_rate(sr),_input_device_id(-1),_output_device_id(-1)
+        constexpr stream_params(double sr,
+                                std::size_t fc,
+                                std::size_t ifw,
+                                std::size_t ofw) noexcept : _input_frame_width(ifw),
+                                                            _output_frame_width(ofw),
+                                                            _frame_count(fc),
+                                                            _sample_rate(sr),
+                                                            _input_device_id(-1),
+                                                            _output_device_id(-1)
         {}
-        constexpr stream_params(double sr, std::size_t fc, std::size_t ifw, std::size_t ofw,long idid,long odid) noexcept : _input_frame_width(ifw),_output_frame_width(ofw),_frame_count(fc),_sample_rate(sr),_input_device_id(idid),_output_device_id(odid)
+        constexpr stream_params(double sr,
+                                std::size_t fc,
+                                std::size_t ifw,
+                                std::size_t ofw,
+                                long idid,
+                                long odid) noexcept : _input_frame_width(ifw),
+                                                      _output_frame_width(ofw),
+                                                      _frame_count(fc),
+                                                      _sample_rate(sr),
+                                                      _input_device_id(idid),
+                                                      _output_device_id(odid)
         {}
 
         constexpr const std::size_t& frame_count() const noexcept
@@ -500,7 +534,10 @@ namespace zaudio
     /*------------------------------------------------------------------------*/
 
     template<typename sample_t>
-    using stream_callback  = std::function<stream_error(const sample_t*, sample_t*,time_point, stream_params<sample_t>&) noexcept>;
+    using stream_callback  = std::function<stream_error(const sample_t*,
+                                                        sample_t*,
+                                                        time_point,
+                                                        stream_params<sample_t>&) noexcept>;
 
 
 
@@ -637,7 +674,10 @@ namespace zaudio
         NOTE: INTERFACE TBD
         */
     protected:
-        using callback_info = std::tuple<stream_callback<sample_t>*,stream_error_callback*,stream_params<sample_t>*,std::mutex*>;
+        using callback_info = std::tuple<stream_callback<sample_t>*,
+                                         stream_error_callback*,
+                                         stream_params<sample_t>*,
+                                         std::mutex*>;
 
 
         callback* _callback;
@@ -788,43 +828,44 @@ namespace zaudio
         using callback = stream_callback<sample_t>;
         using context_type = stream_context<sample_t>;
         using stream_params_type = stream_params<sample_t>;
-        audio_stream() : stream_params_type(),_context(default_stream_context<sample_t>()),
-                                              _error_callback(default_stream_error_callback())
+        audio_stream() : stream_params_type(),
+                         _context(default_stream_context<sample_t>()),
+                         _error_callback(default_stream_error_callback())
         {
             init();
         }
         audio_stream(const stream_params_type& params,
                      const callback& cb,
-                     const stream_error_callback& error_callback = default_stream_error_callback()) :stream_params_type(params),
-                                                                                                     _context(default_stream_context<sample_t>()),
-                                                                                                     _callback(cb),
-                                                                                                     _error_callback(error_callback)
+                     const stream_error_callback& error_callback = default_stream_error_callback()) : stream_params_type(params),
+                                                                                                      _context(default_stream_context<sample_t>()),
+                                                                                                      _callback(cb),
+                                                                                                      _error_callback(error_callback)
         {
             init();
         }
         audio_stream(const stream_params_type& params,
                      context_type& ctx,
-                      const callback& cb,
-                      const stream_error_callback& error_callback = default_stream_error_callback()):stream_params_type(params),
-                                                                                                     _callback(cb),
-                                                                                                     _error_callback(error_callback),
-                                                                                                     _context(ctx)
+                     const callback& cb,
+                     const stream_error_callback& error_callback = default_stream_error_callback()) : stream_params_type(params),
+                                                                                                      _callback(cb),
+                                                                                                      _error_callback(error_callback),
+                                                                                                      _context(ctx)
         {
             init();
         }
         audio_stream(const stream_params_type& params,
-                     audio_process<sample_t>& proc):stream_params_type(params),
-                                                    _callback(proc.get_callback()),
-                                                    _error_callback(proc.get_error_callback()),
-                                                    _context(default_stream_context<sample_t>())
+                     audio_process<sample_t>& proc) : stream_params_type(params),
+                                                      _callback(proc.get_callback()),
+                                                      _error_callback(proc.get_error_callback()),
+                                                      _context(default_stream_context<sample_t>())
         {
             init();
         }
         audio_stream(const stream_params_type& params,
-                     context_type& ctx, audio_process<sample_t>& proc):stream_params_type(params),
-                                                                       _callback(proc.get_callback()),
-                                                                       _error_callback(proc.get_error_callback()),
-                                                                       _context(ctx)
+                     context_type& ctx, audio_process<sample_t>& proc) : stream_params_type(params),
+                                                                         _callback(proc.get_callback()),
+                                                                         _error_callback(proc.get_error_callback()),
+                                                                         _context(ctx)
         {
             init();
         }
@@ -861,7 +902,8 @@ namespace zaudio
                 throw std::runtime_error("Unable to aquire lock to exchange user callback!");
             }
         }
-        stream_error_callback exchange_error_callback(stream_error_callback&& cb,std::chrono::milliseconds duration = std::chrono::milliseconds(1000))
+        stream_error_callback exchange_error_callback(stream_error_callback&& cb,
+                                                      std::chrono::milliseconds duration = std::chrono::milliseconds(1000))
         {
             std::unique_lock<std::mutex> lk{_context.get().api()->callback_mutex(),std::defer_lock};
             if(lk.try_lock_for(duration))
