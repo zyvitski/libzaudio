@@ -29,9 +29,6 @@ namespace zaudio
     namespace internal
     {
 
-        template<typename sample_t>
-        using callback_info = std::tuple<stream_callback<sample_t>*,stream_error_callback*,stream_params<sample_t>*>;
-
 
         template<typename sample_t>
         constexpr PaSampleFormat _type_to_pa_sample_format() noexcept
@@ -74,6 +71,7 @@ namespace zaudio
     class pa_stream_api : public stream_api<sample_t>
     {
         using base = stream_api<sample_t>;
+        using audio_clock = typename base::audio_clock;
     public:
         static_assert(internal::_type_to_pa_sample_format<sample_t>() != -1, "Requested Sample Format Not Supported By PortAudio API");
         pa_stream_api()
@@ -93,12 +91,10 @@ namespace zaudio
         using base::id;
         virtual std::string name() const noexcept
         {
-            //TODO: implement me
-            return "PortAudio Stream API";
+            return "LibZaudio: PortAudio Stream API";
         }
         virtual std::string info() const noexcept
         {
-            //TODO: implement me
             return Pa_GetVersionText();
         }
         virtual stream_error start() noexcept
@@ -139,16 +135,13 @@ namespace zaudio
 
             if(compat == no_error)
             {
-                std::get<0>(calls) = _callback;
-                std::get<1>(calls) = _error_callback;
-                std::get<2>(calls) = &const_cast<stream_params<sample_t>&>(params);
+                _callback_info = callback_info(_callback,_error_callback,&const_cast<stream_params<sample_t>&>(params),&_callback_mutex);
                 double srate=0;
                 std::tie(_inparams,_outparams,srate) = _native_params_to_pa(params);
 
                 const PaStreamParameters* ip = params.input_frame_width() == 0 ? nullptr: &_inparams;
                 const PaStreamParameters* op = params.output_frame_width() == 0 ? nullptr: &_outparams;
 
-                start_time = audio_clock::now();
                 return _pa_invoke(Pa_OpenStream,&stream,
                                   ip,
                                   op,
@@ -156,7 +149,7 @@ namespace zaudio
                                   params.frame_count(),
                                   paNoFlag,
                                   &_pa_stream_api_callback,
-                                  (void*)&calls);
+                                  (void*)&_callback_info);
             }
             else
             {
@@ -208,25 +201,34 @@ namespace zaudio
             return Pa_GetDefaultOutputDevice();
         }
     private:
+        using base::_callback_mutex;
+        using callback_info =typename  base::callback_info;
         static int _pa_stream_api_callback( const void *input,void *output,unsigned long frameCount,const PaStreamCallbackTimeInfo* timeInfo,PaStreamCallbackFlags statusFlags,void *userData )
         {
+
+            callback_info* callbacks = static_cast<callback_info*>(userData);
+            //gather call data
+
+            stream_callback<sample_t>* cb = nullptr;
+            stream_error_callback* ecb = nullptr;
+            stream_params<sample_t>* params = nullptr;
+            std::mutex* cb_mutex = nullptr;
+            std::tie(cb,ecb,params,cb_mutex) = *callbacks;
+
+
+            std::unique_lock<std::mutex> lk{*cb_mutex,std::defer_lock};
+            while (!lk.try_lock()){ continue; }
 
             //cast buffers
             const sample_t* in = static_cast<const sample_t*>(input);
             sample_t* out = static_cast<sample_t*>(output);
 
 
-            //gather call data
-            internal::callback_info<sample_t>* callbacks = static_cast<internal::callback_info<sample_t>*>(userData);
-            stream_callback<sample_t>* cb = nullptr;
-            stream_error_callback* ecb = nullptr;
-            stream_params<sample_t>* params = nullptr;
 
-            std::tie(cb,ecb,params) = *callbacks;
             try
             {
                 //invoke the function;
-                const stream_error ret = (*cb)(in,out,audio_clock::now() - start_time,*params);
+                const stream_error ret = (*cb)(in,out,audio_clock::now(),*params);
 
                 //evaluate if there is an error
                 if(ret != no_error)
@@ -243,7 +245,7 @@ namespace zaudio
                 return -1;
             }
         }
-        internal::callback_info<sample_t> calls;
+        using base::_callback_info;
         PaStream* stream;
         using base::_error_callback;
         using base::_callback;
@@ -290,7 +292,7 @@ namespace zaudio
             inparams.hostApiSpecificStreamInfo=nullptr;
             outparams.hostApiSpecificStreamInfo=nullptr;
 
-            if (params.input_device_id()==-1)
+            if (params.input_device_id() < 0)
             {
                 inparams.device = Pa_GetDefaultInputDevice();
             }
@@ -299,7 +301,7 @@ namespace zaudio
                 inparams.device = params.input_device_id();
             }
 
-            if(params.output_device_id()==-1)
+            if(params.output_device_id() < 0)
             {
                 outparams.device = Pa_GetDefaultOutputDevice();
             }
@@ -315,12 +317,9 @@ namespace zaudio
         }
         PaStreamParameters _inparams;
         PaStreamParameters _outparams;
-        static time_point start_time;
 
     };
-    template<typename sample_t>
 
-    time_point pa_stream_api<sample_t>::start_time;
 
 }
 

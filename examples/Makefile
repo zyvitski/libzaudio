@@ -88,7 +88,8 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = x86_64-apple-darwin16.1.0
 host_triplet = x86_64-apple-darwin16.1.0
-bin_PROGRAMS = sine_example$(EXEEXT) device_probing$(EXEEXT)
+bin_PROGRAMS = sine_example$(EXEEXT) device_probing$(EXEEXT) \
+	lambda_sine_example$(EXEEXT)
 subdir = examples
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -110,6 +111,13 @@ am__v_lt_1 =
 device_probing_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
 	$(AM_CXXFLAGS) $(CXXFLAGS) $(device_probing_LDFLAGS) \
+	$(LDFLAGS) -o $@
+am_lambda_sine_example_OBJECTS = lambda_sine.$(OBJEXT)
+lambda_sine_example_OBJECTS = $(am_lambda_sine_example_OBJECTS)
+lambda_sine_example_LDADD = $(LDADD)
+lambda_sine_example_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
+	$(AM_CXXFLAGS) $(CXXFLAGS) $(lambda_sine_example_LDFLAGS) \
 	$(LDFLAGS) -o $@
 am_sine_example_OBJECTS = sine.$(OBJEXT)
 sine_example_OBJECTS = $(am_sine_example_OBJECTS)
@@ -151,8 +159,10 @@ AM_V_CXXLD = $(am__v_CXXLD_$(V))
 am__v_CXXLD_ = $(am__v_CXXLD_$(AM_DEFAULT_VERBOSITY))
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
-SOURCES = $(device_probing_SOURCES) $(sine_example_SOURCES)
-DIST_SOURCES = $(device_probing_SOURCES) $(sine_example_SOURCES)
+SOURCES = $(device_probing_SOURCES) $(lambda_sine_example_SOURCES) \
+	$(sine_example_SOURCES)
+DIST_SOURCES = $(device_probing_SOURCES) \
+	$(lambda_sine_example_SOURCES) $(sine_example_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -259,7 +269,7 @@ am__leading_dot = .
 am__quote = 
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
-bindir = ${exec_prefix}/bin
+bindir = $(exec_prefix)/bin/zaudio
 build = x86_64-apple-darwin16.1.0
 build_alias = 
 build_cpu = x86_64
@@ -291,7 +301,6 @@ pdfdir = ${docdir}
 prefix = /usr/local
 program_transform_name = s,x,x,
 psdir = ${docdir}
-runstatedir = ${localstatedir}/run
 sbindir = ${exec_prefix}/sbin
 sharedstatedir = ${prefix}/com
 srcdir = .
@@ -302,10 +311,12 @@ top_builddir = ..
 top_srcdir = ..
 device_probing_SOURCES = device_probing.cpp
 sine_example_SOURCES = sine.cpp
+lambda_sine_example_SOURCES = lambda_sine.cpp
 AM_CXXFLAGS = --std=c++11 -g -O3 -pthread -fpic  -MP -Wall -pedantic -I/usr/local/include -I../include
 AM_LDFLAGS = -L/usr/local/lib
 sine_example_LDFLAGS = -lzaudio -lportaudio
 device_probing_LDFLAGS = -lzaudio -lportaudio
+lambda_sine_example_LDFLAGS = -lzaudio -lportaudio
 all: all-am
 
 .SUFFIXES:
@@ -393,6 +404,10 @@ device_probing$(EXEEXT): $(device_probing_OBJECTS) $(device_probing_DEPENDENCIES
 	@rm -f device_probing$(EXEEXT)
 	$(AM_V_CXXLD)$(device_probing_LINK) $(device_probing_OBJECTS) $(device_probing_LDADD) $(LIBS)
 
+lambda_sine_example$(EXEEXT): $(lambda_sine_example_OBJECTS) $(lambda_sine_example_DEPENDENCIES) $(EXTRA_lambda_sine_example_DEPENDENCIES) 
+	@rm -f lambda_sine_example$(EXEEXT)
+	$(AM_V_CXXLD)$(lambda_sine_example_LINK) $(lambda_sine_example_OBJECTS) $(lambda_sine_example_LDADD) $(LIBS)
+
 sine_example$(EXEEXT): $(sine_example_OBJECTS) $(sine_example_DEPENDENCIES) $(EXTRA_sine_example_DEPENDENCIES) 
 	@rm -f sine_example$(EXEEXT)
 	$(AM_V_CXXLD)$(sine_example_LINK) $(sine_example_OBJECTS) $(sine_example_LDADD) $(LIBS)
@@ -404,6 +419,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 include ./$(DEPDIR)/device_probing.Po
+include ./$(DEPDIR)/lambda_sine.Po
 include ./$(DEPDIR)/sine.Po
 
 .cpp.o:
