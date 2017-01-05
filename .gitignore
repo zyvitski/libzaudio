@@ -34,3 +34,5 @@
 /doc/html/
 /doc/latex/
 /doc/man/
+
+*.tar.gz
