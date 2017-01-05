@@ -222,7 +222,7 @@ CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
 CXXFLAGS = -g -O2
 CYGPATH_W = echo
-DEFS = -DPACKAGE_NAME=\"libzaudio\" -DPACKAGE_TARNAME=\"libzaudio\" -DPACKAGE_VERSION=\"0.1.0\" -DPACKAGE_STRING=\"libzaudio\ 0.1.0\" -DPACKAGE_BUGREPORT=\"alexander.zywicki@gmail.com\" -DPACKAGE_URL=\"\" -DPACKAGE=\"libzaudio\" -DVERSION=\"0.1.0\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\"
+DEFS = -DPACKAGE_NAME=\"libzaudio\" -DPACKAGE_TARNAME=\"libzaudio\" -DPACKAGE_VERSION=\"0.1.1\" -DPACKAGE_STRING=\"libzaudio\ 0.1.1\" -DPACKAGE_BUGREPORT=\"alexander.zywicki@gmail.com\" -DPACKAGE_URL=\"\" -DPACKAGE=\"libzaudio\" -DVERSION=\"0.1.1\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\"
 DEPDIR = .deps
 DLLTOOL = false
 DSYMUTIL = dsymutil
@@ -260,17 +260,17 @@ OTOOL64 = :
 PACKAGE = libzaudio
 PACKAGE_BUGREPORT = alexander.zywicki@gmail.com
 PACKAGE_NAME = libzaudio
-PACKAGE_STRING = libzaudio 0.1.0
+PACKAGE_STRING = libzaudio 0.1.1
 PACKAGE_TARNAME = libzaudio
 PACKAGE_URL = 
-PACKAGE_VERSION = 0.1.0
+PACKAGE_VERSION = 0.1.1
 PATH_SEPARATOR = :
 RANLIB = ranlib
 SED = /usr/local/bin/gsed
 SET_MAKE = 
 SHELL = /bin/sh
 STRIP = strip
-VERSION = 0.1.0
+VERSION = 0.1.1
 abs_builddir = /Users/alexanderzywicki/libzaudio
 abs_srcdir = /Users/alexanderzywicki/libzaudio
 abs_top_builddir = /Users/alexanderzywicki/libzaudio
