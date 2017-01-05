@@ -31,3 +31,6 @@
 *.exe
 *.out
 *.app
+/doc/html/
+/doc/latex/
+/doc/man/
