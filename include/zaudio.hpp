@@ -34,9 +34,25 @@ This file is part of zaudio.
 #include <mutex>
 #include <tuple>
 
+/*!
+*\note At least one stream api must be present on every platform.
+       The provided api is permitted to be a non functional dummy api for platforms where a proper api is impossible
+       Preferabbly on any platform that has a filesystem, a file codec api will be provided
+       Preferabbly on any platform that has an audio system an hardware api will be provided
+
+       IDEA:
+            Network serialization api?
+                an api that is designed to work with the std::networking proposal for sending audio over network
+
+       All of the apis will share a uniform interface
+       Ideally multiple apis can be used at once
+            TODO: come up with endpoint class to make multi api io possible
+*/
 /*
 TODO: Documentation on everything, testing on lots of things
 */
+
+
 /*!
  *\namespace zaudio
  *\brief primary namespace for the zaudio library
@@ -680,7 +696,6 @@ namespace zaudio
         std::size_t id() const noexcept
         {
             return std::hash<std::string>{}(name());
-
         }
         virtual std::string name() const noexcept
         {
@@ -771,20 +786,7 @@ namespace zaudio
         std::mutex _callback_mutex;
     };
 
-    /*!
-    *\note At least one stream api must be present on every platform.
-           The provided api is permitted to be a non functional dummy api for platforms where a proper api is impossible
-           Preferabbly on any platform that has a filesystem, a file codec api will be provided
-           Preferabbly on any platform that has an audio system an hardware api will be provided
 
-           IDEA:
-                Network serialization api?
-                    an api that is designed to work with the std::networking proposal for sending audio over network
-
-           All of the apis will share a uniform interface
-           Ideally multiple apis can be used at once
-                TODO: come up with endpoint class to make multi api io possible
-    */
 
 
     /*!
