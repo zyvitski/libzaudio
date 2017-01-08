@@ -49,49 +49,66 @@ namespace zaudio
         using stream_params_type = stream_params<sample_t>;
         using callback = stream_callback<sample_t>;
 
-        explicit stream_context(std::unique_ptr<api_type> api = default_api<sample_t>()) noexcept:_api(std::move(api))
-        {}
+        explicit stream_context(std::unique_ptr<api_type> api = default_api<sample_t>()) noexcept;
 
-        api_type* api() const noexcept
-        {
-            return _api.get();
-        }//get the api
+        api_type* api() const noexcept;
 
 
-        long get_device_count() noexcept
-        {
-            return _api.get()->get_device_count();
-        }
-        device_info get_device_info(long id) noexcept
-        {
-            return _api.get()->get_device_info(id);
-        }
-        std::vector<device_info> get_device_info_list() noexcept
-        {
-            std::vector<device_info> out;
-            for(long i=0;i<get_device_count();++i)
-            {
-                out.push_back(get_device_info(i));
-            }
-            return out;
-        }
-        stream_error is_configuration_supported(const stream_params_type& params) noexcept
-        {
-            return _api.get()->is_configuration_supported(params);
-        }
-        long default_input_device_id() const noexcept
-        {
-            return _api.get()->default_input_device_id();
-        }
-        long default_output_device_id() const noexcept
-        {
-            return _api.get()->default_output_device_id();
-        }
+        long get_device_count() noexcept;
+        device_info get_device_info(long id) noexcept;
+        std::vector<device_info> get_device_info_list() noexcept;
+        stream_error is_configuration_supported(const stream_params_type& params) noexcept;
+        long default_input_device_id() const noexcept;
+        long default_output_device_id() const noexcept;
     private:
         std::unique_ptr<api_type> _api;
     };
 
+    template<typename sample_t>
+    stream_context<sample_t>::stream_context(std::unique_ptr<typename stream_context<sample_t>::api_type> api) noexcept:_api(std::move(api))
+    {}
 
+    template<typename sample_t>
+    typename stream_context<sample_t>::api_type* stream_context<sample_t>::api() const noexcept
+    {
+        return _api.get();
+    }//get the api
+
+    template<typename sample_t>
+    long stream_context<sample_t>::get_device_count() noexcept
+    {
+        return _api.get()->get_device_count();
+    }
+    template<typename sample_t>
+    device_info stream_context<sample_t>::get_device_info(long id) noexcept
+    {
+        return _api.get()->get_device_info(id);
+    }
+    template<typename sample_t>
+    std::vector<device_info> stream_context<sample_t>::get_device_info_list() noexcept
+    {
+        std::vector<device_info> out;
+        for(long i=0;i<get_device_count();++i)
+        {
+            out.push_back(get_device_info(i));
+        }
+        return out;
+    }
+    template<typename sample_t>
+    stream_error stream_context<sample_t>::is_configuration_supported(const typename stream_context<sample_t>::stream_params_type& params) noexcept
+    {
+        return _api.get()->is_configuration_supported(params);
+    }
+    template<typename sample_t>
+    long stream_context<sample_t>::default_input_device_id() const noexcept
+    {
+        return _api.get()->default_input_device_id();
+    }
+    template<typename sample_t>
+    long stream_context<sample_t>::default_output_device_id() const noexcept
+    {
+        return _api.get()->default_output_device_id();
+    }
 
 
     /*!

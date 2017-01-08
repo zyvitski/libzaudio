@@ -52,89 +52,26 @@ namespace zaudio
             using callback = stream_callback<sample_t>;
             using error_callback = stream_error_callback;
 
-            stream_api() noexcept: _callback(nullptr),_error_callback(nullptr){}
+            stream_api() noexcept;
+            std::size_t id() const noexcept;
+            virtual std::string name() const noexcept;
+            virtual std::string info() const noexcept;
+            virtual stream_error start() noexcept;
+            virtual stream_error pause() noexcept;
+            virtual stream_error stop() noexcept;
+            virtual stream_error playback_state() noexcept;
+            virtual std::string get_error_string(const stream_error& err) noexcept;
+            virtual stream_error open_stream(const stream_params<sample_t>&) noexcept;
+            virtual stream_error close_stream() noexcept;
+            virtual long get_device_count() noexcept;
+            virtual device_info get_device_info(long id) noexcept;
+            virtual stream_error is_configuration_supported(const stream_params<sample_t>& params) noexcept;
+            virtual long default_input_device_id() const noexcept;
+            virtual long default_output_device_id() const noexcept;
+            void set_callback(callback& cb) noexcept;
+            void set_error_callback(error_callback&cb) noexcept;
+            std::mutex& callback_mutex() noexcept;
 
-            //id will be assigned based on std::hash<std::string> of name()
-            //aka: unique name = unique id
-            std::size_t id() const noexcept
-            {
-                return std::hash<std::string>{}(name());
-            }
-            virtual std::string name() const noexcept
-            {
-                return "dummy";
-            }
-            virtual std::string info() const noexcept
-            {
-                return "dummy";
-            }
-            virtual stream_error start() noexcept
-            {
-                return make_stream_error(stream_status::system_error,"Attempted use of dummy API");
-            }
-            virtual stream_error pause() noexcept
-            {
-                return make_stream_error(stream_status::system_error,"Attempted use of dummy API");
-            }
-            virtual stream_error stop() noexcept
-            {
-                return make_stream_error(stream_status::system_error,"Attempted use of dummy API");
-            }
-            virtual stream_error playback_state() noexcept
-            {
-                return make_stream_error(stream_status::system_error,"Attempted use of dummy API");
-            }
-            virtual std::string get_error_string(const stream_error& err) noexcept
-            {
-                return {};
-            }
-            virtual stream_error open_stream(const stream_params<sample_t>&) noexcept
-            {
-                return make_stream_error(stream_status::system_error,"Attempted use of dummy API");
-            }
-            virtual stream_error close_stream() noexcept
-            {
-                return make_stream_error(stream_status::system_error,"Attempted use of dummy API");
-            }
-            virtual long get_device_count() noexcept
-            {
-                return 0;
-            }
-            virtual device_info get_device_info(long id) noexcept
-            {
-                return {};
-            }
-            virtual stream_error is_configuration_supported(const stream_params<sample_t>& params) noexcept
-            {
-                return make_stream_error(stream_status::system_error,"Attempted use of dummy API");
-            }
-            virtual long default_input_device_id() const noexcept
-            {
-                return 0;
-            }
-            virtual long default_output_device_id() const noexcept
-            {
-                return 0;
-            }
-
-
-
-            void set_callback(callback& cb) noexcept
-            {
-                _callback = &cb;
-            }
-            void set_error_callback(error_callback&cb) noexcept
-            {
-                _error_callback = &cb;
-            }
-            std::mutex& callback_mutex() noexcept
-            {
-                return _callback_mutex;
-            }
-
-            /*
-            NOTE: INTERFACE TBD
-            */
         protected:
             using callback_info = std::tuple<stream_callback<sample_t>*,
                                              stream_error_callback*,
@@ -149,7 +86,119 @@ namespace zaudio
             std::mutex _callback_mutex;
         };
 
+        template<typename sample_t>
+        stream_api<sample_t>::stream_api() noexcept: _callback(nullptr),_error_callback(nullptr){}
 
+        //id will be assigned based on std::hash<std::string> of name()
+        //aka: unique name = unique id
+        template<typename sample_t>
+        std::size_t stream_api<sample_t>::id() const noexcept
+        {
+            return std::hash<std::string>{}(name());
+        }
+
+        template<typename sample_t>
+        std::string stream_api<sample_t>::name() const noexcept
+        {
+            return "dummy";
+        }
+
+        template<typename sample_t>
+        std::string stream_api<sample_t>::info() const noexcept
+        {
+            return "dummy";
+        }
+
+        template<typename sample_t>
+        stream_error stream_api<sample_t>::start() noexcept
+        {
+            return make_stream_error(stream_status::system_error,"Attempted use of dummy API");
+        }
+
+        template<typename sample_t>
+        stream_error stream_api<sample_t>::pause() noexcept
+        {
+            return make_stream_error(stream_status::system_error,"Attempted use of dummy API");
+        }
+
+        template<typename sample_t>
+        stream_error stream_api<sample_t>::stop() noexcept
+        {
+            return make_stream_error(stream_status::system_error,"Attempted use of dummy API");
+        }
+
+        template<typename sample_t>
+        stream_error stream_api<sample_t>::playback_state() noexcept
+        {
+            return make_stream_error(stream_status::system_error,"Attempted use of dummy API");
+        }
+
+        template<typename sample_t>
+        std::string stream_api<sample_t>::get_error_string(const stream_error& err) noexcept
+        {
+            return {};
+        }
+
+        template<typename sample_t>
+        stream_error stream_api<sample_t>::open_stream(const stream_params<sample_t>&) noexcept
+        {
+            return make_stream_error(stream_status::system_error,"Attempted use of dummy API");
+        }
+
+        template<typename sample_t>
+        stream_error stream_api<sample_t>::close_stream() noexcept
+        {
+            return make_stream_error(stream_status::system_error,"Attempted use of dummy API");
+        }
+
+        template<typename sample_t>
+        long stream_api<sample_t>::get_device_count() noexcept
+        {
+            return 0;
+        }
+
+        template<typename sample_t>
+        device_info stream_api<sample_t>::get_device_info(long id) noexcept
+        {
+            return {};
+        }
+
+        template<typename sample_t>
+        stream_error stream_api<sample_t>::is_configuration_supported(const stream_params<sample_t>& params) noexcept
+        {
+            return make_stream_error(stream_status::system_error,"Attempted use of dummy API");
+        }
+
+        template<typename sample_t>
+        long stream_api<sample_t>::default_input_device_id() const noexcept
+        {
+            return 0;
+        }
+
+        template<typename sample_t>
+        long stream_api<sample_t>::default_output_device_id() const noexcept
+        {
+            return 0;
+        }
+
+
+        template<typename sample_t>
+        void stream_api<sample_t>::set_callback(callback& cb) noexcept
+        {
+            _callback = &cb;
+        }
+
+        template<typename sample_t>
+        void stream_api<sample_t>::set_error_callback(error_callback&cb) noexcept
+        {
+            _error_callback = &cb;
+        }
+
+        template<typename sample_t>
+        std::mutex& stream_api<sample_t>::callback_mutex() noexcept
+        {
+            return _callback_mutex;
+        }
 
 
         /*!
