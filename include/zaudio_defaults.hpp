@@ -29,29 +29,25 @@ This file is part of zaudio.
  */
 namespace zaudio
 {
+    /*!
+     *\fn default_api
+     *\brief constructs an instance of the default_api
+     */
+    template<typename sample_t>
+    std::unique_ptr<stream_api<sample_t>> default_api() noexcept
+    {
+        return make_stream_api<sample_t,pa_stream_api>();
+    }
 
-
-
-
-        /*!
-         *\fn default_api
-         *\brief constructs an instance of the default_api
-         */
-        template<typename sample_t>
-        std::unique_ptr<stream_api<sample_t>> default_api() noexcept
-        {
-            return make_stream_api<sample_t,pa_stream_api>();
-        }
-
-        /*!
-         *\fn default_stream_context
-         *\brief constructs an instance of the default stream context
-         */
-        template<typename sample_t>
-        stream_context<sample_t> default_stream_context() noexcept
-        {
-            return stream_context<sample_t>{};
-        }
+    /*!
+     *\fn default_stream_context
+     *\brief constructs an instance of the default stream context
+     */
+    template<typename sample_t>
+    stream_context<sample_t> default_stream_context() noexcept
+    {
+        return stream_context<sample_t>{};
+    }
 
 }
 #endif

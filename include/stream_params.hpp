@@ -36,8 +36,6 @@ namespace zaudio
      *\class stream_params
      *\brief a collection of values that describe the audio stream setings
      */
-
-
     template<typename sample_t>
     class stream_params : public detail::fail_if_type_is_not_sample<sample_t>
     {
@@ -200,7 +198,7 @@ namespace zaudio
     {
         return _output_device_id;
     }
-    
+
     template<typename sample_t>
     std::ostream& operator<<(std::ostream& os, stream_params<sample_t>& params)
     {

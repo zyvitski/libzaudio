@@ -215,6 +215,7 @@ namespace zaudio
         }
         _context.get().api()->open_stream(params());
     }
+    
     template<typename sample_t>
     void audio_stream<sample_t>::destroy() noexcept
     {
@@ -257,7 +258,6 @@ namespace zaudio
     *\fn make_audio_stream
     *\brief helper function that constructs an audio_stream object
     */
-
     template<typename sample_t,typename... args_t>
     audio_stream<sample_t> make_audio_stream(args_t&&... args)
     {

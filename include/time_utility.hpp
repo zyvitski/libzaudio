@@ -49,11 +49,13 @@ namespace zaudio
         using duration = std::chrono::duration<double>;
         using time_point = audio_clock::time_point;
     };
+
     /*!
      *\typedef duration
      *\brief represents a duration of time based on the audio_clock
      */
     using duration = stream_time_base::duration;
+
     /*!
      *\typedef time_point
      *\brief represents a point in time based on the audio_clock
@@ -87,6 +89,10 @@ namespace zaudio
     template<typename C,use_thread_sleep TS = use_thread_sleep::disable>
     struct sleep_type;
 
+    /*!
+     *\struct sleep_type
+     *\brief a sleep function object type
+     */
     template<typename C>
     struct sleep_type<C , use_thread_sleep::enable>
     {
@@ -103,7 +109,10 @@ namespace zaudio
         }
     };
 
-
+    /*!
+     *\struct sleep_type
+     *\brief a sleep function object type
+     */
     template<typename C>
     struct sleep_type<C , use_thread_sleep::disable>
     {
