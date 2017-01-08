@@ -431,7 +431,7 @@ Copyright (C) 2012 Free Software Foundation, Inc.
 This config.status script is free software; the Free Software Foundation
 gives unlimited permission to copy, distribute and modify it."
 
-ac_pwd='/Users/alexanderzywicki/libzaudio'
+ac_pwd='/Users/alexanderzywicki/libzaudio/'
 srcdir='.'
 INSTALL='/usr/bin/install -c'
 MKDIR_P='config/install-sh -c -d'
@@ -932,7 +932,7 @@ S["ACLOCAL"]="${SHELL} /Users/alexanderzywicki/libzaudio/config/missing aclocal-
 S["VERSION"]="0.1.1"
 S["PACKAGE"]="libzaudio"
 S["CYGPATH_W"]="echo"
-S["am__isrc"]=""
+S["am__isrc"]=" -I$(srcdir)"
 S["INSTALL_DATA"]="${INSTALL} -m 644"
 S["INSTALL_SCRIPT"]="${INSTALL}"
 S["INSTALL_PROGRAM"]="${INSTALL}"
