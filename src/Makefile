@@ -150,7 +150,7 @@ AM_V_at = $(am__v_at_$(V))
 am__v_at_ = $(am__v_at_$(AM_DEFAULT_VERBOSITY))
 am__v_at_0 = @
 am__v_at_1 = 
-DEFAULT_INCLUDES = -I.
+DEFAULT_INCLUDES = -I. -I$(srcdir)
 depcomp = $(SHELL) $(top_srcdir)/config/depcomp
 am__depfiles_maybe = depfiles
 am__mv = mv -f
@@ -268,10 +268,10 @@ SET_MAKE =
 SHELL = /bin/sh
 STRIP = strip
 VERSION = 0.1.1
-abs_builddir = /Users/alexanderzywicki/libzaudio/src
-abs_srcdir = /Users/alexanderzywicki/libzaudio/src
-abs_top_builddir = /Users/alexanderzywicki/libzaudio
-abs_top_srcdir = /Users/alexanderzywicki/libzaudio
+abs_builddir = /Users/alexanderzywicki/libzaudio//src
+abs_srcdir = /Users/alexanderzywicki/libzaudio//src
+abs_top_builddir = /Users/alexanderzywicki/libzaudio/
+abs_top_srcdir = /Users/alexanderzywicki/libzaudio/
 ac_ct_AR = ar
 ac_ct_CC = gcc
 ac_ct_CXX = g++
@@ -324,8 +324,8 @@ top_srcdir = ..
 lib_LTLIBRARIES = libzaudio.la
 libzaudio_la_SOURCES = libzaudio.cpp
 libzaudiodir = $(includedir)/libzaudio
-libzaudio_HEADERS = ../include/zaudio.hpp ../include/pa_stream_api.hpp
-libzaudio_la_LDFLAGS = -version-info 0:1:0
+libzaudio_HEADERS = ../include/zaudio.hpp ../include/pa_stream_api.hpp ../include/audio_process.hpp ../include/audio_stream.hpp ../include/device_info.hpp ../include/error_utility.hpp ../include/sample_utility.hpp ../include/stream_api.hpp ../include/stream_callback.hpp ../include/stream_context.hpp ../include/stream_params.hpp ../include/time_utility.hpp ../include/zaudio_defaults.hpp
+libzaudio_la_LDFLAGS = -version-info 1:1:1
 AM_CXXFLAGS = --std=c++11 -g -O3 -pthread -fpic  -MP -Wall -pedantic -I/usr/local/include -I../include -L/usr/local/lib
 all: all-am
 

@@ -18,7 +18,7 @@ This file is part of zaudio.
     along with zaudio.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "zaudio.hpp"
+#include "stream_api.hpp"
 #include <portaudio.h>
 #include <tuple>
 

@@ -1,6 +1,5 @@
-
-#ifndef zaudio_hpp
-#define zaudio_hpp
+#ifndef ZAUDIO_DEFAULTS
+#define ZAUDIO_DEFAULTS
 
 /*
 This file is part of zaudio.
@@ -19,17 +18,40 @@ This file is part of zaudio.
     along with zaudio.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "sample_utility.hpp"
-#include "time_utility.hpp"
-#include "error_utility.hpp"
-#include "stream_params.hpp"
-#include "device_info.hpp"
+#include <memory>
 #include "stream_api.hpp"
 #include "stream_context.hpp"
-#include "audio_stream.hpp"
-#include "audio_process.hpp"
 #include "pa_stream_api.hpp"
-#include "zaudio_defaults.hpp"
+
+/*!
+ *\namespace zaudio
+ *\brief primary namespace for the zaudio library
+ */
+namespace zaudio
+{
 
 
+
+
+        /*!
+         *\fn default_api
+         *\brief constructs an instance of the default_api
+         */
+        template<typename sample_t>
+        std::unique_ptr<stream_api<sample_t>> default_api() noexcept
+        {
+            return make_stream_api<sample_t,pa_stream_api>();
+        }
+
+        /*!
+         *\fn default_stream_context
+         *\brief constructs an instance of the default stream context
+         */
+        template<typename sample_t>
+        stream_context<sample_t> default_stream_context() noexcept
+        {
+            return stream_context<sample_t>{};
+        }
+
+}
 #endif

@@ -30,8 +30,8 @@ Kernel configured for up to 8 processors.
 Processor type: i486 (Intel 80486)
 Processors active: 0 1 2 3 4 5 6 7
 Primary memory available: 8.00 gigabytes
-Default processor set: 315 tasks, 1350 threads, 8 processors
-Load average: 1.21, Mach factor: 6.78
+Default processor set: 268 tasks, 1172 threads, 8 processors
+Load average: 4.66, Mach factor: 5.02
 /bin/machine           = unknown
 /usr/bin/oslevel       = unknown
 /bin/universe          = unknown
@@ -65,12 +65,472 @@ configure:2673: checking whether make sets $(MAKE)
 configure:2695: result: yes
 configure:2724: checking whether make supports nested variables
 configure:2741: result: yes
-configure:2758: error: source directory already configured; run "make distclean" there first
+configure:2896: checking build system type
+configure:2910: result: x86_64-apple-darwin16.3.0
+configure:2930: checking host system type
+configure:2943: result: x86_64-apple-darwin16.3.0
+configure:2984: checking how to print strings
+configure:3011: result: printf
+configure:3044: checking for style of include used by make
+configure:3072: result: GNU
+configure:3143: checking for gcc
+configure:3159: found /usr/bin/gcc
+configure:3170: result: gcc
+configure:3399: checking for C compiler version
+configure:3408: gcc --version >&5
+Apple LLVM version 8.0.0 (clang-800.0.42.1)
+Target: x86_64-apple-darwin16.3.0
+Thread model: posix
+InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+Configured with: --prefix=/Applications/Xcode.app/Contents/Developer/usr --with-gxx-include-dir=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/usr/include/c++/4.2.1
+configure:3419: $? = 0
+configure:3408: gcc -v >&5
+Configured with: --prefix=/Applications/Xcode.app/Contents/Developer/usr --with-gxx-include-dir=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/usr/include/c++/4.2.1
+Apple LLVM version 8.0.0 (clang-800.0.42.1)
+Target: x86_64-apple-darwin16.3.0
+Thread model: posix
+InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+configure:3419: $? = 0
+configure:3408: gcc -V >&5
+clang: error: argument to '-V' is missing (expected 1 value)
+clang: error: no input files
+configure:3419: $? = 1
+configure:3408: gcc -qversion >&5
+clang: error: unknown argument: '-qversion'
+clang: error: no input files
+configure:3419: $? = 1
+configure:3439: checking whether the C compiler works
+configure:3461: gcc    conftest.c  >&5
+configure:3465: $? = 0
+configure:3513: result: yes
+configure:3516: checking for C compiler default output file name
+configure:3518: result: a.out
+configure:3524: checking for suffix of executables
+configure:3531: gcc -o conftest    conftest.c  >&5
+configure:3535: $? = 0
+configure:3557: result: 
+configure:3579: checking whether we are cross compiling
+configure:3587: gcc -o conftest    conftest.c  >&5
+configure:3591: $? = 0
+configure:3598: ./conftest
+configure:3602: $? = 0
+configure:3617: result: no
+configure:3622: checking for suffix of object files
+configure:3644: gcc -c   conftest.c >&5
+configure:3648: $? = 0
+configure:3669: result: o
+configure:3673: checking whether we are using the GNU C compiler
+configure:3692: gcc -c   conftest.c >&5
+configure:3692: $? = 0
+configure:3701: result: yes
+configure:3710: checking whether gcc accepts -g
+configure:3730: gcc -c -g  conftest.c >&5
+configure:3730: $? = 0
+configure:3771: result: yes
+configure:3788: checking for gcc option to accept ISO C89
+configure:3851: gcc  -c -g -O2  conftest.c >&5
+configure:3851: $? = 0
+configure:3864: result: none needed
+configure:3889: checking whether gcc understands -c and -o together
+configure:3911: gcc -c conftest.c -o conftest2.o
+configure:3914: $? = 0
+configure:3911: gcc -c conftest.c -o conftest2.o
+configure:3914: $? = 0
+configure:3926: result: yes
+configure:3945: checking dependency style of gcc
+configure:4056: result: gcc3
+configure:4071: checking for a sed that does not truncate output
+configure:4135: result: /usr/local/bin/gsed
+configure:4153: checking for grep that handles long lines and -e
+configure:4211: result: /usr/bin/grep
+configure:4216: checking for egrep
+configure:4278: result: /usr/bin/grep -E
+configure:4283: checking for fgrep
+configure:4345: result: /usr/bin/grep -F
+configure:4380: checking for ld used by gcc
+configure:4447: result: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld
+configure:4454: checking if the linker (/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld) is GNU ld
+configure:4469: result: no
+configure:4481: checking for BSD- or MS-compatible name lister (nm)
+configure:4535: result: /usr/bin/nm -B
+configure:4665: checking the name lister (/usr/bin/nm -B) interface
+configure:4672: gcc -c -g -O2  conftest.c >&5
+configure:4675: /usr/bin/nm -B "conftest.o"
+configure:4678: output
+00000000000001f4 S _some_variable
+configure:4685: result: BSD nm
+configure:4688: checking whether ln -s works
+configure:4692: result: yes
+configure:4700: checking the maximum length of command line arguments
+configure:4831: result: 196608
+configure:4879: checking how to convert x86_64-apple-darwin16.3.0 file names to x86_64-apple-darwin16.3.0 format
+configure:4919: result: func_convert_file_noop
+configure:4926: checking how to convert x86_64-apple-darwin16.3.0 file names to toolchain format
+configure:4946: result: func_convert_file_noop
+configure:4953: checking for /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld option to reload object files
+configure:4960: result: -r
+configure:5034: checking for objdump
+configure:5050: found /usr/bin/objdump
+configure:5061: result: objdump
+configure:5093: checking how to recognize dependent libraries
+configure:5293: result: pass_all
+configure:5378: checking for dlltool
+configure:5408: result: no
+configure:5438: checking how to associate runtime and link libraries
+configure:5465: result: printf %s\n
+configure:5526: checking for ar
+configure:5542: found /usr/bin/ar
+configure:5553: result: ar
+configure:5590: checking for archiver @FILE support
+configure:5607: gcc -c -g -O2  conftest.c >&5
+configure:5607: $? = 0
+configure:5610: ar cru libconftest.a @conftest.lst >&5
+ar: @conftest.lst: No such file or directory
+configure:5613: $? = 1
+configure:5633: result: no
+configure:5691: checking for strip
+configure:5707: found /usr/bin/strip
+configure:5718: result: strip
+configure:5790: checking for ranlib
+configure:5806: found /usr/bin/ranlib
+configure:5817: result: ranlib
+configure:5919: checking command to parse /usr/bin/nm -B output from gcc object
+configure:6072: gcc -c -g -O2  conftest.c >&5
+configure:6075: $? = 0
+configure:6079: /usr/bin/nm -B conftest.o \| sed -n -e 's/^.*[ ]\([BCDEGRST][BCDEGRST]*\)[ ][ ]*\([_A-Za-z][_A-Za-z0-9]*\)$/\1 \2 \2/p' | sed '/ __gnu_lto/d' \> conftest.nm
+configure:6082: $? = 0
+cannot find nm_test_var in conftest.nm
+configure:6072: gcc -c -g -O2  conftest.c >&5
+configure:6075: $? = 0
+configure:6079: /usr/bin/nm -B conftest.o \| sed -n -e 's/^.*[ ]\([BCDEGRST][BCDEGRST]*\)[ ][ ]*_\([_A-Za-z][_A-Za-z0-9]*\)$/\1 _\2 \2/p' | sed '/ __gnu_lto/d' \> conftest.nm
+configure:6082: $? = 0
+configure:6148: gcc -o conftest -g -O2   conftest.c conftstm.o >&5
+warning: (x86_64)  could not find object file symbol for symbol _main
+configure:6151: $? = 0
+configure:6189: result: ok
+configure:6236: checking for sysroot
+configure:6266: result: no
+configure:6273: checking for a working dd
+configure:6311: result: /bin/dd
+configure:6315: checking how to truncate binary pipes
+configure:6330: result: /bin/dd bs=4096 count=1
+configure:6659: checking for mt
+configure:6689: result: no
+configure:6709: checking if : is a manifest tool
+configure:6715: : '-?'
+configure:6723: result: no
+configure:6779: checking for dsymutil
+configure:6795: found /usr/bin/dsymutil
+configure:6806: result: dsymutil
+configure:6871: checking for nmedit
+configure:6887: found /usr/bin/nmedit
+configure:6898: result: nmedit
+configure:6963: checking for lipo
+configure:6979: found /usr/bin/lipo
+configure:6990: result: lipo
+configure:7055: checking for otool
+configure:7071: found /usr/bin/otool
+configure:7082: result: otool
+configure:7147: checking for otool64
+configure:7177: result: no
+configure:7222: checking for -single_module linker flag
+gcc -g -O2  -o libconftest.dylib -dynamiclib -Wl,-single_module conftest.c
+configure:7255: result: yes
+configure:7258: checking for -exported_symbols_list linker flag
+configure:7278: gcc -o conftest -g -O2   -Wl,-exported_symbols_list,conftest.sym conftest.c  >&5
+configure:7278: $? = 0
+configure:7288: result: yes
+configure:7291: checking for -force_load linker flag
+gcc -g -O2 -c -o conftest.o conftest.c
+ar cru libconftest.a conftest.o
+ranlib libconftest.a
+gcc -g -O2  -o conftest conftest.c -Wl,-force_load,./libconftest.a
+configure:7323: result: yes
+configure:7400: checking how to run the C preprocessor
+configure:7431: gcc -E  conftest.c
+configure:7431: $? = 0
+configure:7445: gcc -E  conftest.c
+conftest.c:11:10: fatal error: 'ac_nonexistent.h' file not found
+#include <ac_nonexistent.h>
+         ^
+1 error generated.
+configure:7445: $? = 1
+configure: failed program was:
+| /* confdefs.h */
+| #define PACKAGE_NAME "libzaudio"
+| #define PACKAGE_TARNAME "libzaudio"
+| #define PACKAGE_VERSION "0.1.1"
+| #define PACKAGE_STRING "libzaudio 0.1.1"
+| #define PACKAGE_BUGREPORT "alexander.zywicki@gmail.com"
+| #define PACKAGE_URL ""
+| #define PACKAGE "libzaudio"
+| #define VERSION "0.1.1"
+| /* end confdefs.h.  */
+| #include <ac_nonexistent.h>
+configure:7470: result: gcc -E
+configure:7490: gcc -E  conftest.c
+configure:7490: $? = 0
+configure:7504: gcc -E  conftest.c
+conftest.c:11:10: fatal error: 'ac_nonexistent.h' file not found
+#include <ac_nonexistent.h>
+         ^
+1 error generated.
+configure:7504: $? = 1
+configure: failed program was:
+| /* confdefs.h */
+| #define PACKAGE_NAME "libzaudio"
+| #define PACKAGE_TARNAME "libzaudio"
+| #define PACKAGE_VERSION "0.1.1"
+| #define PACKAGE_STRING "libzaudio 0.1.1"
+| #define PACKAGE_BUGREPORT "alexander.zywicki@gmail.com"
+| #define PACKAGE_URL ""
+| #define PACKAGE "libzaudio"
+| #define VERSION "0.1.1"
+| /* end confdefs.h.  */
+| #include <ac_nonexistent.h>
+configure:7533: checking for ANSI C header files
+configure:7553: gcc -c -g -O2  conftest.c >&5
+configure:7553: $? = 0
+configure:7626: gcc -o conftest -g -O2   conftest.c  >&5
+configure:7626: $? = 0
+configure:7626: ./conftest
+configure:7626: $? = 0
+configure:7637: result: yes
+configure:7650: checking for sys/types.h
+configure:7650: gcc -c -g -O2  conftest.c >&5
+configure:7650: $? = 0
+configure:7650: result: yes
+configure:7650: checking for sys/stat.h
+configure:7650: gcc -c -g -O2  conftest.c >&5
+configure:7650: $? = 0
+configure:7650: result: yes
+configure:7650: checking for stdlib.h
+configure:7650: gcc -c -g -O2  conftest.c >&5
+configure:7650: $? = 0
+configure:7650: result: yes
+configure:7650: checking for string.h
+configure:7650: gcc -c -g -O2  conftest.c >&5
+configure:7650: $? = 0
+configure:7650: result: yes
+configure:7650: checking for memory.h
+configure:7650: gcc -c -g -O2  conftest.c >&5
+configure:7650: $? = 0
+configure:7650: result: yes
+configure:7650: checking for strings.h
+configure:7650: gcc -c -g -O2  conftest.c >&5
+configure:7650: $? = 0
+configure:7650: result: yes
+configure:7650: checking for inttypes.h
+configure:7650: gcc -c -g -O2  conftest.c >&5
+configure:7650: $? = 0
+configure:7650: result: yes
+configure:7650: checking for stdint.h
+configure:7650: gcc -c -g -O2  conftest.c >&5
+configure:7650: $? = 0
+configure:7650: result: yes
+configure:7650: checking for unistd.h
+configure:7650: gcc -c -g -O2  conftest.c >&5
+configure:7650: $? = 0
+configure:7650: result: yes
+configure:7664: checking for dlfcn.h
+configure:7664: gcc -c -g -O2  conftest.c >&5
+configure:7664: $? = 0
+configure:7664: result: yes
+configure:7920: checking for objdir
+configure:7935: result: .libs
+configure:8195: checking if gcc supports -fno-rtti -fno-exceptions
+configure:8213: gcc -c -g -O2  -fno-rtti -fno-exceptions conftest.c >&5
+configure:8217: $? = 0
+configure:8230: result: yes
+configure:8588: checking for gcc option to produce PIC
+configure:8595: result: -fno-common -DPIC
+configure:8603: checking if gcc PIC flag -fno-common -DPIC works
+configure:8621: gcc -c -g -O2  -fno-common -DPIC -DPIC conftest.c >&5
+configure:8625: $? = 0
+configure:8638: result: yes
+configure:8667: checking if gcc static flag -static works
+configure:8695: result: no
+configure:8710: checking if gcc supports -c -o file.o
+configure:8731: gcc -c -g -O2  -o out/conftest2.o conftest.c >&5
+configure:8735: $? = 0
+configure:8757: result: yes
+configure:8765: checking if gcc supports -c -o file.o
+configure:8812: result: yes
+configure:8845: checking whether the gcc linker (/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld) supports shared libraries
+configure:10104: result: yes
+configure:10344: checking dynamic linker characteristics
+configure:11162: result: darwin16.3.0 dyld
+configure:11284: checking how to hardcode library paths into programs
+configure:11309: result: immediate
+configure:11857: checking whether stripping libraries is possible
+configure:11871: result: yes
+configure:11897: checking if libtool supports shared libraries
+configure:11899: result: yes
+configure:11902: checking whether to build shared libraries
+configure:11927: result: yes
+configure:11930: checking whether to build static libraries
+configure:11934: result: yes
+configure:12031: checking for g++
+configure:12047: found /usr/bin/g++
+configure:12058: result: g++
+configure:12085: checking for C++ compiler version
+configure:12094: g++ --version >&5
+Apple LLVM version 8.0.0 (clang-800.0.42.1)
+Target: x86_64-apple-darwin16.3.0
+Thread model: posix
+InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+Configured with: --prefix=/Applications/Xcode.app/Contents/Developer/usr --with-gxx-include-dir=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/usr/include/c++/4.2.1
+configure:12105: $? = 0
+configure:12094: g++ -v >&5
+Configured with: --prefix=/Applications/Xcode.app/Contents/Developer/usr --with-gxx-include-dir=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/usr/include/c++/4.2.1
+Apple LLVM version 8.0.0 (clang-800.0.42.1)
+Target: x86_64-apple-darwin16.3.0
+Thread model: posix
+InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+configure:12105: $? = 0
+configure:12094: g++ -V >&5
+clang: error: argument to '-V' is missing (expected 1 value)
+clang: error: no input files
+configure:12105: $? = 1
+configure:12094: g++ -qversion >&5
+clang: error: unknown argument: '-qversion'
+clang: error: no input files
+configure:12105: $? = 1
+configure:12109: checking whether we are using the GNU C++ compiler
+configure:12128: g++ -c   conftest.cpp >&5
+configure:12128: $? = 0
+configure:12137: result: yes
+configure:12146: checking whether g++ accepts -g
+configure:12166: g++ -c -g  conftest.cpp >&5
+configure:12166: $? = 0
+configure:12207: result: yes
+configure:12232: checking dependency style of g++
+configure:12343: result: gcc3
+configure:12376: checking how to run the C++ preprocessor
+configure:12403: g++ -E  conftest.cpp
+configure:12403: $? = 0
+configure:12417: g++ -E  conftest.cpp
+conftest.cpp:23:10: fatal error: 'ac_nonexistent.h' file not found
+#include <ac_nonexistent.h>
+         ^
+1 error generated.
+configure:12417: $? = 1
+configure: failed program was:
+| /* confdefs.h */
+| #define PACKAGE_NAME "libzaudio"
+| #define PACKAGE_TARNAME "libzaudio"
+| #define PACKAGE_VERSION "0.1.1"
+| #define PACKAGE_STRING "libzaudio 0.1.1"
+| #define PACKAGE_BUGREPORT "alexander.zywicki@gmail.com"
+| #define PACKAGE_URL ""
+| #define PACKAGE "libzaudio"
+| #define VERSION "0.1.1"
+| #define STDC_HEADERS 1
+| #define HAVE_SYS_TYPES_H 1
+| #define HAVE_SYS_STAT_H 1
+| #define HAVE_STDLIB_H 1
+| #define HAVE_STRING_H 1
+| #define HAVE_MEMORY_H 1
+| #define HAVE_STRINGS_H 1
+| #define HAVE_INTTYPES_H 1
+| #define HAVE_STDINT_H 1
+| #define HAVE_UNISTD_H 1
+| #define HAVE_DLFCN_H 1
+| #define LT_OBJDIR ".libs/"
+| /* end confdefs.h.  */
+| #include <ac_nonexistent.h>
+configure:12442: result: g++ -E
+configure:12462: g++ -E  conftest.cpp
+configure:12462: $? = 0
+configure:12476: g++ -E  conftest.cpp
+conftest.cpp:23:10: fatal error: 'ac_nonexistent.h' file not found
+#include <ac_nonexistent.h>
+         ^
+1 error generated.
+configure:12476: $? = 1
+configure: failed program was:
+| /* confdefs.h */
+| #define PACKAGE_NAME "libzaudio"
+| #define PACKAGE_TARNAME "libzaudio"
+| #define PACKAGE_VERSION "0.1.1"
+| #define PACKAGE_STRING "libzaudio 0.1.1"
+| #define PACKAGE_BUGREPORT "alexander.zywicki@gmail.com"
+| #define PACKAGE_URL ""
+| #define PACKAGE "libzaudio"
+| #define VERSION "0.1.1"
+| #define STDC_HEADERS 1
+| #define HAVE_SYS_TYPES_H 1
+| #define HAVE_SYS_STAT_H 1
+| #define HAVE_STDLIB_H 1
+| #define HAVE_STRING_H 1
+| #define HAVE_MEMORY_H 1
+| #define HAVE_STRINGS_H 1
+| #define HAVE_INTTYPES_H 1
+| #define HAVE_STDINT_H 1
+| #define HAVE_UNISTD_H 1
+| #define HAVE_DLFCN_H 1
+| #define LT_OBJDIR ".libs/"
+| /* end confdefs.h.  */
+| #include <ac_nonexistent.h>
+configure:12638: checking for ld used by g++
+configure:12705: result: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld
+configure:12712: checking if the linker (/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld) is GNU ld
+configure:12727: result: no
+configure:12782: checking whether the g++ linker (/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld) supports shared libraries
+configure:13855: result: yes
+configure:13891: g++ -c -g -O2  conftest.cpp >&5
+configure:13894: $? = 0
+configure:14375: checking for g++ option to produce PIC
+configure:14382: result: -fno-common -DPIC
+configure:14390: checking if g++ PIC flag -fno-common -DPIC works
+configure:14408: g++ -c -g -O2  -fno-common -DPIC -DPIC conftest.cpp >&5
+configure:14412: $? = 0
+configure:14425: result: yes
+configure:14448: checking if g++ static flag -static works
+configure:14476: result: no
+configure:14488: checking if g++ supports -c -o file.o
+configure:14509: g++ -c -g -O2  -o out/conftest2.o conftest.cpp >&5
+configure:14513: $? = 0
+configure:14535: result: yes
+configure:14540: checking if g++ supports -c -o file.o
+configure:14587: result: yes
+configure:14617: checking whether the g++ linker (/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld) supports shared libraries
+configure:14657: result: yes
+configure:14798: checking dynamic linker characteristics
+configure:15543: result: darwin16.3.0 dyld
+configure:15608: checking how to hardcode library paths into programs
+configure:15633: result: immediate
+configure:15822: checking that generated files are newer than configure
+configure:15828: result: done
+configure:15855: creating ./config.status
+
+## ---------------------- ##
+## Running config.status. ##
+## ---------------------- ##
+
+This file was extended by libzaudio config.status 0.1.1, which was
+generated by GNU Autoconf 2.69.  Invocation command line was
+
+  CONFIG_FILES    = 
+  CONFIG_HEADERS  = 
+  CONFIG_LINKS    = 
+  CONFIG_COMMANDS = 
+  $ ./config.status 
+
+on Alexanders-MacBook-Pro.local
+
+config.status:1067: creating Makefile
+config.status:1067: creating src/Makefile
+config.status:1239: executing depfiles commands
+config.status:1239: executing libtool commands
 
 ## ---------------- ##
 ## Cache variables. ##
 ## ---------------- ##
 
+ac_cv_build=x86_64-apple-darwin16.3.0
+ac_cv_c_compiler_gnu=yes
+ac_cv_cxx_compiler_gnu=yes
 ac_cv_env_CCC_set=
 ac_cv_env_CCC_value=
 ac_cv_env_CC_set=
@@ -99,74 +559,145 @@ ac_cv_env_host_alias_set=
 ac_cv_env_host_alias_value=
 ac_cv_env_target_alias_set=
 ac_cv_env_target_alias_value=
+ac_cv_header_dlfcn_h=yes
+ac_cv_header_inttypes_h=yes
+ac_cv_header_memory_h=yes
+ac_cv_header_stdc=yes
+ac_cv_header_stdint_h=yes
+ac_cv_header_stdlib_h=yes
+ac_cv_header_string_h=yes
+ac_cv_header_strings_h=yes
+ac_cv_header_sys_stat_h=yes
+ac_cv_header_sys_types_h=yes
+ac_cv_header_unistd_h=yes
+ac_cv_host=x86_64-apple-darwin16.3.0
+ac_cv_objext=o
+ac_cv_path_EGREP='/usr/bin/grep -E'
+ac_cv_path_FGREP='/usr/bin/grep -F'
+ac_cv_path_GREP=/usr/bin/grep
+ac_cv_path_SED=/usr/local/bin/gsed
 ac_cv_path_install='/usr/bin/install -c'
+ac_cv_path_lt_DD=/bin/dd
 ac_cv_prog_AWK=gawk
+ac_cv_prog_CPP='gcc -E'
+ac_cv_prog_CXXCPP='g++ -E'
+ac_cv_prog_ac_ct_AR=ar
+ac_cv_prog_ac_ct_CC=gcc
+ac_cv_prog_ac_ct_CXX=g++
+ac_cv_prog_ac_ct_DSYMUTIL=dsymutil
+ac_cv_prog_ac_ct_LIPO=lipo
+ac_cv_prog_ac_ct_NMEDIT=nmedit
+ac_cv_prog_ac_ct_OBJDUMP=objdump
+ac_cv_prog_ac_ct_OTOOL=otool
+ac_cv_prog_ac_ct_RANLIB=ranlib
+ac_cv_prog_ac_ct_STRIP=strip
+ac_cv_prog_cc_c89=
+ac_cv_prog_cc_g=yes
+ac_cv_prog_cxx_g=yes
 ac_cv_prog_make_make_set=yes
+am_cv_CC_dependencies_compiler_type=gcc3
+am_cv_CXX_dependencies_compiler_type=gcc3
 am_cv_make_support_nested_variables=yes
+am_cv_prog_cc_c_o=yes
+lt_cv_apple_cc_single_mod=yes
+lt_cv_ar_at_file=no
+lt_cv_deplibs_check_method=pass_all
+lt_cv_file_magic_cmd='$MAGIC_CMD'
+lt_cv_file_magic_test_file=
+lt_cv_ld_exported_symbols_list=yes
+lt_cv_ld_force_load=yes
+lt_cv_ld_reload_flag=-r
+lt_cv_nm_interface='BSD nm'
+lt_cv_objdir=.libs
+lt_cv_path_LD=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld
+lt_cv_path_LDCXX=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld
+lt_cv_path_NM='/usr/bin/nm -B'
+lt_cv_path_mainfest_tool=no
+lt_cv_prog_compiler_c_o=yes
+lt_cv_prog_compiler_c_o_CXX=yes
+lt_cv_prog_compiler_pic='-fno-common -DPIC'
+lt_cv_prog_compiler_pic_CXX='-fno-common -DPIC'
+lt_cv_prog_compiler_pic_works=yes
+lt_cv_prog_compiler_pic_works_CXX=yes
+lt_cv_prog_compiler_rtti_exceptions=yes
+lt_cv_prog_compiler_static_works=no
+lt_cv_prog_compiler_static_works_CXX=no
+lt_cv_prog_gnu_ld=no
+lt_cv_prog_gnu_ldcxx=no
+lt_cv_sharedlib_from_linklib_cmd='printf %s\n'
+lt_cv_sys_global_symbol_pipe='sed -n -e '\''s/^.*[	 ]\([BCDEGRST][BCDEGRST]*\)[	 ][	 ]*_\([_A-Za-z][_A-Za-z0-9]*\)$/\1 _\2 \2/p'\'' | sed '\''/ __gnu_lto/d'\'''
+lt_cv_sys_global_symbol_to_c_name_address='sed -n -e '\''s/^: \(.*\) .*$/  {"\1", (void *) 0},/p'\'' -e '\''s/^[BCDEGRST][BCDEGRST]* .* \(.*\)$/  {"\1", (void *) \&\1},/p'\'''
+lt_cv_sys_global_symbol_to_c_name_address_lib_prefix='sed -n -e '\''s/^: \(.*\) .*$/  {"\1", (void *) 0},/p'\'' -e '\''s/^[BCDEGRST][BCDEGRST]* .* \(lib.*\)$/  {"\1", (void *) \&\1},/p'\'' -e '\''s/^[BCDEGRST][BCDEGRST]* .* \(.*\)$/  {"lib\1", (void *) \&\1},/p'\'''
+lt_cv_sys_global_symbol_to_cdecl='sed -n -e '\''s/^T .* \(.*\)$/extern int \1();/p'\'' -e '\''s/^[BCDEGRST][BCDEGRST]* .* \(.*\)$/extern char \1;/p'\'''
+lt_cv_sys_global_symbol_to_import=
+lt_cv_sys_max_cmd_len=196608
+lt_cv_to_host_file_cmd=func_convert_file_noop
+lt_cv_to_tool_file_cmd=func_convert_file_noop
+lt_cv_truncate_bin='/bin/dd bs=4096 count=1'
 
 ## ----------------- ##
 ## Output variables. ##
 ## ----------------- ##
 
-ACLOCAL=''
-AMDEPBACKSLASH=''
-AMDEP_FALSE=''
+ACLOCAL='${SHELL} /Users/alexanderzywicki/libzaudio/config/missing aclocal-1.15'
+AMDEPBACKSLASH='\'
+AMDEP_FALSE='#'
 AMDEP_TRUE=''
-AMTAR=''
+AMTAR='$${TAR-tar}'
 AM_BACKSLASH='\'
 AM_DEFAULT_V='$(AM_DEFAULT_VERBOSITY)'
 AM_DEFAULT_VERBOSITY='1'
 AM_V='$(V)'
-AR=''
-AUTOCONF=''
-AUTOHEADER=''
-AUTOMAKE=''
+AR='ar'
+AUTOCONF='${SHELL} /Users/alexanderzywicki/libzaudio/config/missing autoconf'
+AUTOHEADER='${SHELL} /Users/alexanderzywicki/libzaudio/config/missing autoheader'
+AUTOMAKE='${SHELL} /Users/alexanderzywicki/libzaudio/config/missing automake-1.15'
 AWK='gawk'
-CC=''
-CCDEPMODE=''
-CFLAGS=''
-CPP=''
+CC='gcc'
+CCDEPMODE='depmode=gcc3'
+CFLAGS='-g -O2'
+CPP='gcc -E'
 CPPFLAGS=''
-CXX=''
-CXXCPP=''
-CXXDEPMODE=''
-CXXFLAGS=''
-CYGPATH_W=''
-DEFS=''
-DEPDIR=''
-DLLTOOL=''
-DSYMUTIL=''
+CXX='g++'
+CXXCPP='g++ -E'
+CXXDEPMODE='depmode=gcc3'
+CXXFLAGS='-g -O2'
+CYGPATH_W='echo'
+DEFS='-DPACKAGE_NAME=\"libzaudio\" -DPACKAGE_TARNAME=\"libzaudio\" -DPACKAGE_VERSION=\"0.1.1\" -DPACKAGE_STRING=\"libzaudio\ 0.1.1\" -DPACKAGE_BUGREPORT=\"alexander.zywicki@gmail.com\" -DPACKAGE_URL=\"\" -DPACKAGE=\"libzaudio\" -DVERSION=\"0.1.1\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\"'
+DEPDIR='.deps'
+DLLTOOL='false'
+DSYMUTIL='dsymutil'
 DUMPBIN=''
 ECHO_C='\c'
 ECHO_N=''
 ECHO_T=''
-EGREP=''
+EGREP='/usr/bin/grep -E'
 EXEEXT=''
-FGREP=''
-GREP=''
+FGREP='/usr/bin/grep -F'
+GREP='/usr/bin/grep'
 INSTALL_DATA='${INSTALL} -m 644'
 INSTALL_PROGRAM='${INSTALL}'
 INSTALL_SCRIPT='${INSTALL}'
 INSTALL_STRIP_PROGRAM='$(install_sh) -c -s'
-LD=''
+LD='/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld'
 LDFLAGS=''
 LIBOBJS=''
 LIBS=''
-LIBTOOL=''
-LIPO=''
-LN_S=''
+LIBTOOL='$(SHELL) $(top_builddir)/libtool'
+LIPO='lipo'
+LN_S='ln -s'
 LTLIBOBJS=''
 LT_SYS_LIBRARY_PATH=''
-MAKEINFO=''
-MANIFEST_TOOL=''
+MAKEINFO='${SHELL} /Users/alexanderzywicki/libzaudio/config/missing makeinfo'
+MANIFEST_TOOL=':'
 MKDIR_P='config/install-sh -c -d'
-NM=''
-NMEDIT=''
-OBJDUMP=''
-OBJEXT=''
-OTOOL64=''
-OTOOL=''
-PACKAGE=''
+NM='/usr/bin/nm -B'
+NMEDIT='nmedit'
+OBJDUMP='objdump'
+OBJEXT='o'
+OTOOL64=':'
+OTOOL='otool'
+PACKAGE='libzaudio'
 PACKAGE_BUGREPORT='alexander.zywicki@gmail.com'
 PACKAGE_NAME='libzaudio'
 PACKAGE_STRING='libzaudio 0.1.1'
@@ -174,45 +705,45 @@ PACKAGE_TARNAME='libzaudio'
 PACKAGE_URL=''
 PACKAGE_VERSION='0.1.1'
 PATH_SEPARATOR=':'
-RANLIB=''
-SED=''
+RANLIB='ranlib'
+SED='/usr/local/bin/gsed'
 SET_MAKE=''
 SHELL='/bin/sh'
-STRIP=''
-VERSION=''
-ac_ct_AR=''
-ac_ct_CC=''
-ac_ct_CXX=''
+STRIP='strip'
+VERSION='0.1.1'
+ac_ct_AR='ar'
+ac_ct_CC='gcc'
+ac_ct_CXX='g++'
 ac_ct_DUMPBIN=''
 am__EXEEXT_FALSE=''
-am__EXEEXT_TRUE=''
-am__fastdepCC_FALSE=''
+am__EXEEXT_TRUE='#'
+am__fastdepCC_FALSE='#'
 am__fastdepCC_TRUE=''
-am__fastdepCXX_FALSE=''
+am__fastdepCXX_FALSE='#'
 am__fastdepCXX_TRUE=''
-am__include=''
+am__include='include'
 am__isrc=' -I$(srcdir)'
 am__leading_dot='.'
-am__nodep=''
+am__nodep='_no'
 am__quote=''
-am__tar=''
-am__untar=''
+am__tar='$${TAR-tar} chof - "$$tardir"'
+am__untar='$${TAR-tar} xf -'
 bindir='${exec_prefix}/bin'
-build=''
+build='x86_64-apple-darwin16.3.0'
 build_alias=''
-build_cpu=''
-build_os=''
-build_vendor=''
+build_cpu='x86_64'
+build_os='darwin16.3.0'
+build_vendor='apple'
 datadir='${datarootdir}'
 datarootdir='${prefix}/share'
 docdir='${datarootdir}/doc/${PACKAGE_TARNAME}'
 dvidir='${docdir}'
-exec_prefix='NONE'
-host=''
+exec_prefix='${prefix}'
+host='x86_64-apple-darwin16.3.0'
 host_alias=''
-host_cpu=''
-host_os=''
-host_vendor=''
+host_cpu='x86_64'
+host_os='darwin16.3.0'
+host_vendor='apple'
 htmldir='${docdir}'
 includedir='${prefix}/include'
 infodir='${datarootdir}/info'
@@ -222,10 +753,10 @@ libexecdir='${exec_prefix}/libexec'
 localedir='${datarootdir}/locale'
 localstatedir='${prefix}/var'
 mandir='${datarootdir}/man'
-mkdir_p=''
+mkdir_p='$(MKDIR_P)'
 oldincludedir='/usr/include'
 pdfdir='${docdir}'
-prefix='NONE'
+prefix='/usr/local'
 program_transform_name='s,x,x,'
 psdir='${docdir}'
 sbindir='${exec_prefix}/sbin'
@@ -244,40 +775,19 @@ target_alias=''
 #define PACKAGE_STRING "libzaudio 0.1.1"
 #define PACKAGE_BUGREPORT "alexander.zywicki@gmail.com"
 #define PACKAGE_URL ""
+#define PACKAGE "libzaudio"
+#define VERSION "0.1.1"
+#define STDC_HEADERS 1
+#define HAVE_SYS_TYPES_H 1
+#define HAVE_SYS_STAT_H 1
+#define HAVE_STDLIB_H 1
+#define HAVE_STRING_H 1
+#define HAVE_MEMORY_H 1
+#define HAVE_STRINGS_H 1
+#define HAVE_INTTYPES_H 1
+#define HAVE_STDINT_H 1
+#define HAVE_UNISTD_H 1
+#define HAVE_DLFCN_H 1
+#define LT_OBJDIR ".libs/"
 
-configure: exit 1
-
-## ---------------------- ##
-## Running config.status. ##
-## ---------------------- ##
-
-This file was extended by libzaudio config.status 0.1.1, which was
-generated by GNU Autoconf 2.69.  Invocation command line was
-
-  CONFIG_FILES    = 
-  CONFIG_HEADERS  = 
-  CONFIG_LINKS    = 
-  CONFIG_COMMANDS = 
-  $ ./config.status Makefile
-
-on Alexanders-MacBook-Pro.local
-
-config.status:1067: creating Makefile
-
-## ---------------------- ##
-## Running config.status. ##
-## ---------------------- ##
-
-This file was extended by libzaudio config.status 0.1.1, which was
-generated by GNU Autoconf 2.69.  Invocation command line was
-
-  CONFIG_FILES    = 
-  CONFIG_HEADERS  = 
-  CONFIG_LINKS    = 
-  CONFIG_COMMANDS = 
-  $ ./config.status src/Makefile depfiles
-
-on Alexanders-MacBook-Pro.local
-
-config.status:1067: creating src/Makefile
-config.status:1239: executing depfiles commands
+configure: exit 0
