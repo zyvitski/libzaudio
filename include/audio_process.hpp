@@ -40,14 +40,19 @@ namespace zaudio
   struct audio_process : public detail::fail_if_type_is_not_sample<sample_t>
   {
       using audio_clock = stream_time_base::audio_clock;
+
       using callback = stream_callback<sample_t>;
+
       using error_callback = stream_error_callback;
 
       virtual stream_error on_process(const sample_t*,sample_t*,time_point,stream_params<sample_t>&) noexcept;
+
       virtual void on_error(const stream_error& err) noexcept;
+
       callback get_callback() noexcept;
 
       error_callback get_error_callback() noexcept;
+      
   };
 
   template<typename sample_t>

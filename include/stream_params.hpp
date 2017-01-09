@@ -41,13 +41,16 @@ namespace zaudio
     {
     public:
         constexpr stream_params() noexcept;
+
         constexpr stream_params(double sr,
                                 std::size_t fc,
                                 std::size_t fw) noexcept;
+
         constexpr stream_params(double sr,
                                 std::size_t fc,
                                 std::size_t ifw,
                                 std::size_t ofw) noexcept;
+
         constexpr stream_params(double sr,
                                 std::size_t fc,
                                 std::size_t ifw,
@@ -56,28 +59,44 @@ namespace zaudio
                                 long odid) noexcept;
 
         constexpr const std::size_t& frame_count() const noexcept;
+
         constexpr const std::size_t& input_frame_width() const noexcept;
+
         constexpr const std::size_t& output_frame_width() const noexcept;
 
         constexpr const std::size_t input_sample_count() const noexcept;
+
         constexpr const std::size_t output_sample_count() const noexcept;
 
         constexpr const double& sample_rate() const noexcept;
+
         constexpr const double input_byte_rate() const noexcept;
+
         constexpr const double input_bit_rate() const noexcept;
+
         constexpr const double output_byte_rate() const noexcept;
+
         constexpr const double output_bit_rate() const noexcept;
+
         constexpr const long& input_device_id() const noexcept;
+
         constexpr const long& output_device_id() const noexcept;
+
         friend std::ostream& operator<<(std::ostream& os, stream_params<sample_t>& params);
 
     private:
         std::size_t _input_frame_width;
+
         std::size_t _output_frame_width;
+
         std::size_t _frame_count;
+
         double _sample_rate;
+
         long _input_device_id;
+
         long _output_device_id;
+        
     };
 
 

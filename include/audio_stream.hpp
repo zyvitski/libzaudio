@@ -43,39 +43,59 @@ namespace zaudio
     {
     public:
       using callback = stream_callback<sample_t>;
+
       using context_type = stream_context<sample_t>;
+
       using stream_params_type = stream_params<sample_t>;
 
       audio_stream();
+
       audio_stream(const stream_params_type& params,
                    const callback& cb,
                    const stream_error_callback& error_callback = default_stream_error_callback());
+
       audio_stream(const stream_params_type& params,
                    context_type& ctx,
                    const callback& cb,
                    const stream_error_callback& error_callback = default_stream_error_callback());
+
       audio_stream(const stream_params_type& params,
                    audio_process<sample_t>& proc);
+
       audio_stream(const stream_params_type& params,
                    context_type& ctx, audio_process<sample_t>& proc);
+
       ~audio_stream();
+
       stream_error start() noexcept;
+
       stream_error pasue() noexcept;
+
       stream_error stop() noexcept;
+
       stream_error playback_state() noexcept;
+
       callback exchange_callback(callback&& cb,std::chrono::milliseconds duration = std::chrono::milliseconds(1000));
+
       stream_error_callback exchange_error_callback(stream_error_callback&& cb,
                                                     std::chrono::milliseconds duration = std::chrono::milliseconds(1000));
 
       const stream_params_type& params() noexcept;
+
       void params(const stream_params_type& p) noexcept;
+
 
     private:
       void init();
+
       void destroy() noexcept;
+
       callback _callback;
+
       stream_error_callback _error_callback;
+
       std::reference_wrapper<context_type> _context;
+
     };
 
 
@@ -203,6 +223,7 @@ namespace zaudio
         *(stream_params_type*)this = p;
     }
 
+
     template<typename sample_t>
     void audio_stream<sample_t>::init()
     {
@@ -215,7 +236,7 @@ namespace zaudio
         }
         _context.get().api()->open_stream(params());
     }
-    
+
     template<typename sample_t>
     void audio_stream<sample_t>::destroy() noexcept
     {

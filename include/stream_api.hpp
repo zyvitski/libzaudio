@@ -49,45 +49,63 @@ namespace zaudio
         {
         public:
             using audio_clock = stream_time_base::audio_clock;
+
             using callback = stream_callback<sample_t>;
+
             using error_callback = stream_error_callback;
 
             stream_api() noexcept;
+
             std::size_t id() const noexcept;
+
             virtual std::string name() const noexcept;
+
             virtual std::string info() const noexcept;
+
             virtual stream_error start() noexcept;
+
             virtual stream_error pause() noexcept;
+
             virtual stream_error stop() noexcept;
+
             virtual stream_error playback_state() noexcept;
+
             virtual std::string get_error_string(const stream_error& err) noexcept;
+
             virtual stream_error open_stream(const stream_params<sample_t>&) noexcept;
+
             virtual stream_error close_stream() noexcept;
+
             virtual long get_device_count() noexcept;
+
             virtual device_info get_device_info(long id) noexcept;
+
             virtual stream_error is_configuration_supported(const stream_params<sample_t>& params) noexcept;
+
             virtual long default_input_device_id() const noexcept;
+
             virtual long default_output_device_id() const noexcept;
+
             void set_callback(callback& cb) noexcept;
+
             void set_error_callback(error_callback&cb) noexcept;
-            std::mutex& callback_mutex() noexcept;
 
         protected:
-            using callback_info = std::tuple<stream_callback<sample_t>*,
-                                             stream_error_callback*,
-                                             stream_params<sample_t>*,
-                                             std::mutex*>;
-
 
             callback* _callback;
+
             error_callback* _error_callback;
 
-            callback_info _callback_info;
+            stream_params<sample_t>* _params;
+
             std::mutex _callback_mutex;
+
+            stream_error _on_process(const sample_t*,sample_t*) noexcept;
+
         };
 
         template<typename sample_t>
-        stream_api<sample_t>::stream_api() noexcept: _callback(nullptr),_error_callback(nullptr){}
+        stream_api<sample_t>::stream_api() noexcept: _callback(nullptr),_error_callback(nullptr),_params(nullptr){}
 
         //id will be assigned based on std::hash<std::string> of name()
         //aka: unique name = unique id
@@ -181,7 +199,6 @@ namespace zaudio
             return 0;
         }
 
-
         template<typename sample_t>
         void stream_api<sample_t>::set_callback(callback& cb) noexcept
         {
@@ -194,10 +211,30 @@ namespace zaudio
             _error_callback = &cb;
         }
 
+
+
+
         template<typename sample_t>
-        std::mutex& stream_api<sample_t>::callback_mutex() noexcept
+        stream_error stream_api<sample_t>::_on_process(const sample_t* input, sample_t*output) noexcept
         {
-            return _callback_mutex;
+            try
+            {
+                std::unique_lock<std::mutex> lk{_callback_mutex,std::defer_lock};
+                while (!lk.try_lock()){ continue; }
+
+                auto&& ret = (*_callback)(input,output,audio_clock::now(),*_params);
+                if(ret != no_error)
+                {
+                    (*_error_callback)(ret);
+                }
+                return ret;
+            }
+            catch (std::exception& e)
+            {
+                auto&& err = make_stream_error(stream_status::system_error,e.what());
+                (*_error_callback)(err);
+                return err;
+            }
         }
 
 

@@ -37,6 +37,7 @@ namespace zaudio
     struct device_info
     {
         device_info() noexcept;
+
         device_info(const char* nm,
                     std::size_t idx,
                     std::size_t mic,
@@ -47,25 +48,32 @@ namespace zaudio
                     duration dlol,
                     duration dhol) noexcept;
 
-
         const char* name;
+
         std::size_t device_index;
+
         std::size_t max_input_count;
+
         std::size_t max_output_count;
+
         double default_sample_rate;
+
         duration default_low_input_latency;
+
         duration default_high_input_latency;
+
         duration default_low_ouput_latency;
+
         duration default_high_output_latency;
 
         friend std::ostream& operator<<(std::ostream& os, const device_info& info);
     };
+
     /*!
      *\fn std::vector<device_info> operator<<
      *\brief enables printing of a vector of device_info objects
      */
     std::ostream& operator<<(std::ostream& os, const std::vector<device_info>& vinfo);
-
 
     /*!
      *\fn make_device_info

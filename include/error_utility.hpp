@@ -80,13 +80,18 @@ namespace zaudio
       struct stream_error_type
       {
           stream_error_type():first(stream_status::no_error),second(""){}
+
           constexpr stream_error_type(stream_status f,stream_error_message s):first(f),second(s){}
+
           stream_status first;
+
           stream_error_message second;
+
           friend bool operator==(const stream_error_type& lhs,const stream_error_type& rhs)
           {
               return lhs.first == lhs.first && rhs.second == rhs.second;
           }
+          
           friend bool operator!=(const stream_error_type& lhs,const stream_error_type& rhs)
           {
               return lhs.first != lhs.first || rhs.second != rhs.second;

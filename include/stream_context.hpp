@@ -44,22 +44,28 @@ namespace zaudio
     class stream_context : public detail::fail_if_type_is_not_sample<sample_t>
     {
     public:
-
         using api_type = stream_api<sample_t>;
+
         using stream_params_type = stream_params<sample_t>;
+
         using callback = stream_callback<sample_t>;
 
         explicit stream_context(std::unique_ptr<api_type> api = default_api<sample_t>()) noexcept;
 
         api_type* api() const noexcept;
 
-
         long get_device_count() noexcept;
+
         device_info get_device_info(long id) noexcept;
+
         std::vector<device_info> get_device_info_list() noexcept;
+
         stream_error is_configuration_supported(const stream_params_type& params) noexcept;
+
         long default_input_device_id() const noexcept;
+
         long default_output_device_id() const noexcept;
+
     private:
         std::unique_ptr<api_type> _api;
     };
@@ -79,11 +85,13 @@ namespace zaudio
     {
         return _api.get()->get_device_count();
     }
+
     template<typename sample_t>
     device_info stream_context<sample_t>::get_device_info(long id) noexcept
     {
         return _api.get()->get_device_info(id);
     }
+
     template<typename sample_t>
     std::vector<device_info> stream_context<sample_t>::get_device_info_list() noexcept
     {
@@ -94,16 +102,19 @@ namespace zaudio
         }
         return out;
     }
+
     template<typename sample_t>
     stream_error stream_context<sample_t>::is_configuration_supported(const typename stream_context<sample_t>::stream_params_type& params) noexcept
     {
         return _api.get()->is_configuration_supported(params);
     }
+
     template<typename sample_t>
     long stream_context<sample_t>::default_input_device_id() const noexcept
     {
         return _api.get()->default_input_device_id();
     }
+    
     template<typename sample_t>
     long stream_context<sample_t>::default_output_device_id() const noexcept
     {
