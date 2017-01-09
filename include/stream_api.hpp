@@ -137,7 +137,7 @@ namespace zaudio
         }
 
         template<typename sample_t>
-        stream_error stream_api<sample_t>::_on_process(const sample_t* input, sample_t*output) noexcept
+        stream_error stream_api<sample_t>::_on_process(const sample_t* input, sample_t* output) noexcept
         {
             try
             {
