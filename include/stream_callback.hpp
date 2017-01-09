@@ -1,7 +1,5 @@
-
-#ifndef zaudio_hpp
-#define zaudio_hpp
-
+#ifndef ZAUDIO_STREAM_CALLBACK
+#define ZAUDIO_STREAM_CALLBACK
 /*
 This file is part of zaudio.
 
@@ -18,18 +16,17 @@ This file is part of zaudio.
     You should have received a copy of the GNU Lesser General Public License
     along with zaudio.  If not, see <http://www.gnu.org/licenses/>.
 */
-
-#include "sample_utility.hpp"
-#include "time_utility.hpp"
-#include "error_utility.hpp"
+#include <functional>
 #include "stream_params.hpp"
-#include "device_info.hpp"
-#include "stream_api.hpp"
-#include "stream_context.hpp"
-#include "audio_stream.hpp"
-#include "audio_process.hpp"
-#include "pa_stream_api.hpp"
-#include "zaudio_defaults.hpp"
-
+#include "time_utility.hpp"
+namespace zaudio
+{
+    /*!
+     *\typedef stream_callback
+     *\brief a function object type that represents an audio stream callback function
+     */
+    template<typename sample_t>
+    using stream_callback  = std::function<stream_error (const sample_t*, sample_t*, time_point, stream_params<sample_t>&) noexcept>;
+}
 
 #endif

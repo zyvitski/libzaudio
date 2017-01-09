@@ -18,7 +18,7 @@ This file is part of zaudio.
     along with zaudio.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "zaudio.hpp"
+#include "stream_api.hpp"
 #include <portaudio.h>
 #include <tuple>
 
@@ -135,7 +135,7 @@ namespace zaudio
 
             if(compat == no_error)
             {
-                _callback_info = callback_info(_callback,_error_callback,&const_cast<stream_params<sample_t>&>(params),&_callback_mutex);
+                _params = &const_cast<stream_params<sample_t>&>(params);
                 double srate=0;
                 std::tie(_inparams,_outparams,srate) = _native_params_to_pa(params);
 
@@ -149,7 +149,7 @@ namespace zaudio
                                   params.frame_count(),
                                   paNoFlag,
                                   &_pa_stream_api_callback,
-                                  (void*)&_callback_info);
+                                  (void*)this);
             }
             else
             {
@@ -201,23 +201,22 @@ namespace zaudio
             return Pa_GetDefaultOutputDevice();
         }
     private:
-        using base::_callback_mutex;
-        using callback_info =typename  base::callback_info;
+        using base::_params;
+
+        using base::_on_process;
+
+        using base::_error_callback;
+
+        PaStream* stream;
+
+        PaStreamParameters _inparams;
+
+        PaStreamParameters _outparams;
+
         static int _pa_stream_api_callback( const void *input,void *output,unsigned long frameCount,const PaStreamCallbackTimeInfo* timeInfo,PaStreamCallbackFlags statusFlags,void *userData )
         {
 
-            callback_info* callbacks = static_cast<callback_info*>(userData);
-            //gather call data
-
-            stream_callback<sample_t>* cb = nullptr;
-            stream_error_callback* ecb = nullptr;
-            stream_params<sample_t>* params = nullptr;
-            std::mutex* cb_mutex = nullptr;
-            std::tie(cb,ecb,params,cb_mutex) = *callbacks;
-
-
-            std::unique_lock<std::mutex> lk{*cb_mutex,std::defer_lock};
-            while (!lk.try_lock()){ continue; }
+            pa_stream_api<sample_t> * api = (pa_stream_api<sample_t>*)userData;
 
             //cast buffers
             const sample_t* in = static_cast<const sample_t*>(input);
@@ -225,30 +224,14 @@ namespace zaudio
 
 
 
-            try
+            auto&& ret = api->_on_process(in,out);
+            if(ret != no_error)
             {
-                //invoke the function;
-                const stream_error ret = (*cb)(in,out,audio_clock::now(),*params);
-
-                //evaluate if there is an error
-                if(ret != no_error)
-                {
-                    //invoke user error callback
-                    (*ecb)(ret);
-                    return -1;
-                }
-                else return 0;
-            }
-            catch(std::exception& e)
-            {
-                (*ecb)(make_stream_error(stream_status::system_error,e.what()));
                 return -1;
             }
+            else return 0;
         }
-        using base::_callback_info;
-        PaStream* stream;
-        using base::_error_callback;
-        using base::_callback;
+
 
 
         //attempt to invoke a pa function, on failure call user error callback;
@@ -315,8 +298,7 @@ namespace zaudio
 
             return std::make_tuple(inparams,outparams,srate);
         }
-        PaStreamParameters _inparams;
-        PaStreamParameters _outparams;
+
 
     };
 

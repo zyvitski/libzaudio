@@ -1,4 +1,5 @@
 #include <zaudio.hpp>
+#include <sstream>
 /*
 This file is part of zaudio.
 

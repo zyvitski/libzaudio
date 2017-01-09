@@ -191,13 +191,23 @@ device_probing.o: device_probing.cpp \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/bitset \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/__bit_reference \
   /usr/local/include/libzaudio/zaudio.hpp \
+  /usr/local/include/libzaudio/sample_utility.hpp \
+  /usr/local/include/libzaudio/time_utility.hpp \
+  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/thread \
+  /usr/local/include/libzaudio/error_utility.hpp \
+  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/future \
+  /usr/local/include/libzaudio/stream_params.hpp \
+  /usr/local/include/libzaudio/device_info.hpp \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/vector \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/__split_buffer \
-  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/sstream \
-  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/future \
-  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/thread \
+  /usr/local/include/libzaudio/stream_api.hpp \
+  /usr/local/include/libzaudio/stream_callback.hpp \
+  /usr/local/include/libzaudio/stream_context.hpp \
+  /usr/local/include/libzaudio/audio_stream.hpp \
+  /usr/local/include/libzaudio/audio_process.hpp \
   /usr/local/include/libzaudio/pa_stream_api.hpp \
-  /usr/local/include/portaudio.h
+  /usr/local/include/portaudio.h \
+  /usr/local/include/libzaudio/zaudio_defaults.hpp
 
 /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/iostream:
 
@@ -583,16 +593,36 @@ device_probing.o: device_probing.cpp \
 
 /usr/local/include/libzaudio/zaudio.hpp:
 
+/usr/local/include/libzaudio/sample_utility.hpp:
+
+/usr/local/include/libzaudio/time_utility.hpp:
+
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/thread:
+
+/usr/local/include/libzaudio/error_utility.hpp:
+
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/future:
+
+/usr/local/include/libzaudio/stream_params.hpp:
+
+/usr/local/include/libzaudio/device_info.hpp:
+
 /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/vector:
 
 /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/__split_buffer:
 
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/sstream:
+/usr/local/include/libzaudio/stream_api.hpp:
 
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/future:
+/usr/local/include/libzaudio/stream_callback.hpp:
 
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/thread:
+/usr/local/include/libzaudio/stream_context.hpp:
+
+/usr/local/include/libzaudio/audio_stream.hpp:
+
+/usr/local/include/libzaudio/audio_process.hpp:
 
 /usr/local/include/libzaudio/pa_stream_api.hpp:
 
 /usr/local/include/portaudio.h:
+
+/usr/local/include/libzaudio/zaudio_defaults.hpp:
