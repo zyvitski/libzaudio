@@ -23,6 +23,11 @@ This file is part of zaudio.
 
 namespace zaudio
 {
+
+    /*
+    API RESPONSIBILITIES:
+
+    */
     template<typename sample_t>
     class api_template : public stream_api<sample_t>
     {
@@ -56,7 +61,10 @@ namespace zaudio
             return running;//or error
         }
 
-        //pause playback, or stop if pause is not possible
+        //pause playback
+        //if "Pause" is not supported by your platforms API
+        //you can either implement your callback to write silence while "paused" or
+        //you can implement "pause" the same as "stop"
         virtual stream_error pause() noexcept
         {
             //your code here

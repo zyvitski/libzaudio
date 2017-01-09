@@ -58,33 +58,33 @@ namespace zaudio
 
             std::size_t id() const noexcept;
 
-            virtual std::string name() const noexcept;
+            virtual std::string name() const noexcept = 0;
 
-            virtual std::string info() const noexcept;
+            virtual std::string info() const noexcept = 0;
 
-            virtual stream_error start() noexcept;
+            virtual stream_error start() noexcept = 0;
 
-            virtual stream_error pause() noexcept;
+            virtual stream_error pause() noexcept = 0;
 
-            virtual stream_error stop() noexcept;
+            virtual stream_error stop() noexcept = 0;
 
-            virtual stream_error playback_state() noexcept;
+            virtual stream_error playback_state() noexcept = 0;
 
-            virtual std::string get_error_string(const stream_error& err) noexcept;
+            virtual std::string get_error_string(const stream_error& err) noexcept = 0;
 
-            virtual stream_error open_stream(const stream_params<sample_t>&) noexcept;
+            virtual stream_error open_stream(const stream_params<sample_t>&) noexcept = 0;
 
-            virtual stream_error close_stream() noexcept;
+            virtual stream_error close_stream() noexcept = 0;
 
-            virtual long get_device_count() noexcept;
+            virtual long get_device_count() noexcept = 0;
 
-            virtual device_info get_device_info(long id) noexcept;
+            virtual device_info get_device_info(long id) noexcept = 0;
 
-            virtual stream_error is_configuration_supported(const stream_params<sample_t>& params) noexcept;
+            virtual stream_error is_configuration_supported(const stream_params<sample_t>& params) noexcept = 0;
 
-            virtual long default_input_device_id() const noexcept;
+            virtual long default_input_device_id() const noexcept = 0;
 
-            virtual long default_output_device_id() const noexcept;
+            virtual long default_output_device_id() const noexcept = 0;
 
             void set_callback(callback& cb) noexcept;
 
@@ -122,90 +122,6 @@ namespace zaudio
         }
 
         template<typename sample_t>
-        std::string stream_api<sample_t>::name() const noexcept
-        {
-            return "dummy";
-        }
-
-        template<typename sample_t>
-        std::string stream_api<sample_t>::info() const noexcept
-        {
-            return "dummy";
-        }
-
-        template<typename sample_t>
-        stream_error stream_api<sample_t>::start() noexcept
-        {
-            return make_stream_error(stream_status::system_error,"Attempted use of dummy API");
-        }
-
-        template<typename sample_t>
-        stream_error stream_api<sample_t>::pause() noexcept
-        {
-            return make_stream_error(stream_status::system_error,"Attempted use of dummy API");
-        }
-
-        template<typename sample_t>
-        stream_error stream_api<sample_t>::stop() noexcept
-        {
-            return make_stream_error(stream_status::system_error,"Attempted use of dummy API");
-        }
-
-        template<typename sample_t>
-        stream_error stream_api<sample_t>::playback_state() noexcept
-        {
-            return make_stream_error(stream_status::system_error,"Attempted use of dummy API");
-        }
-
-        template<typename sample_t>
-        std::string stream_api<sample_t>::get_error_string(const stream_error& err) noexcept
-        {
-            return {};
-        }
-
-        template<typename sample_t>
-        stream_error stream_api<sample_t>::open_stream(const stream_params<sample_t>&) noexcept
-        {
-            return make_stream_error(stream_status::system_error,"Attempted use of dummy API");
-        }
-
-        template<typename sample_t>
-        stream_error stream_api<sample_t>::close_stream() noexcept
-        {
-            return make_stream_error(stream_status::system_error,"Attempted use of dummy API");
-        }
-
-        template<typename sample_t>
-        long stream_api<sample_t>::get_device_count() noexcept
-        {
-            return 0;
-        }
-
-        template<typename sample_t>
-        device_info stream_api<sample_t>::get_device_info(long id) noexcept
-        {
-            return {};
-        }
-
-        template<typename sample_t>
-        stream_error stream_api<sample_t>::is_configuration_supported(const stream_params<sample_t>& params) noexcept
-        {
-            return make_stream_error(stream_status::system_error,"Attempted use of dummy API");
-        }
-
-        template<typename sample_t>
-        long stream_api<sample_t>::default_input_device_id() const noexcept
-        {
-            return 0;
-        }
-
-        template<typename sample_t>
-        long stream_api<sample_t>::default_output_device_id() const noexcept
-        {
-            return 0;
-        }
-
-        template<typename sample_t>
         void stream_api<sample_t>::set_callback(callback& cb) noexcept
         {
             _new_callback = &cb;
@@ -225,9 +141,6 @@ namespace zaudio
         {
             try
             {
-                std::unique_lock<std::mutex> lk{_callback_mutex,std::defer_lock};
-                while (!lk.try_lock()){ continue; }
-
                 if(_new_callback != nullptr)
                 {
                     _callback.exchange(_new_callback);
