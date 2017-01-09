@@ -14,4 +14,4 @@ As of version 0.1.1 Libzaudio depends on **[PortAudio.](http://www.portaudio.com
 
 #### **License :**
 
-    Libzaudio is released under the GNU LGPL licesne. For more information see the file COPYING.lesser
+    Libzaudio is released under the GNU LGPL license. For more information see the file COPYING.lesser
