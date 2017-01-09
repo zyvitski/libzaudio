@@ -1,6 +1,6 @@
 MASTER TODO LIST:
-  -Documentation
-  -CHECK License compatability with portaudio
+  -Documentation //in progress
+  -CHECK License compatability with portaudio //should be okay
   -FILL OUT README and other helpful files
   -Write more tests
 
@@ -10,7 +10,7 @@ MASTER TODO LIST:
     -or maybe something like a "frame_iterator"
 
   //done but needs testing
-  //-review synchronization of user callback swaps
+  -review synchronization of user callback swaps
 
 
 
