@@ -211,7 +211,6 @@ namespace zaudio
         {
             throw stream_exception(make_stream_error(stream_status::system_error, "Unable to aquire lock to swap error callback."));
         }
-
     }
 
     template<typename sample_t>

@@ -117,11 +117,13 @@ namespace zaudio
         {
             return std::hash<std::string>{}(name());
         }
+
         template<typename sample_t>
         void stream_api<sample_t>::set_callback(callback& cb) noexcept
         {
             _callback = &cb;
         }
+
         template<typename sample_t>
         void stream_api<sample_t>::set_error_callback(error_callback&cb) noexcept
         {
@@ -134,14 +136,13 @@ namespace zaudio
             return _callback_mutex;
         }
 
-
-
         template<typename sample_t>
         stream_error stream_api<sample_t>::_on_process(const sample_t* input, sample_t*output) noexcept
         {
             try
             {
-                std::unique_lock<std::mutex> lk{_callback_mutex,std::defer_lock};
+                std::unique_lock<std::mutex> lk{ _callback_mutex, std::defer_lock };
+                //the only reason we should not get this lock every time is in the case of a user callback swap
                 while(!lk.try_lock()){ continue; }
 
                 auto&& ret = (*_callback)(input,output,audio_clock::now(),*_params);
