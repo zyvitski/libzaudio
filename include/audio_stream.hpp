@@ -75,10 +75,9 @@ namespace zaudio
 
       stream_error playback_state() noexcept;
 
-      callback exchange_callback(callback&& cb,std::chrono::milliseconds duration = std::chrono::milliseconds(1000));
+      callback exchange_callback(callback&& cb);
 
-      stream_error_callback exchange_error_callback(stream_error_callback&& cb,
-                                                    std::chrono::milliseconds duration = std::chrono::milliseconds(1000));
+      stream_error_callback exchange_error_callback(stream_error_callback&& cb);
 
       const stream_params_type& params() noexcept;
 
@@ -181,34 +180,19 @@ namespace zaudio
     }
 
     template<typename sample_t>
-    typename audio_stream<sample_t>::callback audio_stream<sample_t>::exchange_callback(callback&& cb,std::chrono::milliseconds duration)
+    typename audio_stream<sample_t>::callback audio_stream<sample_t>::exchange_callback(callback&& cb)
     {
-        std::unique_lock<std::mutex> lk{_context.get().api()->callback_mutex(),std::defer_lock};
-        if(lk.try_lock_for(duration))
-        {
-            std::swap(_callback,cb);
-            return cb;
-        }
-        else
-        {
-            throw std::runtime_error("Unable to aquire lock to exchange user callback!");
-        }
+        auto&& out = _callback;
+        _context.get().api()->set_callback(cb);
+        return out;
     }
 
     template<typename sample_t>
-    stream_error_callback audio_stream<sample_t>::exchange_error_callback(stream_error_callback&& cb,
-                                                  std::chrono::milliseconds duration)
+    stream_error_callback audio_stream<sample_t>::exchange_error_callback(stream_error_callback&& cb)
     {
-        std::unique_lock<std::mutex> lk{_context.get().api()->callback_mutex(),std::defer_lock};
-        if(lk.try_lock_for(duration))
-        {
-            std::swap(_error_callback,cb);
-            return cb;
-        }
-        else
-        {
-            throw std::runtime_error("Unable to aquire lock to exchange user error callback!");
-        }
+        auto&& out = _error_callback;
+        _context.get().api()->set_error_callback(cb);
+        return out;
     }
 
     template<typename sample_t>

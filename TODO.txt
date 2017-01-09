@@ -10,7 +10,7 @@ MASTER TODO LIST:
     -or maybe something like a "frame_iterator"
 
   //done but needs testing
-  //-add synchronization to user callback swaps
+  //-review synchronization of user callback swaps
 
 
 
