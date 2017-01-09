@@ -22,6 +22,8 @@ This file is part of zaudio.
 #include "stream_params.hpp"
 #include "stream_context.hpp"
 
+#include <type_traits>
+
 
 /*!
  *\namespace zaudio
@@ -282,9 +284,9 @@ namespace zaudio
     *\brief helper function that constructs an audio_stream object
     */
     template<typename sample_t,typename... args_t>
-    audio_stream<sample_t> make_audio_stream(args_t&&... args)
+    audio_stream<typename std::decay<sample_t>::type> make_audio_stream(args_t&&... args)
     {
-      return audio_stream<sample_t>(args...);
+      return audio_stream<typename std::decay<sample_t>::type>(args...);
     }
 
 }

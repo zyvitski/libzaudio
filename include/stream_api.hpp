@@ -175,9 +175,9 @@ namespace zaudio
          *\brief contructs an stream_api objects
          */
         template<typename sample_t,template<typename> class api>
-        std::unique_ptr<stream_api<sample_t>> make_stream_api() noexcept
+        std::unique_ptr<stream_api<typename std::decay<sample_t>::type>> make_stream_api() noexcept
         {
-            return std::unique_ptr<stream_api<sample_t>>{new api<sample_t>{}};
+            return std::unique_ptr<stream_api<typename std::decay<sample_t>::type>>{new api<typename std::decay<sample_t>::type>{}};
         }
 }
 
