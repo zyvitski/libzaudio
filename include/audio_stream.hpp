@@ -50,22 +50,23 @@ namespace zaudio
 
       using stream_params_type = stream_params<sample_t>;
 
-      audio_stream();
+      explicit audio_stream();
 
-      audio_stream(const stream_params_type& params,
-                   const callback& cb,
-                   const stream_error_callback& error_callback = default_stream_error_callback());
+      explicit audio_stream(const stream_params_type& params,
+                            const callback& cb,
+                            const stream_error_callback& error_callback = default_stream_error_callback());
 
-      audio_stream(const stream_params_type& params,
-                   context_type& ctx,
-                   const callback& cb,
-                   const stream_error_callback& error_callback = default_stream_error_callback());
+      explicit audio_stream(const stream_params_type& params,
+                            context_type& ctx,
+                            const callback& cb,
+                            const stream_error_callback& error_callback = default_stream_error_callback());
 
-      audio_stream(const stream_params_type& params,
-                   audio_process<sample_t>& proc);
+      explicit audio_stream(const stream_params_type& params,
+                            audio_process<sample_t>& proc);
 
-      audio_stream(const stream_params_type& params,
-                   context_type& ctx, audio_process<sample_t>& proc);
+      explicit audio_stream(const stream_params_type& params,
+                            context_type& ctx,
+                            audio_process<sample_t>& proc);
 
       ~audio_stream();
 
