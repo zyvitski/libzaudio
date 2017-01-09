@@ -90,13 +90,12 @@ namespace zaudio
 
             void set_error_callback(error_callback&cb) noexcept;
 
+            std::mutex& callback_mutex() noexcept;
         protected:
 
-            std::atomic<callback*> _callback;
-            std::atomic<callback*> _new_callback;
+            callback* _callback;
 
-            std::atomic<error_callback*> _error_callback;
-            std::atomic<error_callback*> _new_error_callback;
+            error_callback* _error_callback;
 
             stream_params<sample_t>* _params;
 
@@ -108,9 +107,7 @@ namespace zaudio
 
         template<typename sample_t>
         stream_api<sample_t>::stream_api() noexcept: _callback(nullptr),
-                                                     _new_callback(nullptr),
                                                      _error_callback(nullptr),
-                                                     _new_error_callback(nullptr),
                                                      _params(nullptr){}
 
         //id will be assigned based on std::hash<std::string> of name()
@@ -120,19 +117,22 @@ namespace zaudio
         {
             return std::hash<std::string>{}(name());
         }
-
         template<typename sample_t>
         void stream_api<sample_t>::set_callback(callback& cb) noexcept
         {
-            _new_callback = &cb;
+            _callback = &cb;
         }
-
         template<typename sample_t>
         void stream_api<sample_t>::set_error_callback(error_callback&cb) noexcept
         {
-            _new_error_callback = &cb;
+            _error_callback = &cb;
         }
 
+        template<typename sample_t>
+        std::mutex& stream_api<sample_t>::callback_mutex() noexcept
+        {
+            return _callback_mutex;
+        }
 
 
 
@@ -141,16 +141,8 @@ namespace zaudio
         {
             try
             {
-                if(_new_callback != nullptr)
-                {
-                    _callback.exchange(_new_callback);
-                    _new_callback=nullptr;
-                }
-                if(_new_error_callback != nullptr)
-                {
-                    _error_callback.exchange(_new_error_callback);
-                    _new_error_callback=nullptr;
-                }
+                std::unique_lock<std::mutex> lk{_callback_mutex,std::defer_lock};
+                while(!lk.try_lock()){ continue; }
 
                 auto&& ret = (*_callback)(input,output,audio_clock::now(),*_params);
                 if(ret != no_error)

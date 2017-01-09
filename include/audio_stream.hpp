@@ -183,16 +183,35 @@ namespace zaudio
     typename audio_stream<sample_t>::callback audio_stream<sample_t>::exchange_callback(callback&& cb)
     {
         auto&& out = _callback;
-        _context.get().api()->set_callback(cb);
-        return out;
+        auto& mtx = _context.get().api()->callback_mutex();
+        std::unique_lock<std::mutex> lk{mtx,std::defer_lock};
+        if(lk.try_lock_for(std::chrono::seconds(1)))
+        {
+            _callback = cb;
+            return out;
+        }
+        else
+        {
+            throw stream_exception(make_stream_error(stream_status::system_error, "Unable to aquire lock to swap callback."));
+        }
     }
 
     template<typename sample_t>
     stream_error_callback audio_stream<sample_t>::exchange_error_callback(stream_error_callback&& cb)
     {
         auto&& out = _error_callback;
-        _context.get().api()->set_error_callback(cb);
-        return out;
+        auto& mtx = _context.get().api()->callback_mutex();
+        std::unique_lock<std::mutex> lk{mtx,std::defer_lock};
+        if(lk.try_lock_for(std::chrono::seconds(1)))
+        {
+            _error_callback = cb;
+            return out;
+        }
+        else
+        {
+            throw stream_exception(make_stream_error(stream_status::system_error, "Unable to aquire lock to swap error callback."));
+        }
+
     }
 
     template<typename sample_t>
