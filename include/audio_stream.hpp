@@ -86,6 +86,7 @@ namespace zaudio
 
       void params(const stream_params_type& p) noexcept;
 
+      double cpu_load() noexcept;
 
     private:
       void init();
@@ -229,6 +230,12 @@ namespace zaudio
     void audio_stream<sample_t>::params(const stream_params_type& p) noexcept
     {
         _params = p;
+    }
+
+    template<typename sample_t>
+    double audio_stream<sample_t>::cpu_load() noexcept
+    {
+        return _context.get().api()->cpu_load();
     }
 
 

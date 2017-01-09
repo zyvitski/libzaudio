@@ -34,5 +34,8 @@
 /doc/html/
 /doc/latex/
 /doc/man/
+/examples/sine_example
+/examples/lambda_sine_example
+/examples/device_probing
 
 *.tar.gz

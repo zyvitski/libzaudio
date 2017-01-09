@@ -86,6 +86,8 @@ namespace zaudio
 
             virtual long default_output_device_id() const noexcept = 0;
 
+            virtual double cpu_load() const noexcept = 0;
+
             void set_callback(callback& cb) noexcept;
 
             void set_error_callback(error_callback&cb) noexcept;

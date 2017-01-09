@@ -200,6 +200,11 @@ namespace zaudio
         {
             return Pa_GetDefaultOutputDevice();
         }
+        virtual double cpu_load() const noexcept
+        {
+            return Pa_GetStreamCpuLoad(stream);
+        }
+
     private:
         using base::_params;
 
