@@ -26,7 +26,10 @@ namespace zaudio
      *\brief a function object type that represents an audio stream callback function
      */
     template<typename sample_t>
-    using stream_callback  = std::function<stream_error (const sample_t*, sample_t*, time_point, stream_params<sample_t>&) noexcept>;
+    using stream_callback  = std::function<stream_error (const sample_t*,
+                                                         sample_t*,
+                                                         time_point,
+                                                         stream_params<sample_t>&) noexcept>;
 }
 
 #endif

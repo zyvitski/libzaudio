@@ -90,7 +90,7 @@ namespace zaudio
 
             void set_callback(callback& cb) noexcept;
 
-            void set_error_callback(error_callback&cb) noexcept;
+            void set_error_callback(error_callback& cb) noexcept;
 
             std::mutex& callback_mutex() noexcept;
         protected:

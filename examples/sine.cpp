@@ -33,7 +33,7 @@ public:
     {}
     virtual stream_error on_process(const sample_t* input, sample_t* output,time_point stream_time, stream_params<sample_t>& params) noexcept
     {
-        std::cerr<<"Time: "<<duration_in_samples<44100>(stream_time-start).count()<<std::endl;
+        std::cerr<<"Time: "<<duration_in_samples(stream_time-start,params.sample_rate()).count()<<std::endl;
         constexpr sample_t _2pi = M_PI * 2.0;
         stp = hz / params.sample_rate() * _2pi;
 

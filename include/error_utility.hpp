@@ -91,7 +91,7 @@ namespace zaudio
           {
               return lhs.first == lhs.first && rhs.second == rhs.second;
           }
-          
+
           friend bool operator!=(const stream_error_type& lhs,const stream_error_type& rhs)
           {
               return lhs.first != lhs.first || rhs.second != rhs.second;
