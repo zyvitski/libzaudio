@@ -114,7 +114,7 @@ namespace zaudio
     {
         return _api.get()->default_input_device_id();
     }
-    
+
     template<typename sample_t>
     long stream_context<sample_t>::default_output_device_id() const noexcept
     {
@@ -127,9 +127,9 @@ namespace zaudio
      *\brief helper function that creates a stream_context object
      */
     template<typename sample_t,typename... args_t>
-    stream_context<sample_t> make_stream_context(args_t&&... args) noexcept
+    stream_context<typename std::decay<sample_t>::type> make_stream_context(args_t&&... args) noexcept
     {
-        return stream_context<sample_t>{std::forward<args_t&&>(args)...};
+        return stream_context<typename std::decay<sample_t>::type>{std::forward<args_t&&>(args)...};
     }
 
 
@@ -138,7 +138,7 @@ namespace zaudio
      *\brief helper function that creates the a stream_context object with default values
      */
     template<typename sample_t>
-    stream_context<sample_t> default_stream_context() noexcept;
+    stream_context<typename std::decay<sample_t>::type> default_stream_context() noexcept;
 }
 
 #endif

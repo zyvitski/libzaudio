@@ -86,17 +86,18 @@ namespace zaudio
 
             virtual long default_output_device_id() const noexcept = 0;
 
+            virtual double cpu_load() const noexcept = 0;
+
             void set_callback(callback& cb) noexcept;
 
-            void set_error_callback(error_callback&cb) noexcept;
+            void set_error_callback(error_callback& cb) noexcept;
 
+            std::mutex& callback_mutex() noexcept;
         protected:
 
-            std::atomic<callback*> _callback;
-            std::atomic<callback*> _new_callback;
+            callback* _callback;
 
-            std::atomic<error_callback*> _error_callback;
-            std::atomic<error_callback*> _new_error_callback;
+            error_callback* _error_callback;
 
             stream_params<sample_t>* _params;
 
@@ -108,9 +109,7 @@ namespace zaudio
 
         template<typename sample_t>
         stream_api<sample_t>::stream_api() noexcept: _callback(nullptr),
-                                                     _new_callback(nullptr),
                                                      _error_callback(nullptr),
-                                                     _new_error_callback(nullptr),
                                                      _params(nullptr){}
 
         //id will be assigned based on std::hash<std::string> of name()
@@ -124,33 +123,29 @@ namespace zaudio
         template<typename sample_t>
         void stream_api<sample_t>::set_callback(callback& cb) noexcept
         {
-            _new_callback = &cb;
+            _callback = &cb;
         }
 
         template<typename sample_t>
         void stream_api<sample_t>::set_error_callback(error_callback&cb) noexcept
         {
-            _new_error_callback = &cb;
+            _error_callback = &cb;
         }
 
-
-
+        template<typename sample_t>
+        std::mutex& stream_api<sample_t>::callback_mutex() noexcept
+        {
+            return _callback_mutex;
+        }
 
         template<typename sample_t>
-        stream_error stream_api<sample_t>::_on_process(const sample_t* input, sample_t*output) noexcept
+        stream_error stream_api<sample_t>::_on_process(const sample_t* input, sample_t* output) noexcept
         {
             try
             {
-                if(_new_callback != nullptr)
-                {
-                    _callback.exchange(_new_callback);
-                    _new_callback=nullptr;
-                }
-                if(_new_error_callback != nullptr)
-                {
-                    _error_callback.exchange(_new_error_callback);
-                    _new_error_callback=nullptr;
-                }
+                std::unique_lock<std::mutex> lk{ _callback_mutex, std::defer_lock };
+                //the only reason we should not get this lock every time is in the case of a user callback swap
+                while(!lk.try_lock()){ continue; }
 
                 auto&& ret = (*_callback)(input,output,audio_clock::now(),*_params);
                 if(ret != no_error)
@@ -182,9 +177,9 @@ namespace zaudio
          *\brief contructs an stream_api objects
          */
         template<typename sample_t,template<typename> class api>
-        std::unique_ptr<stream_api<sample_t>> make_stream_api() noexcept
+        std::unique_ptr<stream_api<typename std::decay<sample_t>::type>> make_stream_api() noexcept
         {
-            return std::unique_ptr<stream_api<sample_t>>{new api<sample_t>{}};
+            return std::unique_ptr<stream_api<typename std::decay<sample_t>::type>>{new api<typename std::decay<sample_t>::type>{}};
         }
 }
 

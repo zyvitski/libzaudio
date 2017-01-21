@@ -44,9 +44,9 @@ namespace zaudio
      *\brief constructs an instance of the default stream context
      */
     template<typename sample_t>
-    stream_context<sample_t> default_stream_context() noexcept
+    stream_context<typename std::decay<sample_t>::type> default_stream_context() noexcept
     {
-        return stream_context<sample_t>{};
+        return stream_context<typename std::decay<sample_t>::type>{};
     }
 
 }

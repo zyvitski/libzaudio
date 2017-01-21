@@ -96,7 +96,7 @@ namespace zaudio
         long _input_device_id;
 
         long _output_device_id;
-        
+
     };
 
 
@@ -238,9 +238,9 @@ namespace zaudio
      */
 
     template<typename sample_t, typename... args_t>
-    constexpr stream_params<sample_t> make_stream_params(args_t&&...args) noexcept
+    constexpr stream_params<typename std::decay<sample_t>::type> make_stream_params(args_t&&...args) noexcept
     {
-        return stream_params<sample_t>(std::forward<args_t&&>(args)...);
+        return stream_params<typename std::decay<sample_t>::type>(std::forward<args_t&&>(args)...);
     }
 
 

@@ -9,8 +9,8 @@ MASTER TODO LIST:
   -look into creating a buffer class that wraps the plain c-style array buffers used now.
     -or maybe something like a "frame_iterator"
 
-  //done but needs testing
-  -review synchronization of user callback swaps
+  -check default_stream_error_callback and stream_api::_on_process to make sure error reporting works correctly
+
 
 
 

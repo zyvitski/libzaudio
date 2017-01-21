@@ -22,6 +22,8 @@ This file is part of zaudio.
 #include "stream_params.hpp"
 #include "stream_context.hpp"
 
+#include <type_traits>
+
 
 /*!
  *\namespace zaudio
@@ -39,7 +41,7 @@ namespace zaudio
     */
 
     template<typename sample_t>
-    class audio_stream : protected stream_params<sample_t>
+    class audio_stream : public detail::fail_if_type_is_not_sample<sample_t>
     {
     public:
       using callback = stream_callback<sample_t>;
@@ -48,22 +50,23 @@ namespace zaudio
 
       using stream_params_type = stream_params<sample_t>;
 
-      audio_stream();
+      explicit audio_stream();
 
-      audio_stream(const stream_params_type& params,
-                   const callback& cb,
-                   const stream_error_callback& error_callback = default_stream_error_callback());
+      explicit audio_stream(const stream_params_type& params,
+                            const callback& cb,
+                            const stream_error_callback& error_callback = default_stream_error_callback());
 
-      audio_stream(const stream_params_type& params,
-                   context_type& ctx,
-                   const callback& cb,
-                   const stream_error_callback& error_callback = default_stream_error_callback());
+      explicit audio_stream(const stream_params_type& params,
+                            context_type& ctx,
+                            const callback& cb,
+                            const stream_error_callback& error_callback = default_stream_error_callback());
 
-      audio_stream(const stream_params_type& params,
-                   audio_process<sample_t>& proc);
+      explicit audio_stream(const stream_params_type& params,
+                            audio_process<sample_t>& proc);
 
-      audio_stream(const stream_params_type& params,
-                   context_type& ctx, audio_process<sample_t>& proc);
+      explicit audio_stream(const stream_params_type& params,
+                            context_type& ctx,
+                            audio_process<sample_t>& proc);
 
       ~audio_stream();
 
@@ -83,11 +86,14 @@ namespace zaudio
 
       void params(const stream_params_type& p) noexcept;
 
+      double cpu_load() noexcept;
 
     private:
       void init();
 
       void destroy() noexcept;
+
+      stream_params_type _params;
 
       callback _callback;
 
@@ -99,9 +105,9 @@ namespace zaudio
 
 
     template<typename sample_t>
-    audio_stream<sample_t>::audio_stream() : stream_params_type(),
-                     _context(default_stream_context<sample_t>()),
-                     _error_callback(default_stream_error_callback())
+    audio_stream<sample_t>::audio_stream() : _params(),
+                                             _context(default_stream_context<sample_t>()),
+                                             _error_callback(default_stream_error_callback())
     {
         init();
     }
@@ -109,7 +115,7 @@ namespace zaudio
     template<typename sample_t>
     audio_stream<sample_t>::audio_stream(const stream_params_type& params,
                                          const callback& cb,
-                                         const stream_error_callback& error_callback) : stream_params_type(params),
+                                         const stream_error_callback& error_callback) : _params(params),
                                                                                         _context(default_stream_context<sample_t>()),
                                                                                         _callback(cb),
                                                                                         _error_callback(error_callback)
@@ -121,7 +127,7 @@ namespace zaudio
     audio_stream<sample_t>::audio_stream(const stream_params_type& params,
                                          context_type& ctx,
                                          const callback& cb,
-                                         const stream_error_callback& error_callback) : stream_params_type(params),
+                                         const stream_error_callback& error_callback) : _params(params),
                                                                                         _callback(cb),
                                                                                         _error_callback(error_callback),
                                                                                         _context(ctx)
@@ -131,7 +137,7 @@ namespace zaudio
 
     template<typename sample_t>
     audio_stream<sample_t>::audio_stream(const stream_params_type& params,
-                                         audio_process<sample_t>& proc) : stream_params_type(params),
+                                         audio_process<sample_t>& proc) : _params(params),
                                                                           _callback(proc.get_callback()),
                                                                           _error_callback(proc.get_error_callback()),
                                                                           _context(default_stream_context<sample_t>())
@@ -141,10 +147,11 @@ namespace zaudio
 
     template<typename sample_t>
     audio_stream<sample_t>::audio_stream(const stream_params_type& params,
-                 context_type& ctx, audio_process<sample_t>& proc) : stream_params_type(params),
-                                                                     _callback(proc.get_callback()),
-                                                                     _error_callback(proc.get_error_callback()),
-                                                                     _context(ctx)
+                                         context_type& ctx,
+                                         audio_process<sample_t>& proc) : _params(params),
+                                                                          _callback(proc.get_callback()),
+                                                                          _error_callback(proc.get_error_callback()),
+                                                                          _context(ctx)
     {
         init();
     }
@@ -183,28 +190,52 @@ namespace zaudio
     typename audio_stream<sample_t>::callback audio_stream<sample_t>::exchange_callback(callback&& cb)
     {
         auto&& out = _callback;
-        _context.get().api()->set_callback(cb);
-        return out;
+        auto& mtx = _context.get().api()->callback_mutex();
+        std::unique_lock<std::mutex> lk{mtx,std::defer_lock};
+        if(lk.try_lock_for(std::chrono::seconds(1)))
+        {
+            _callback = cb;
+            return out;
+        }
+        else
+        {
+            throw stream_exception(make_stream_error(stream_status::system_error, "Unable to aquire lock to swap callback."));
+        }
     }
 
     template<typename sample_t>
     stream_error_callback audio_stream<sample_t>::exchange_error_callback(stream_error_callback&& cb)
     {
         auto&& out = _error_callback;
-        _context.get().api()->set_error_callback(cb);
-        return out;
+        auto& mtx = _context.get().api()->callback_mutex();
+        std::unique_lock<std::mutex> lk{mtx,std::defer_lock};
+        if(lk.try_lock_for(std::chrono::seconds(1)))
+        {
+            _error_callback = cb;
+            return out;
+        }
+        else
+        {
+            throw stream_exception(make_stream_error(stream_status::system_error, "Unable to aquire lock to swap error callback."));
+        }
     }
 
     template<typename sample_t>
     const typename audio_stream<sample_t>::stream_params_type& audio_stream<sample_t>::params() noexcept
     {
-        return *(stream_params_type*)this;
+        return _params;
     }
 
     template<typename sample_t>
     void audio_stream<sample_t>::params(const stream_params_type& p) noexcept
     {
-        *(stream_params_type*)this = p;
+        _params = p;
+    }
+
+    template<typename sample_t>
+    double audio_stream<sample_t>::cpu_load() noexcept
+    {
+        return _context.get().api()->cpu_load();
     }
 
 
@@ -264,9 +295,9 @@ namespace zaudio
     *\brief helper function that constructs an audio_stream object
     */
     template<typename sample_t,typename... args_t>
-    audio_stream<sample_t> make_audio_stream(args_t&&... args)
+    audio_stream<typename std::decay<sample_t>::type> make_audio_stream(args_t&&... args)
     {
-      return audio_stream<sample_t>(args...);
+      return audio_stream<typename std::decay<sample_t>::type>(args...);
     }
 
 }

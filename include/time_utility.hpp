@@ -46,8 +46,8 @@ namespace zaudio
     struct stream_time_base
     {
         using audio_clock = monotonic_clock;
-        using duration = std::chrono::duration<double>;
-        using time_point = audio_clock::time_point;
+        using duration    = std::chrono::duration<double>;
+        using time_point  = audio_clock::time_point;
     };
 
     /*!
@@ -73,20 +73,20 @@ namespace zaudio
     }
 
     /*!
-     *\enum use_thread_sleep
-     *\brief tags that specify if thread sleep should be used
+     *\fn duration_in_samples
+     *\brief multiplies the duration bby a sample rate
      */
-    enum class use_thread_sleep
+    template<typename D>
+    std::chrono::duration<double> duration_in_samples(D&& duration,double sample_rate) noexcept
     {
-        enable,
-        disable
-    };
+        return duration * sample_rate;
+    }
 
     /*!
      *\struct sleep_type
      *\brief a sleep function object type
      */
-    template<typename C,use_thread_sleep TS = use_thread_sleep::disable>
+    template<typename C,typename TS = std::false_type>
     struct sleep_type;
 
     /*!
@@ -94,9 +94,8 @@ namespace zaudio
      *\brief a sleep function object type
      */
     template<typename C>
-    struct sleep_type<C , use_thread_sleep::enable>
+    struct sleep_type<C , std::true_type>
     {
-
         template<typename D>
         void operator()(D&& duration) noexcept
         {
@@ -114,7 +113,7 @@ namespace zaudio
      *\brief a sleep function object type
      */
     template<typename C>
-    struct sleep_type<C , use_thread_sleep::disable>
+    struct sleep_type<C , std::false_type>
     {
         template<typename D>
         void operator()(D&& duration) noexcept
@@ -125,27 +124,9 @@ namespace zaudio
         }
     };
 
-    /*!
-     *\fn sleep
-     *\brief a sleep function that can use an arbitrary duration
-     */
-    template<typename D>
-    inline void sleep(D&& duration) noexcept
-    {
-        static sleep_type<monotonic_clock,use_thread_sleep::disable> _sleep;
-        _sleep(std::forward<D&&>(duration));
-    }
 
-    /*!
-     *\fn thread_sleep
-     *\brief a sleep function that can use an arbitrary duration and puts the thread to sleep for a portion of the duration
-     */
-    template<typename D>
-    inline void thread_sleep(D&& duration) noexcept
-    {
-        static sleep_type<monotonic_clock,use_thread_sleep::enable> _sleep;
-        _sleep(std::forward<D&&>(duration));
-    }
+    sleep_type<monotonic_clock, std::false_type> sleep;
+    sleep_type<monotonic_clock, std::true_type>  thread_sleep;
 }
 
 #endif

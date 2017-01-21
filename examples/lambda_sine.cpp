@@ -73,7 +73,8 @@ int main(int argc, char** argv)
             return no_error;
         };
 
-        //create an audio stream using the params, context, and callback created above. Uses the default error callback
+        //create an audio stream using the params, context, and callback created above.
+        // Uses the default error callback
         auto&& stream = make_audio_stream<sample_type>(params,context,callback);
 
         //start the stream
