@@ -16,6 +16,6 @@ Libzaudio is released under the GNU LGPL license. For more information see the f
 
 #### Installation:
 
-To install the lates release: Download the lastest .tar archive from the [releases github page](https://github.com/zyvitski/libzaudio/releases). Unpack the archive then run **./configure && make** additionally you may run **sudo make install** to install the binaries and headers.
+To install the latest release: Download the latest .tar archive from the [releases github page](https://github.com/zyvitski/libzaudio/releases). Unpack the archive then run **./configure && make** additionally you may run **sudo make install** to install the binaries and headers.
 
 For development you should clone the latest version of the dev branch. Run **./autogen.sh && ./configure && make** to build.
