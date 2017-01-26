@@ -38,9 +38,10 @@
 /examples/sine_example
 /examples/lambda_sine_example
 /examples/device_probing
+
 /examples/playthrough
 
 
-/m4/*
+/m4/
 
 *.tar.gz
