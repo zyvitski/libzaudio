@@ -1,6 +1,23 @@
 #ifndef BUFFER_VIEW_HPP
 #define BUFFER_VIEW_HPP
 
+/*
+This file is part of zaudio.
+
+    zaudio is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    zaudio is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with zaudio.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #include <cstddef>
 #include <stdexcept>
 #include <string>
@@ -94,30 +111,30 @@ namespace zaudio
             iterator(sample_t* buffer, const std::size_t& size):_buffer(buffer),_size(size)
             {}
 
-            iterator& operator++()
+            iterator& operator++() noexcept
             {
                 _buffer += _size;
                 return *this;
             }
-            iterator operator++(int)
+            iterator operator++(int) noexcept
             {
                 iterator iter =*this;
                 ++(*this);
                 return iter;
             }
-            bool operator==(iterator& other)
+            bool operator==(const iterator& other) const noexcept
             {
                 return (_buffer == other.buffer) && (_size == other._size);
             }
-            bool operator !=(iterator& other)
+            bool operator !=(const iterator& other) const  noexcept
             {
                 return (_buffer != other._buffer) || (_size != other._size);
             }
-            frame_view<sample_t> operator*()
+            frame_view<sample_t> operator*() noexcept
             {
                 return frame_view<sample_t>(_buffer,_size);
             }
-            const frame_view<sample_t> operator*() const
+            const frame_view<sample_t> operator*() const noexcept
             {
                 return frame_view<sample_t>(_buffer,_size);
             }
@@ -140,11 +157,11 @@ namespace zaudio
                                                                        _frame_width(frame_width)
         {}
 
-        const frame_view<sample_t> operator[](const std::size_t& idx) const
+        const frame_view<sample_t> operator[](const std::size_t& idx) const noexcept
         {
             return frame_view<sample_t>{_buffer + (idx * _frame_width),_frame_width};
         }
-        frame_view<sample_t>  operator[](const std::size_t& idx)
+        frame_view<sample_t>  operator[](const std::size_t& idx) noexcept
         {
             return frame_view<sample_t>{_buffer + (idx * _frame_width),_frame_width};
         }
@@ -176,32 +193,32 @@ namespace zaudio
         {
             return _frame_count;
         }
-        sample_t* data()
+        sample_t* data() noexcept
         {
             return _buffer;
         }
 
-        iterator begin()
+        iterator begin() noexcept
         {
             return iterator(_buffer,_frame_width);
         }
-        const_iterator begin() const
+        const_iterator begin() const noexcept
         {
             return begin();
         }
-        const_iterator cbegin() const
+        const_iterator cbegin() const noexcept
         {
             return begin();
         }
-        iterator end()
+        iterator end() noexcept
         {
             return iterator(_buffer + (_frame_count * _frame_width),_frame_width);
         }
-        const_iterator end() const
+        const_iterator end() const noexcept
         {
             return end();
         }
-        const_iterator cend() const
+        const_iterator cend() const noexcept
         {
             return end();
         }

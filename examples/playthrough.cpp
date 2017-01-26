@@ -46,13 +46,11 @@ int main(int argc, char** argv)
         //create a stream params object
         auto&& params = make_stream_params<sample_type>(44100,512,2,2);
 
-
         auto&& callback = [&](buffer_group<sample_type>& buffers,
                               time_point stream_time,
                               stream_params<sample_type>& params) noexcept
         {
-
-            for(std::size_t i = 0; i <params.frame_count() ; ++i)
+            for(std::size_t i = 0; i <params.frame_count(); ++i)
             {
                 for(std::size_t j = 0; j < params.output_frame_width(); ++j)
                 {
