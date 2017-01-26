@@ -15,9 +15,7 @@ This file is part of zaudio.
     along with zaudio.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #include <iostream>
-#include <cmath>
 #include <libzaudio/zaudio.hpp>
 
 int main(int argc, char** argv)
@@ -54,11 +52,11 @@ int main(int argc, char** argv)
                               stream_params<sample_type>& params) noexcept
         {
 
-            for(std::size_t i = 0; i <params.frame_count() ; i += params.output_frame_width())
+            for(std::size_t i = 0; i <params.frame_count() ; ++i)
             {
                 for(std::size_t j = 0; j < params.output_frame_width(); ++j)
                 {
-                    buffers.output()[i + j] = buffers.input()[i + j] * 0.75;
+                    buffers.output[i][j] = buffers.input[i][j];
                 }
             }
             return no_error;
@@ -70,8 +68,11 @@ int main(int argc, char** argv)
 
         //start the stream
         start_stream(stream);
-        //run for 5 seconds
-        thread_sleep(std::chrono::seconds(5));
+
+        //block until user is done
+        std::cout<<"Press Enter to Quit"<<std::endl;
+        std::cin.get();
+
         //stop the stream
         stop_stream(stream);
     }

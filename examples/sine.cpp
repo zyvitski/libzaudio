@@ -38,8 +38,7 @@ public:
 
         stp = hz / params.sample_rate() * _2pi;
 
-        auto&& output = buffers.output();
-        for(auto&& frame: output)
+        for(auto&& frame: buffers.output)
         {
             auto&& value = std::sin(phs);
             if((phs += stp) > _2pi) { phs -= _2pi; }

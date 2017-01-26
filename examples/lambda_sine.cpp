@@ -59,8 +59,7 @@ int main(int argc, char** argv)
                               time_point stream_time,
                               stream_params<sample_type>& params) noexcept
         {
-            auto&& output = buffers.output();
-            for(auto&& frame: output)
+            for(auto&& frame: buffers.output)
             {
                 auto&& value = std::sin(phs);
                 if((phs += stp) > _2pi) { phs -= _2pi; }

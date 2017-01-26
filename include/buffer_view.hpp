@@ -140,13 +140,13 @@ namespace zaudio
                                                                        _frame_width(frame_width)
         {}
 
-        const sample_t& operator[](const std::size_t& idx) const
+        const frame_view<sample_t> operator[](const std::size_t& idx) const
         {
-            return _buffer[idx];
+            return frame_view<sample_t>{_buffer + (idx * _frame_width),_frame_width};
         }
-        sample_t& operator[](const std::size_t& idx)
+        frame_view<sample_t>  operator[](const std::size_t& idx)
         {
-            return _buffer[idx];
+            return frame_view<sample_t>{_buffer + (idx * _frame_width),_frame_width};
         }
         const sample_t& at(const std::size_t& idx) const
         {
