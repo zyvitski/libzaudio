@@ -86,10 +86,10 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-build_triplet = x86_64-apple-darwin16.1.0
-host_triplet = x86_64-apple-darwin16.1.0
+build_triplet = x86_64-apple-darwin16.4.0
+host_triplet = x86_64-apple-darwin16.4.0
 bin_PROGRAMS = sine_example$(EXEEXT) device_probing$(EXEEXT) \
-	lambda_sine_example$(EXEEXT)
+	lambda_sine_example$(EXEEXT) playthrough$(EXEEXT)
 subdir = examples
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -119,6 +119,12 @@ lambda_sine_example_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
 	$(AM_CXXFLAGS) $(CXXFLAGS) $(lambda_sine_example_LDFLAGS) \
 	$(LDFLAGS) -o $@
+am_playthrough_OBJECTS = playthrough.$(OBJEXT)
+playthrough_OBJECTS = $(am_playthrough_OBJECTS)
+playthrough_LDADD = $(LDADD)
+playthrough_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
+	$(CXXFLAGS) $(playthrough_LDFLAGS) $(LDFLAGS) -o $@
 am_sine_example_OBJECTS = sine.$(OBJEXT)
 sine_example_OBJECTS = $(am_sine_example_OBJECTS)
 sine_example_LDADD = $(LDADD)
@@ -137,7 +143,7 @@ AM_V_at = $(am__v_at_$(V))
 am__v_at_ = $(am__v_at_$(AM_DEFAULT_VERBOSITY))
 am__v_at_0 = @
 am__v_at_1 = 
-DEFAULT_INCLUDES = -I.
+DEFAULT_INCLUDES = -I. -I$(srcdir)
 depcomp = $(SHELL) $(top_srcdir)/config/depcomp
 am__depfiles_maybe = depfiles
 am__mv = mv -f
@@ -160,9 +166,10 @@ am__v_CXXLD_ = $(am__v_CXXLD_$(AM_DEFAULT_VERBOSITY))
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
 SOURCES = $(device_probing_SOURCES) $(lambda_sine_example_SOURCES) \
-	$(sine_example_SOURCES)
+	$(playthrough_SOURCES) $(sine_example_SOURCES)
 DIST_SOURCES = $(device_probing_SOURCES) \
-	$(lambda_sine_example_SOURCES) $(sine_example_SOURCES)
+	$(lambda_sine_example_SOURCES) $(playthrough_SOURCES) \
+	$(sine_example_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -207,7 +214,7 @@ CXXCPP = g++ -E
 CXXDEPMODE = depmode=gcc3
 CXXFLAGS = -g -O2
 CYGPATH_W = echo
-DEFS = -DPACKAGE_NAME=\"libzaudio\" -DPACKAGE_TARNAME=\"libzaudio\" -DPACKAGE_VERSION=\"0.1.0\" -DPACKAGE_STRING=\"libzaudio\ 0.1.0\" -DPACKAGE_BUGREPORT=\"alexander.zywicki@gmail.com\" -DPACKAGE_URL=\"\" -DPACKAGE=\"libzaudio\" -DVERSION=\"0.1.0\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\"
+DEFS = -DPACKAGE_NAME=\"libzaudio\" -DPACKAGE_TARNAME=\"libzaudio\" -DPACKAGE_VERSION=\"0.1.3\" -DPACKAGE_STRING=\"libzaudio\ 0.1.3\" -DPACKAGE_BUGREPORT=\"alexander.zywicki@gmail.com\" -DPACKAGE_URL=\"\" -DPACKAGE=\"libzaudio\" -DVERSION=\"0.1.3\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\"
 DEPDIR = .deps
 DLLTOOL = false
 DSYMUTIL = dsymutil
@@ -245,21 +252,21 @@ OTOOL64 = :
 PACKAGE = libzaudio
 PACKAGE_BUGREPORT = alexander.zywicki@gmail.com
 PACKAGE_NAME = libzaudio
-PACKAGE_STRING = libzaudio 0.1.0
+PACKAGE_STRING = libzaudio 0.1.3
 PACKAGE_TARNAME = libzaudio
 PACKAGE_URL = 
-PACKAGE_VERSION = 0.1.0
+PACKAGE_VERSION = 0.1.3
 PATH_SEPARATOR = :
 RANLIB = ranlib
 SED = /usr/local/bin/gsed
 SET_MAKE = 
 SHELL = /bin/sh
 STRIP = strip
-VERSION = 0.1.0
-abs_builddir = /Users/alexanderzywicki/libzaudio/examples
-abs_srcdir = /Users/alexanderzywicki/libzaudio/examples
-abs_top_builddir = /Users/alexanderzywicki/libzaudio
-abs_top_srcdir = /Users/alexanderzywicki/libzaudio
+VERSION = 0.1.3
+abs_builddir = /Users/alexanderzywicki/libzaudio//examples
+abs_srcdir = /Users/alexanderzywicki/libzaudio//examples
+abs_top_builddir = /Users/alexanderzywicki/libzaudio/
+abs_top_srcdir = /Users/alexanderzywicki/libzaudio/
 ac_ct_AR = ar
 ac_ct_CC = gcc
 ac_ct_CXX = g++
@@ -270,10 +277,10 @@ am__quote =
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = $(exec_prefix)/bin/zaudio
-build = x86_64-apple-darwin16.1.0
+build = x86_64-apple-darwin16.4.0
 build_alias = 
 build_cpu = x86_64
-build_os = darwin16.1.0
+build_os = darwin16.4.0
 build_vendor = apple
 builddir = .
 datadir = ${datarootdir}
@@ -281,10 +288,10 @@ datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
-host = x86_64-apple-darwin16.1.0
+host = x86_64-apple-darwin16.4.0
 host_alias = 
 host_cpu = x86_64
-host_os = darwin16.1.0
+host_os = darwin16.4.0
 host_vendor = apple
 htmldir = ${docdir}
 includedir = ${prefix}/include
@@ -312,11 +319,13 @@ top_srcdir = ..
 device_probing_SOURCES = device_probing.cpp
 sine_example_SOURCES = sine.cpp
 lambda_sine_example_SOURCES = lambda_sine.cpp
+playthrough_SOURCES = playthrough.cpp
 AM_CXXFLAGS = --std=c++11 -g -O3 -pthread -fpic  -MP -Wall -pedantic -I/usr/local/include -I../include
 AM_LDFLAGS = -L/usr/local/lib
 sine_example_LDFLAGS = -lzaudio -lportaudio
 device_probing_LDFLAGS = -lzaudio -lportaudio
 lambda_sine_example_LDFLAGS = -lzaudio -lportaudio
+playthrough_LDFLAGS = -lzaudio -lportaudio
 all: all-am
 
 .SUFFIXES:
@@ -408,6 +417,10 @@ lambda_sine_example$(EXEEXT): $(lambda_sine_example_OBJECTS) $(lambda_sine_examp
 	@rm -f lambda_sine_example$(EXEEXT)
 	$(AM_V_CXXLD)$(lambda_sine_example_LINK) $(lambda_sine_example_OBJECTS) $(lambda_sine_example_LDADD) $(LIBS)
 
+playthrough$(EXEEXT): $(playthrough_OBJECTS) $(playthrough_DEPENDENCIES) $(EXTRA_playthrough_DEPENDENCIES) 
+	@rm -f playthrough$(EXEEXT)
+	$(AM_V_CXXLD)$(playthrough_LINK) $(playthrough_OBJECTS) $(playthrough_LDADD) $(LIBS)
+
 sine_example$(EXEEXT): $(sine_example_OBJECTS) $(sine_example_DEPENDENCIES) $(EXTRA_sine_example_DEPENDENCIES) 
 	@rm -f sine_example$(EXEEXT)
 	$(AM_V_CXXLD)$(sine_example_LINK) $(sine_example_OBJECTS) $(sine_example_LDADD) $(LIBS)
@@ -420,6 +433,7 @@ distclean-compile:
 
 include ./$(DEPDIR)/device_probing.Po
 include ./$(DEPDIR)/lambda_sine.Po
+include ./$(DEPDIR)/playthrough.Po
 include ./$(DEPDIR)/sine.Po
 
 .cpp.o:
