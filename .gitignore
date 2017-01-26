@@ -44,7 +44,7 @@
 
 /m4/
 /autom4te.cache/
-/autom4te.cache/requests
+/autom4te.cache/*
 /autom4te.cache/*.*
 /src/.deps/
 /src/Makefile
