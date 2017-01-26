@@ -47,7 +47,7 @@
 /autom4te.cache/*
 /autom4te.cache/*.*
 /src/.deps/
-/src/.libs
+/src/.libs/
 /src/Makefile
 /examples/.deps
 /examples/.libs
