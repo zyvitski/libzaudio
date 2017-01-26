@@ -1,9 +1,9 @@
-#! /bin/sh
+#! /bin/bash
 
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
+if(("$OSTYPE" == "linux-gnu")); then
         # ...
         libtoolize
-elif [[ "$OSTYPE" == "darwin"* ]]; then
+elif(("$OSTYPE" == "darwin"*)); then
         # Mac OSX
         glibtoolize
 else
