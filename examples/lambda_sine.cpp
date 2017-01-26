@@ -60,21 +60,13 @@ int main(int argc, char** argv)
                               stream_params<sample_type>& params) noexcept
         {
             auto&& output = buffers.output();
-
-            for(std::size_t i = 0; i < output.size(); i+=params.output_frame_width())
+            for(auto&& frame: output)
             {
                 auto&& value = std::sin(phs);
-
-                phs += stp;
-                if(phs > _2pi)
+                if((phs += stp) > _2pi) { phs -= _2pi; }
+                for(auto&& samp: frame)
                 {
-                    phs -= _2pi;
-                }
-
-                for(std::size_t j = 0; j < params.output_frame_width(); ++j)
-                {
-                    //std::cout<<i+j<<std::endl;
-                    output[i + j] = value;
+                    samp = value;
                 }
             }
             return no_error;

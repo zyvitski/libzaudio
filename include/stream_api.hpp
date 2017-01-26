@@ -148,9 +148,8 @@ namespace zaudio
                 //the only reason we should not get this lock every time is in the case of a user callback swap
                 while(!lk.try_lock()){ continue; }
 
-                auto inlen = _params->frame_count() * _params->input_frame_width();
-                auto outlen= _params->frame_count() * _params->output_frame_width();
-                buffer_group<sample_t> buffers{buffer_view<sample_t>{input,inlen},buffer_view<sample_t>{output,outlen}};
+                buffer_group<sample_t> buffers{buffer_view<sample_t>{input,_params->frame_count(),_params->input_frame_width()},
+                                               buffer_view<sample_t>{output,_params->frame_count(),_params->output_frame_width()}};
 
                 auto&& ret = (*_callback)(buffers,audio_clock::now(),*_params);
                 if(ret != no_error)
