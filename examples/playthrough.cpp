@@ -49,7 +49,6 @@ int main(int argc, char** argv)
         auto&& params = make_stream_params<sample_type>(44100,512,2,2);
 
 
-        //create a zaudio::stream_callback compliant lambda that generates a sine wave
         auto&& callback = [&](buffer_group<sample_type>& buffers,
                               time_point stream_time,
                               stream_params<sample_type>& params) noexcept
