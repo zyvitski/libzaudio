@@ -24,6 +24,7 @@ This file is part of zaudio.
 #include "error_utility.hpp"
 #include "stream_params.hpp"
 #include "stream_callback.hpp"
+#include "buffer_group.hpp"
 
 
 /*!
@@ -45,18 +46,18 @@ namespace zaudio
 
       using error_callback = stream_error_callback;
 
-      virtual stream_error on_process(const sample_t*,sample_t*,time_point,stream_params<sample_t>&) noexcept;
+      virtual stream_error on_process(buffer_group<sample_t>&,time_point,stream_params<sample_t>&) noexcept;
 
       virtual void on_error(const stream_error& err) noexcept;
 
       callback get_callback() noexcept;
 
       error_callback get_error_callback() noexcept;
-      
+
   };
 
   template<typename sample_t>
-  stream_error audio_process<sample_t>::on_process(const sample_t *, sample_t *, time_point, stream_params<sample_t> &) noexcept
+  stream_error audio_process<sample_t>::on_process(buffer_group<sample_t>&, time_point, stream_params<sample_t> &) noexcept
   {
       return no_error;
   }
@@ -73,8 +74,7 @@ namespace zaudio
       using std::placeholders::_1;
       using std::placeholders::_2;
       using std::placeholders::_3;
-      using std::placeholders::_4;
-      return callback(std::bind(&audio_process<sample_t>::on_process,this,_1,_2,_3,_4));
+      return callback(std::bind(&audio_process<sample_t>::on_process,this,_1,_2,_3));
   }
 
   template<typename sample_t>

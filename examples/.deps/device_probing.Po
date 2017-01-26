@@ -192,6 +192,7 @@ device_probing.o: device_probing.cpp \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/__bit_reference \
   /usr/local/include/libzaudio/zaudio.hpp \
   /usr/local/include/libzaudio/sample_utility.hpp \
+  ../include/buffer_view.hpp ../include/buffer_group.hpp \
   /usr/local/include/libzaudio/time_utility.hpp \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/thread \
   /usr/local/include/libzaudio/error_utility.hpp \
@@ -594,6 +595,10 @@ device_probing.o: device_probing.cpp \
 /usr/local/include/libzaudio/zaudio.hpp:
 
 /usr/local/include/libzaudio/sample_utility.hpp:
+
+../include/buffer_view.hpp:
+
+../include/buffer_group.hpp:
 
 /usr/local/include/libzaudio/time_utility.hpp:
 

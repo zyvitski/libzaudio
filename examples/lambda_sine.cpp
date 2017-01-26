@@ -36,6 +36,8 @@ int main(int argc, char** argv)
         using zaudio::start_stream;
         using zaudio::stop_stream;
         using zaudio::thread_sleep;
+        using zaudio::buffer_view;
+        using zaudio::buffer_group;
 
         //create an alias for a 32 bit float sample
         using sample_type = sample<sample_format::f32>;
@@ -48,26 +50,31 @@ int main(int argc, char** argv)
 
         //setup to generate a sine wave
         constexpr sample_type _2pi = M_PI * 2.0;
-        float hz = 440.0;
+        sample_type hz = 440.0;
         sample_type phs = 0;
         sample_type stp = hz / params.sample_rate() * _2pi;
 
         //create a zaudio::stream_callback compliant lambda that generates a sine wave
-        auto&& callback = [&](const sample_type* input,
-                              sample_type* output,
+        auto&& callback = [&](buffer_group<sample_type>& buffers,
                               time_point stream_time,
                               stream_params<sample_type>& params) noexcept
         {
-            for(std::size_t i = 0; i < params.frame_count(); ++i)
+            auto&& output = buffers.output();
+
+            for(std::size_t i = 0; i < output.size(); i+=params.output_frame_width())
             {
-                for(std::size_t j = 0; j < params.output_frame_width(); ++j)
-                {
-                    *(output++) = std::sin(phs);
-                }
+                auto&& value = std::sin(phs);
+
                 phs += stp;
                 if(phs > _2pi)
                 {
                     phs -= _2pi;
+                }
+
+                for(std::size_t j = 0; j < params.output_frame_width(); ++j)
+                {
+                    //std::cout<<i+j<<std::endl;
+                    output[i + j] = value;
                 }
             }
             return no_error;
