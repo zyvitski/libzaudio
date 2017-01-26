@@ -1,13 +1,10 @@
-#! /bin/bash
+#!/bin/bash
 
-if(("$OSTYPE" == "linux-gnu")); then
-        # ...
-        libtoolize
-elif(("$OSTYPE" == "darwin"*)); then
-        # Mac OSX
-        glibtoolize
-else
-        libtoolize
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+  libtoolize
+fi
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  glibtoolize
 fi
 
 aclocal \
