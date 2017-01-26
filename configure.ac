@@ -9,7 +9,7 @@ LT_INIT
 
 
 AC_PROG_CXX
-
+AC_CHECK_HEADER(/usr/local/include/portaudio.h,,[AC_MSG_ERROR([Couldn't find portaudio.h ... try downloading source from www.portaudio.com])])
 
 AC_CONFIG_FILES([Makefile src/Makefile examples/Makefile])
 AC_OUTPUT
