@@ -89,10 +89,13 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 bin_PROGRAMS = sine_example$(EXEEXT) device_probing$(EXEEXT) \
-	lambda_sine_example$(EXEEXT)
+	lambda_sine_example$(EXEEXT) playthrough$(EXEEXT)
 subdir = examples
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/configure.ac
+am__aclocal_m4_deps = $(top_srcdir)/m4/libtool.m4 \
+	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
+	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
+	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 DIST_COMMON = $(srcdir)/Makefile.am $(am__DIST_COMMON)
@@ -119,6 +122,12 @@ lambda_sine_example_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
 	$(AM_CXXFLAGS) $(CXXFLAGS) $(lambda_sine_example_LDFLAGS) \
 	$(LDFLAGS) -o $@
+am_playthrough_OBJECTS = playthrough.$(OBJEXT)
+playthrough_OBJECTS = $(am_playthrough_OBJECTS)
+playthrough_LDADD = $(LDADD)
+playthrough_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
+	$(CXXFLAGS) $(playthrough_LDFLAGS) $(LDFLAGS) -o $@
 am_sine_example_OBJECTS = sine.$(OBJEXT)
 sine_example_OBJECTS = $(am_sine_example_OBJECTS)
 sine_example_LDADD = $(LDADD)
@@ -160,9 +169,10 @@ am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
 SOURCES = $(device_probing_SOURCES) $(lambda_sine_example_SOURCES) \
-	$(sine_example_SOURCES)
+	$(playthrough_SOURCES) $(sine_example_SOURCES)
 DIST_SOURCES = $(device_probing_SOURCES) \
-	$(lambda_sine_example_SOURCES) $(sine_example_SOURCES)
+	$(lambda_sine_example_SOURCES) $(playthrough_SOURCES) \
+	$(sine_example_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -312,11 +322,13 @@ top_srcdir = @top_srcdir@
 device_probing_SOURCES = device_probing.cpp
 sine_example_SOURCES = sine.cpp
 lambda_sine_example_SOURCES = lambda_sine.cpp
+playthrough_SOURCES = playthrough.cpp
 AM_CXXFLAGS = --std=c++11 -g -O3 -pthread -fpic  -MP -Wall -pedantic -I/usr/local/include -I../include
 AM_LDFLAGS = -L/usr/local/lib
-sine_example_LDFLAGS = -lzaudio -lportaudio
-device_probing_LDFLAGS = -lzaudio -lportaudio
-lambda_sine_example_LDFLAGS = -lzaudio -lportaudio
+sine_example_LDFLAGS = -lzaudio 
+device_probing_LDFLAGS = -lzaudio
+lambda_sine_example_LDFLAGS = -lzaudio
+playthrough_LDFLAGS = -lzaudio
 all: all-am
 
 .SUFFIXES:
@@ -408,6 +420,10 @@ lambda_sine_example$(EXEEXT): $(lambda_sine_example_OBJECTS) $(lambda_sine_examp
 	@rm -f lambda_sine_example$(EXEEXT)
 	$(AM_V_CXXLD)$(lambda_sine_example_LINK) $(lambda_sine_example_OBJECTS) $(lambda_sine_example_LDADD) $(LIBS)
 
+playthrough$(EXEEXT): $(playthrough_OBJECTS) $(playthrough_DEPENDENCIES) $(EXTRA_playthrough_DEPENDENCIES) 
+	@rm -f playthrough$(EXEEXT)
+	$(AM_V_CXXLD)$(playthrough_LINK) $(playthrough_OBJECTS) $(playthrough_LDADD) $(LIBS)
+
 sine_example$(EXEEXT): $(sine_example_OBJECTS) $(sine_example_DEPENDENCIES) $(EXTRA_sine_example_DEPENDENCIES) 
 	@rm -f sine_example$(EXEEXT)
 	$(AM_V_CXXLD)$(sine_example_LINK) $(sine_example_OBJECTS) $(sine_example_LDADD) $(LIBS)
@@ -420,6 +436,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/device_probing.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lambda_sine.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/playthrough.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sine.Po@am__quote@
 
 .cpp.o:

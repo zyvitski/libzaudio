@@ -15,9 +15,7 @@ This file is part of zaudio.
     along with zaudio.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #include <iostream>
-#include <cmath>
 #include <libzaudio/zaudio.hpp>
 
 int main(int argc, char** argv)
@@ -46,26 +44,19 @@ int main(int argc, char** argv)
         auto&& context = make_stream_context<sample_type>();
 
         //create a stream params object
-        auto&& params = make_stream_params<sample_type>(44100,512,0,2);
+        auto&& params = make_stream_params<sample_type>(44100,512,2,2);
 
-        //setup to generate a sine wave
-        constexpr sample_type _2pi = M_PI * 2.0;
-        sample_type hz = 440.0;
-        sample_type phs = 0;
-        sample_type stp = hz / params.sample_rate() * _2pi;
 
-        //create a zaudio::stream_callback compliant lambda that generates a sine wave
         auto&& callback = [&](buffer_group<sample_type>& buffers,
                               time_point stream_time,
                               stream_params<sample_type>& params) noexcept
         {
-            for(auto&& frame: buffers.output)
+
+            for(std::size_t i = 0; i <params.frame_count() ; ++i)
             {
-                auto&& value = std::sin(phs);
-                if((phs += stp) > _2pi) { phs -= _2pi; }
-                for(auto&& samp: frame)
+                for(std::size_t j = 0; j < params.output_frame_width(); ++j)
                 {
-                    samp = value;
+                    buffers.output[i][j] = buffers.input[i][j];
                 }
             }
             return no_error;
@@ -77,8 +68,11 @@ int main(int argc, char** argv)
 
         //start the stream
         start_stream(stream);
-        //run for 1 second
-        thread_sleep(std::chrono::seconds(1));
+
+        //block until user is done
+        std::cout<<"Press Enter to Quit"<<std::endl;
+        std::cin.get();
+
         //stop the stream
         stop_stream(stream);
     }

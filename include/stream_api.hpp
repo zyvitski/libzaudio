@@ -26,6 +26,7 @@ This file is part of zaudio.
 #include "error_utility.hpp"
 #include "device_info.hpp"
 #include "stream_callback.hpp"
+#include "buffer_group.hpp"
 
 #include <memory>
 #include <mutex>
@@ -147,7 +148,10 @@ namespace zaudio
                 //the only reason we should not get this lock every time is in the case of a user callback swap
                 while(!lk.try_lock()){ continue; }
 
-                auto&& ret = (*_callback)(input,output,audio_clock::now(),*_params);
+                buffer_group<sample_t> buffers{buffer_view<sample_t>{input,_params->frame_count(),_params->input_frame_width()},
+                                               buffer_view<sample_t>{output,_params->frame_count(),_params->output_frame_width()}};
+
+                auto&& ret = (*_callback)(buffers,audio_clock::now(),*_params);
                 if(ret != no_error)
                 {
                     (*_error_callback)(ret);

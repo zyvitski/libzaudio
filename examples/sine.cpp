@@ -26,27 +26,25 @@ using namespace zaudio;
 template<typename sample_t>
 class example : public audio_process<sample_t>
 {
+    constexpr static sample_t _2pi = M_PI * 2.0;
 public:
     using base =  audio_process<sample_t>;
     using audio_clock = typename base::audio_clock;
     example():phs(0.0),start(audio_clock::now())
     {}
-    virtual stream_error on_process(const sample_t* input, sample_t* output,time_point stream_time, stream_params<sample_t>& params) noexcept
+    virtual stream_error on_process(buffer_group<sample_t>& buffers,time_point stream_time, stream_params<sample_t>& params) noexcept
     {
         std::cerr<<"Time: "<<duration_in_samples(stream_time-start,params.sample_rate()).count()<<std::endl;
-        constexpr sample_t _2pi = M_PI * 2.0;
+
         stp = hz / params.sample_rate() * _2pi;
 
-        for(std::size_t i = 0; i < params.frame_count(); ++i)
+        for(auto&& frame: buffers.output)
         {
-            for(std::size_t j = 0; j < params.output_frame_width(); ++j)
+            auto&& value = std::sin(phs);
+            if((phs += stp) > _2pi) { phs -= _2pi; }
+            for(auto&& samp: frame)
             {
-                *(output++) = std::sin(phs);
-            }
-            phs += stp;
-            if(phs > _2pi)
-            {
-                phs -= _2pi;
+                samp = value;
             }
         }
         return no_error;

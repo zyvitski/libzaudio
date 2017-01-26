@@ -393,7 +393,7 @@ on `(hostname || uname -n) 2>/dev/null | sed 1q`
 "
 
 # Files that config.status was made for.
-config_files=" Makefile src/Makefile"
+config_files=" Makefile src/Makefile examples/Makefile"
 config_commands=" depfiles libtool"
 
 ac_cs_usage="\
@@ -543,11 +543,11 @@ SHELL='/bin/sh'
 ECHO='printf %s\n'
 PATH_SEPARATOR=':'
 host_alias=''
-host='x86_64-apple-darwin16.3.0'
-host_os='darwin16.3.0'
+host='x86_64-apple-darwin16.4.0'
+host_os='darwin16.4.0'
 build_alias=''
-build='x86_64-apple-darwin16.3.0'
-build_os='darwin16.3.0'
+build='x86_64-apple-darwin16.4.0'
+build_os='darwin16.4.0'
 SED='/usr/local/bin/gsed'
 Xsed='/usr/local/bin/gsed -e 1s/^X//'
 GREP='/usr/bin/grep'
@@ -786,6 +786,7 @@ do
     "libtool") CONFIG_COMMANDS="$CONFIG_COMMANDS libtool" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
+    "examples/Makefile") CONFIG_FILES="$CONFIG_FILES examples/Makefile" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
   esac
@@ -900,14 +901,14 @@ S["CPPFLAGS"]=""
 S["LDFLAGS"]=""
 S["CFLAGS"]="-g -O2"
 S["CC"]="gcc"
-S["host_os"]="darwin16.3.0"
+S["host_os"]="darwin16.4.0"
 S["host_vendor"]="apple"
 S["host_cpu"]="x86_64"
-S["host"]="x86_64-apple-darwin16.3.0"
-S["build_os"]="darwin16.3.0"
+S["host"]="x86_64-apple-darwin16.4.0"
+S["build_os"]="darwin16.4.0"
 S["build_vendor"]="apple"
 S["build_cpu"]="x86_64"
-S["build"]="x86_64-apple-darwin16.3.0"
+S["build"]="x86_64-apple-darwin16.4.0"
 S["LIBTOOL"]="$(SHELL) $(top_builddir)/libtool"
 S["AM_BACKSLASH"]="\\"
 S["AM_DEFAULT_VERBOSITY"]="1"

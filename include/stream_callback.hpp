@@ -19,6 +19,7 @@ This file is part of zaudio.
 #include <functional>
 #include "stream_params.hpp"
 #include "time_utility.hpp"
+#include "buffer_group.hpp"
 namespace zaudio
 {
     /*!
@@ -26,8 +27,7 @@ namespace zaudio
      *\brief a function object type that represents an audio stream callback function
      */
     template<typename sample_t>
-    using stream_callback  = std::function<stream_error (const sample_t*,
-                                                         sample_t*,
+    using stream_callback  = std::function<stream_error (buffer_group<sample_t>&,
                                                          time_point,
                                                          stream_params<sample_t>&) noexcept>;
 }

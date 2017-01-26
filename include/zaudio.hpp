@@ -20,6 +20,8 @@ This file is part of zaudio.
 */
 
 #include "sample_utility.hpp"
+#include "buffer_view.hpp"
+#include "buffer_group.hpp"
 #include "time_utility.hpp"
 #include "error_utility.hpp"
 #include "stream_params.hpp"

@@ -85,11 +85,14 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-build_triplet = x86_64-apple-darwin16.3.0
-host_triplet = x86_64-apple-darwin16.3.0
+build_triplet = x86_64-apple-darwin16.4.0
+host_triplet = x86_64-apple-darwin16.4.0
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/configure.ac
+am__aclocal_m4_deps = $(top_srcdir)/m4/libtool.m4 \
+	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
+	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
+	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 DIST_COMMON = $(srcdir)/Makefile.am $(top_srcdir)/configure \
@@ -285,10 +288,10 @@ am__quote =
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = ${exec_prefix}/bin
-build = x86_64-apple-darwin16.3.0
+build = x86_64-apple-darwin16.4.0
 build_alias = 
 build_cpu = x86_64
-build_os = darwin16.3.0
+build_os = darwin16.4.0
 build_vendor = apple
 builddir = .
 datadir = ${datarootdir}
@@ -296,10 +299,10 @@ datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
-host = x86_64-apple-darwin16.3.0
+host = x86_64-apple-darwin16.4.0
 host_alias = 
 host_cpu = x86_64
-host_os = darwin16.3.0
+host_os = darwin16.4.0
 host_vendor = apple
 htmldir = ${docdir}
 includedir = ${prefix}/include
@@ -324,6 +327,7 @@ target_alias =
 top_build_prefix = 
 top_builddir = .
 top_srcdir = .
+ACLOCAL_AMFLAGS = -I m4
 SUBDIRS = \
     src
 

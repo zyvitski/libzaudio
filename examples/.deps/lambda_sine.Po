@@ -194,6 +194,8 @@ lambda_sine.o: lambda_sine.cpp \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/usr/include/math.h \
   /usr/local/include/libzaudio/zaudio.hpp \
   /usr/local/include/libzaudio/sample_utility.hpp \
+  /usr/local/include/libzaudio/buffer_view.hpp \
+  /usr/local/include/libzaudio/buffer_group.hpp \
   /usr/local/include/libzaudio/time_utility.hpp \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1/thread \
   /usr/local/include/libzaudio/error_utility.hpp \
@@ -600,6 +602,10 @@ lambda_sine.o: lambda_sine.cpp \
 /usr/local/include/libzaudio/zaudio.hpp:
 
 /usr/local/include/libzaudio/sample_utility.hpp:
+
+/usr/local/include/libzaudio/buffer_view.hpp:
+
+/usr/local/include/libzaudio/buffer_group.hpp:
 
 /usr/local/include/libzaudio/time_utility.hpp:
 
