@@ -12,6 +12,7 @@ namespace zaudio
     {
     public:
         using iterator = sample_t*;
+        using const_iterator = const sample_t*;
 
         explicit frame_view(sample_t* buffer,
                              const std::size_t& size) noexcept: _buffer(buffer),_size(size)
@@ -57,11 +58,11 @@ namespace zaudio
         {
             return _buffer;
         }
-        const iterator begin() const
+        const_iterator begin() const
         {
             return begin();
         }
-        const iterator cbegin() const
+        const_iterator cbegin() const
         {
             return begin();
         }
@@ -69,11 +70,11 @@ namespace zaudio
         {
             return _buffer + _size;
         }
-        const iterator end() const
+        const_iterator end() const
         {
             return end();
         }
-        const iterator cend() const
+        const_iterator cend() const
         {
             return end();
         }
@@ -104,11 +105,11 @@ namespace zaudio
                 ++(*this);
                 return iter;
             }
-            bool operator==(const iterator& other)
+            bool operator==(iterator& other)
             {
                 return (_buffer == other.buffer) && (_size == other._size);
             }
-            bool operator !=(const iterator& other)
+            bool operator !=(iterator& other)
             {
                 return (_buffer != other._buffer) || (_size != other._size);
             }
@@ -184,11 +185,11 @@ namespace zaudio
         {
             return iterator(_buffer,_frame_width);
         }
-        const iterator begin() const
+        const_iterator begin() const
         {
             return begin();
         }
-        const iterator cbegin() const
+        const_iterator cbegin() const
         {
             return begin();
         }
@@ -196,11 +197,11 @@ namespace zaudio
         {
             return iterator(_buffer + (_frame_count * _frame_width),_frame_width);
         }
-        const iterator end() const
+        const_iterator end() const
         {
             return end();
         }
-        const iterator cend() const
+        const_iterator cend() const
         {
             return end();
         }
