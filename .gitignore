@@ -43,5 +43,22 @@
 
 
 /m4/
+/autom4te.cache/
+/autom4te.cache/*
+/autom4te.cache/*.*
+/src/.deps/
+/src/Makefile
+/examples/.deps
+/examples/Makefile
+config.log
+config.status
+configure
+libtool
+Makefile
+Makefile.in
+/src/Makefile.in
+/examples/Makefile.in
+aclocal.m4
+/config/
 
 *.tar.gz
