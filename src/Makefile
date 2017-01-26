@@ -91,7 +91,10 @@ build_triplet = x86_64-apple-darwin16.4.0
 host_triplet = x86_64-apple-darwin16.4.0
 subdir = src
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/configure.ac
+am__aclocal_m4_deps = $(top_srcdir)/m4/libtool.m4 \
+	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
+	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
+	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 DIST_COMMON = $(srcdir)/Makefile.am $(libzaudio_HEADERS) \
@@ -321,11 +324,12 @@ target_alias =
 top_build_prefix = ../
 top_builddir = ..
 top_srcdir = ..
+ACLOCAL_AMFLAGS = -I m4
 lib_LTLIBRARIES = libzaudio.la
 libzaudio_la_SOURCES = libzaudio.cpp
 libzaudiodir = $(includedir)/libzaudio
 libzaudio_HEADERS = ../include/zaudio.hpp ../include/pa_stream_api.hpp ../include/audio_process.hpp ../include/audio_stream.hpp ../include/device_info.hpp ../include/error_utility.hpp ../include/sample_utility.hpp ../include/stream_api.hpp ../include/stream_callback.hpp ../include/stream_context.hpp ../include/stream_params.hpp ../include/time_utility.hpp ../include/zaudio_defaults.hpp ../include/buffer_view.hpp ../include/buffer_group.hpp
-libzaudio_la_LDFLAGS = -version-info 1:2:1
+libzaudio_la_LDFLAGS = -version-info 1:2:1 -lportaudio
 AM_CXXFLAGS = --std=c++11 -g -O3 -pthread -fpic  -MP -Wall -pedantic -I/usr/local/include -I../include -L/usr/local/lib
 all: all-am
 

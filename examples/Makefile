@@ -92,7 +92,10 @@ bin_PROGRAMS = sine_example$(EXEEXT) device_probing$(EXEEXT) \
 	lambda_sine_example$(EXEEXT) playthrough$(EXEEXT)
 subdir = examples
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/configure.ac
+am__aclocal_m4_deps = $(top_srcdir)/m4/libtool.m4 \
+	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
+	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
+	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 DIST_COMMON = $(srcdir)/Makefile.am $(am__DIST_COMMON)
@@ -322,10 +325,10 @@ lambda_sine_example_SOURCES = lambda_sine.cpp
 playthrough_SOURCES = playthrough.cpp
 AM_CXXFLAGS = --std=c++11 -g -O3 -pthread -fpic  -MP -Wall -pedantic -I/usr/local/include -I../include
 AM_LDFLAGS = -L/usr/local/lib
-sine_example_LDFLAGS = -lzaudio -lportaudio
-device_probing_LDFLAGS = -lzaudio -lportaudio
-lambda_sine_example_LDFLAGS = -lzaudio -lportaudio
-playthrough_LDFLAGS = -lzaudio -lportaudio
+sine_example_LDFLAGS = -lzaudio 
+device_probing_LDFLAGS = -lzaudio
+lambda_sine_example_LDFLAGS = -lzaudio
+playthrough_LDFLAGS = -lzaudio
 all: all-am
 
 .SUFFIXES:
