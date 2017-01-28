@@ -51,8 +51,8 @@ int main(int argc, char** argv)
         //setup to generate a sine wave
         constexpr sample_type _2pi = M_PI * 2.0;
         sample_type hz = 440.0;
-        sample_type phs1 = 0;
-        sample_type stp1 = hz / params.sample_rate() * _2pi;
+        sample_type phs = 0;
+        sample_type stp = hz / params.sample_rate() * _2pi;
 
         //create a zaudio::stream_callback compliant lambda that generates a sine wave
         auto&& callback1 = [&](buffer_group<sample_type>& buffers,
@@ -61,28 +61,8 @@ int main(int argc, char** argv)
         {
             for(auto&& frame: buffers.output)
             {
-                auto&& value = std::sin(phs1);
-                if((phs1 += stp1) > _2pi) { phs1 -= _2pi; }
-                for(auto&& samp: frame)
-                {
-                    samp = value;
-                }
-            }
-            return no_error;
-        };
-
-        sample_type phs2 = 0;
-        sample_type stp2 = 2 * hz / params.sample_rate();
-
-        //create a zaudio::stream_callback compliant lambda that generates a sine wave
-        auto&& callback2 = [&](buffer_group<sample_type>& buffers,
-                              time_point stream_time,
-                              stream_params<sample_type>& params) noexcept
-        {
-            for(auto&& frame: buffers.output)
-            {
-                auto&& value = phs2;
-                if((phs2 += stp2) > 1.0) { phs2 -= 2.0; }
+                auto&& value = std::sin(phs);
+                if((phs += stp) > _2pi) { phs -= _2pi; }
                 for(auto&& samp: frame)
                 {
                     samp = value;
@@ -104,7 +84,7 @@ int main(int argc, char** argv)
             thread_sleep(std::chrono::seconds(1));
 
             //swap callback
-            stream.exchange_callback(callback2);
+            stream.exchange_callback(zaudio::write_silence<sample_type>);
 
             //run for 1 second
             thread_sleep(std::chrono::seconds(1));

@@ -20,6 +20,7 @@ This file is part of zaudio.
 #include "stream_params.hpp"
 #include "time_utility.hpp"
 #include "buffer_group.hpp"
+#include "error_utility.hpp"
 namespace zaudio
 {
     /*!
@@ -30,6 +31,19 @@ namespace zaudio
     using stream_callback  = std::function<stream_error (buffer_group<sample_t>&,
                                                          time_point,
                                                          stream_params<sample_t>&) noexcept>;
+
+    template<typename sample_t>
+    static stream_error write_silence(buffer_group<sample_t>& buffers, time_point tp, stream_params<sample_t>& params) noexcept
+    {
+        for(auto&& frame: buffers.output)
+        {
+            for(auto&& samp: frame)
+            {
+                samp = 0.0;
+            }
+        }
+        return no_error;
+    }
 }
 
 #endif
