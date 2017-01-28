@@ -79,7 +79,7 @@ namespace zaudio
        */
       struct stream_error_type
       {
-          stream_error_type():first(stream_status::no_error),second(""){}
+          constexpr stream_error_type():first(stream_status::no_error),second(""){}
 
           constexpr stream_error_type(stream_status f,stream_error_message s):first(f),second(s){}
 

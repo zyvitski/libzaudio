@@ -93,7 +93,7 @@ namespace zaudio
 
             void set_error_callback(error_callback& cb) noexcept;
 
-            std::mutex& callback_mutex() noexcept;
+            std::timed_mutex& callback_mutex() noexcept;
         protected:
 
             callback* _callback;
@@ -102,7 +102,7 @@ namespace zaudio
 
             stream_params<sample_t>* _params;
 
-            std::mutex _callback_mutex;
+            std::timed_mutex _callback_mutex;
 
             stream_error _on_process(const sample_t*,sample_t*) noexcept;
 
@@ -134,7 +134,7 @@ namespace zaudio
         }
 
         template<typename sample_t>
-        std::mutex& stream_api<sample_t>::callback_mutex() noexcept
+        std::timed_mutex& stream_api<sample_t>::callback_mutex() noexcept
         {
             return _callback_mutex;
         }
@@ -144,7 +144,7 @@ namespace zaudio
         {
             try
             {
-                std::unique_lock<std::mutex> lk{ _callback_mutex, std::defer_lock };
+                std::unique_lock<std::timed_mutex> lk{ _callback_mutex, std::defer_lock };
                 //the only reason we should not get this lock every time is in the case of a user callback swap
                 while(!lk.try_lock()){ continue; }
 

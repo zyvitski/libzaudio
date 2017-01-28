@@ -191,7 +191,7 @@ namespace zaudio
     {
         auto&& out = _callback;
         auto& mtx = _context.get().api()->callback_mutex();
-        std::unique_lock<std::mutex> lk{mtx,std::defer_lock};
+        std::unique_lock<std::timed_mutex> lk{mtx,std::defer_lock};
         if(lk.try_lock_for(std::chrono::seconds(1)))
         {
             _callback = cb;
@@ -208,7 +208,7 @@ namespace zaudio
     {
         auto&& out = _error_callback;
         auto& mtx = _context.get().api()->callback_mutex();
-        std::unique_lock<std::mutex> lk{mtx,std::defer_lock};
+        std::unique_lock<std::timed_mutex> lk{mtx,std::defer_lock};
         if(lk.try_lock_for(std::chrono::seconds(1)))
         {
             _error_callback = cb;
