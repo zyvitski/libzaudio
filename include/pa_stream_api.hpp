@@ -175,8 +175,13 @@ namespace zaudio
             double srate=0;
             std::tie(inparams,outparams,srate) = _native_params_to_pa(params);
 
+            PaStreamParameters* inptr = inparams.channelCount == 0 ? nullptr : &inparams;
+            PaStreamParameters* outptr = outparams.channelCount == 0 ? nullptr : &outparams;
+
+
+
             PaError err;
-            err = Pa_IsFormatSupported(&inparams,&outparams,srate);
+            err = Pa_IsFormatSupported(inptr,outptr,srate);
             if(err == paFormatIsSupported)
             {
                 return no_error;
@@ -224,7 +229,7 @@ namespace zaudio
             auto&& ret = api->_on_process(in,out);
             if(ret != no_error)
             {
-                return -1;
+                return paAbort;
             }
             else return paContinue;
         }
@@ -290,6 +295,7 @@ namespace zaudio
 
             inparams.suggestedLatency = Pa_GetDeviceInfo(inparams.device)->defaultLowInputLatency;
             outparams.suggestedLatency = Pa_GetDeviceInfo(outparams.device)->defaultLowOutputLatency;
+
 
             return std::make_tuple(inparams,outparams,srate);
         }

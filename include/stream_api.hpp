@@ -154,11 +154,17 @@ namespace zaudio
                 auto&& ret = (*_callback)(buffers,audio_clock::now(),*_params);
                 if(ret != no_error)
                 {
-                    (*_error_callback)(ret);
+                    throw stream_exception(ret);
                 }
                 return ret;
             }
-            catch (std::exception& e)
+            catch(const stream_exception& e)
+            {
+                auto&& err = e.error();
+                (*_error_callback)(err);
+                return err;
+            }
+            catch (const std::exception& e)
             {
                 auto&& err = make_stream_error(stream_status::system_error,e.what());
                 (*_error_callback)(err);
