@@ -34,7 +34,7 @@ namespace zaudio
      *\struct device_info
      *\brief represents information about an audio device
      */
-    ZAUDIO_EXPORT struct device_info
+    struct ZAUDIO_EXPORT device_info
     {
         device_info() noexcept;
 
