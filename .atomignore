@@ -62,5 +62,3 @@ Makefile.in
 /examples/Makefile.in
 aclocal.m4
 /config/
-
-*.tar.gz
