@@ -17,7 +17,7 @@ This file is part of zaudio.
 
 
 #include <iostream>
-#include <libzaudio/zaudio.hpp>
+#include <zaudio.hpp>
 
 
 

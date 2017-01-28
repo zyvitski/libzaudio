@@ -16,7 +16,7 @@ This file is part of zaudio.
 */
 
 #include <iostream>
-#include <libzaudio/zaudio.hpp>
+#include <zaudio.hpp>
 
 int main(int argc, char** argv)
 {

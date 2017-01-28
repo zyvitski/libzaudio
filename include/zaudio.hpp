@@ -19,6 +19,8 @@ This file is part of zaudio.
     along with zaudio.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+
+#include "config.hpp"
 #include "sample_utility.hpp"
 #include "buffer_view.hpp"
 #include "buffer_group.hpp"

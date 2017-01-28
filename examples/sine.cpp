@@ -19,7 +19,7 @@ This file is part of zaudio.
 #include <iostream>
 #include <cmath>
 #include <thread>
-#include <libzaudio/zaudio.hpp>
+#include <zaudio.hpp>
 
 
 using namespace zaudio;

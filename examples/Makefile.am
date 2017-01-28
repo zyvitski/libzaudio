@@ -8,7 +8,7 @@ lambda_sine_example_SOURCES = lambda_sine.cpp
 playthrough_SOURCES = playthrough.cpp
 callback_swap_SOURCES = callback_swap.cpp
 
-AM_CXXFLAGS = --std=c++11 -g -O3 -pthread -fpic  -MP -Wall -pedantic -I/usr/local/include -I../include
+AM_CXXFLAGS = --std=c++11 -g -O3 -pthread -fpic  -MP -Wall -pedantic -I/usr/local/include/libzaudio -I/usr/local/include/ -I../include
 AM_LDFLAGS = -L/usr/local/lib
 sine_example_LDFLAGS = -lzaudio -lportaudio
 device_probing_LDFLAGS = -lzaudio -lportaudio
