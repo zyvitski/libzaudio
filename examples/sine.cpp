@@ -26,7 +26,6 @@ using namespace zaudio;
 template<typename sample_t>
 class example : public audio_process<sample_t>
 {
-    constexpr static sample_t _2pi = M_PI * 2.0;
 public:
     using base =  audio_process<sample_t>;
     using audio_clock = typename base::audio_clock;
@@ -36,12 +35,12 @@ public:
     {
         std::cerr<<"Time: "<<duration_in_samples(stream_time-start,params.sample_rate()).count()<<std::endl;
 
-        stp = hz / params.sample_rate() * _2pi;
+        stp = hz / params.sample_rate() * two_pi;
 
         for(auto&& frame: buffers.output)
         {
             auto&& value = std::sin(phs);
-            if((phs += stp) > _2pi) { phs -= _2pi; }
+            if((phs += stp) > two_pi) { phs -= two_pi; }
             for(auto&& samp: frame)
             {
                 samp = value;

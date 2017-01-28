@@ -21,6 +21,7 @@ This file is part of zaudio.
 
 
 #include "config.hpp"
+#include "constants.hpp"
 #include "sample_utility.hpp"
 #include "buffer_view.hpp"
 #include "buffer_group.hpp"
