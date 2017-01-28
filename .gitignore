@@ -38,7 +38,7 @@
 /examples/sine_example
 /examples/lambda_sine_example
 /examples/device_probing
-
+/examples/callback_swap
 /examples/playthrough
 
 

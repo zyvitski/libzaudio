@@ -21,6 +21,7 @@ This file is part of zaudio.
 #include <string>
 #include <exception>
 #include <future>
+#include <iostream>
 
 
 /*!
@@ -79,7 +80,7 @@ namespace zaudio
        */
       struct stream_error_type
       {
-          stream_error_type():first(stream_status::no_error),second(""){}
+          constexpr stream_error_type():first(stream_status::no_error),second(""){}
 
           constexpr stream_error_type(stream_status f,stream_error_message s):first(f),second(s){}
 
@@ -89,12 +90,12 @@ namespace zaudio
 
           friend bool operator==(const stream_error_type& lhs,const stream_error_type& rhs)
           {
-              return lhs.first == lhs.first && rhs.second == rhs.second;
+              return lhs.first == rhs.first && lhs.second == rhs.second;
           }
 
           friend bool operator!=(const stream_error_type& lhs,const stream_error_type& rhs)
           {
-              return lhs.first != lhs.first || rhs.second != rhs.second;
+              return lhs.first != rhs.first || lhs.second != rhs.second;
           }
       };
   }
@@ -142,8 +143,10 @@ namespace zaudio
       explicit stream_exception(const stream_error& err);
       explicit stream_exception(const stream_status& status);
       explicit stream_exception(const stream_status& status,const stream_error_message& code);
+      const stream_error& error() const noexcept;
   private:
       const std::string _make_error_string(const stream_error& err);
+      const stream_error _error;
   };
 
   //user defined error callback type
@@ -165,10 +168,7 @@ namespace zaudio
   {
       return [](const stream_error& err) noexcept
       {
-          std::async(std::launch::async, [](const stream_error& err)
-          {
-              throw stream_exception(err);
-          }, err);
+          std::cerr<<err<<std::endl;
       };
   }
 

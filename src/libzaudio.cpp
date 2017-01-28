@@ -95,10 +95,12 @@ namespace zaudio
 
     std::ostream& operator<<(std::ostream& os, const stream_error& err)
     {
-        os<<"Stream Error, type: "<<err.first;
+        os<<"Stream Error"<<std::endl<<"{"<<std::endl;
+        os<<"Type: "<<err.first<<std::endl;
         if(std::string(err.second) != "" && err.second != stream_status_string(err.first))
         {
-            os<<" code: "<<err.second;
+            os<<"Message: "<<err.second<<std::endl;
+            os<<"}"<<std::endl;
         }
         return os;
     }
@@ -108,11 +110,15 @@ namespace zaudio
 
 
 
-    stream_exception::stream_exception(const char* what_arg) : std::runtime_error(what_arg){}
-    stream_exception::stream_exception(const std::string& what_arg):std::runtime_error(what_arg){}
-    stream_exception::stream_exception(const stream_error& err) : std::runtime_error(_make_error_string(err)){}
-    stream_exception::stream_exception(const stream_status& status) : std::runtime_error(_make_error_string(make_stream_error(status))){}
-    stream_exception::stream_exception(const stream_status& status,const stream_error_message& code) : std::runtime_error(_make_error_string(make_stream_error(status,code))){}
+    stream_exception::stream_exception(const char* what_arg) : std::runtime_error(what_arg),_error(stream_status::system_error,what_arg){}
+    stream_exception::stream_exception(const std::string& what_arg):std::runtime_error(what_arg),_error(stream_status::system_error,what_arg.c_str()){}
+    stream_exception::stream_exception(const stream_error& err) : std::runtime_error(_make_error_string(err)),_error(err){}
+    stream_exception::stream_exception(const stream_status& status) : std::runtime_error(_make_error_string(make_stream_error(status))),_error(status,stream_status_string(status).c_str()){}
+    stream_exception::stream_exception(const stream_status& status,const stream_error_message& code) : std::runtime_error(_make_error_string(make_stream_error(status,code))),_error(status,code){}
+    const stream_error& stream_exception::stream_exception::error() const noexcept
+    {
+        return _error;
+    }
     const std::string stream_exception::_make_error_string(const stream_error& err)
     {
         std::stringstream sstr;
@@ -163,7 +169,7 @@ namespace zaudio
 
      std::ostream& operator<<(std::ostream& os, const std::vector<device_info>& vinfo)
      {
-         for(auto idx = 0; idx < vinfo.size(); ++idx)
+         for(auto idx = 0ul; idx < vinfo.size(); ++idx)
          {
              os<<"@index: "<<idx<<std::endl<<"\t";
              os<<vinfo[idx]<<std::endl;

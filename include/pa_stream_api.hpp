@@ -22,14 +22,10 @@ This file is part of zaudio.
 #include <portaudio.h>
 #include <tuple>
 
-
-
 namespace zaudio
 {
     namespace internal
     {
-
-
         template<typename sample_t>
         constexpr PaSampleFormat _type_to_pa_sample_format() noexcept
         {
@@ -158,7 +154,6 @@ namespace zaudio
                 //would depend on if we knew what was wrong
                 return compat;
             }
-
         }
         virtual stream_error close_stream() noexcept
         {
@@ -180,8 +175,13 @@ namespace zaudio
             double srate=0;
             std::tie(inparams,outparams,srate) = _native_params_to_pa(params);
 
+            PaStreamParameters* inptr = inparams.channelCount == 0 ? nullptr : &inparams;
+            PaStreamParameters* outptr = outparams.channelCount == 0 ? nullptr : &outparams;
+
+
+
             PaError err;
-            err = Pa_IsFormatSupported(&inparams,&outparams,srate);
+            err = Pa_IsFormatSupported(inptr,outptr,srate);
             if(err == paFormatIsSupported)
             {
                 return no_error;
@@ -190,7 +190,6 @@ namespace zaudio
             {
                 return make_stream_error(stream_status::system_error,Pa_GetErrorText(err));
             }
-
         }
         virtual long default_input_device_id() const noexcept
         {
@@ -227,17 +226,13 @@ namespace zaudio
             const sample_t* in = static_cast<const sample_t*>(input);
             sample_t* out = static_cast<sample_t*>(output);
 
-
-
             auto&& ret = api->_on_process(in,out);
             if(ret != no_error)
             {
-                return -1;
+                return paAbort;
             }
-            else return 0;
+            else return paContinue;
         }
-
-
 
         //attempt to invoke a pa function, on failure call user error callback;
         template<typename F, typename...args_t>
@@ -301,13 +296,10 @@ namespace zaudio
             inparams.suggestedLatency = Pa_GetDeviceInfo(inparams.device)->defaultLowInputLatency;
             outparams.suggestedLatency = Pa_GetDeviceInfo(outparams.device)->defaultLowOutputLatency;
 
+
             return std::make_tuple(inparams,outparams,srate);
         }
-
-
     };
-
-
 }
 
 #endif

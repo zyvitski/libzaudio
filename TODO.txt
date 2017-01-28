@@ -1,13 +1,10 @@
 MASTER TODO LIST:
   -Documentation //in progress
-  -CHECK License compatability with portaudio //should be okay
   -FILL OUT README and other helpful files
   -Write more tests
 
 
   -work on s24 sample class, make sure it works
-  -look into creating a buffer class that wraps the plain c-style array buffers used now.
-    -or maybe something like a "frame_iterator"
 
   -check default_stream_error_callback and stream_api::_on_process to make sure error reporting works correctly
 
