@@ -8,7 +8,7 @@ MASTER TODO LIST:
 
   -check default_stream_error_callback and stream_api::_on_process to make sure error reporting works correctly
 
-
+ -define π for library
 
 
 LONGTERM GOALS LIST:

@@ -17,7 +17,7 @@ This file is part of zaudio.
     You should have received a copy of the GNU Lesser General Public License
     along with zaudio.  If not, see <http://www.gnu.org/licenses/>.
 */
-
+#include "config.hpp"
 #include <cstddef>
 #include <ostream>
 #include <vector>
@@ -34,7 +34,7 @@ namespace zaudio
      *\struct device_info
      *\brief represents information about an audio device
      */
-    struct device_info
+    struct ZAUDIO_EXPORT device_info
     {
         device_info() noexcept;
 
@@ -73,7 +73,7 @@ namespace zaudio
      *\fn std::vector<device_info> operator<<
      *\brief enables printing of a vector of device_info objects
      */
-    std::ostream& operator<<(std::ostream& os, const std::vector<device_info>& vinfo);
+    ZAUDIO_EXPORT std::ostream& operator<<(std::ostream& os, const std::vector<device_info>& vinfo);
 
     /*!
      *\fn make_device_info

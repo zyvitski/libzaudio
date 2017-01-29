@@ -17,7 +17,7 @@ This file is part of zaudio.
     You should have received a copy of the GNU Lesser General Public License
     along with zaudio.  If not, see <http://www.gnu.org/licenses/>.
 */
-
+#include "config.hpp"
 #include <string>
 #include <exception>
 #include <future>
@@ -53,13 +53,13 @@ namespace zaudio
    *\fn stream_status_string
    *\brief converts a stream_status to a std::string
    */
-  std::string stream_status_string(stream_status status);
+  ZAUDIO_EXPORT std::string stream_status_string(stream_status status);
 
   /*!
    *\fn stream_status operator<<
    *\brief enables printing of stream_status
    */
-  std::ostream& operator<<(std::ostream& os,stream_status status);
+  ZAUDIO_EXPORT std::ostream& operator<<(std::ostream& os,stream_status status);
 
 
   /*!
@@ -115,7 +115,7 @@ namespace zaudio
   *\fn stream_error operator<<
   *\brief enables printing of stream_error
   */
-  std::ostream& operator<<(std::ostream& os, const stream_error& err);
+  ZAUDIO_EXPORT std::ostream& operator<<(std::ostream& os, const stream_error& err);
 
   /*!
    *\fn make_stream_error
@@ -135,7 +135,7 @@ namespace zaudio
    *\class stream_exception
    *\brief an audio stream exception class
    */
-  class stream_exception : public std::runtime_error
+  class ZAUDIO_EXPORT  stream_exception : public std::runtime_error
   {
   public:
       explicit stream_exception(const char* what_arg);
@@ -156,7 +156,7 @@ namespace zaudio
    *\typedef stream_error_callback
    *\brief a function object type to represent stream_error callbacks
    */
-  using stream_error_callback = std::function<void(const stream_error&) noexcept>;
+  using stream_error_callback = std::function<void(const stream_error&)>;
 
 
 
