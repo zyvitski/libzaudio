@@ -1,3 +1,11 @@
+﻿╔═══════════════════════════════════════════════════════════════╗
+║Erich's Not All Caps List:					║
+╚═╗Optimize visual studio solution    				║
+  ╚═╗Set intermediate directories somewhere inside bin folder	║
+    ║Consider "One Click Build" option for weakling users	║
+    ╚═══════════════════════════════════════════════════════════╝
+
+
 MASTER TODO LIST:
   -Documentation //in progress
   -FILL OUT README and other helpful files
