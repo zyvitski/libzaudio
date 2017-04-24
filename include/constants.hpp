@@ -18,11 +18,9 @@ This file is part of zaudio.
 */
 namespace zaudio
 {
-    constexpr static double pi = 3.14159265358979323846264338327950288419716939937510;
-    //constexpr static double π  = pi;
+    constexpr static double pi = static_cast<double>(3.14159265358979323846264338327950288419716939937510);
 
-    constexpr static double two_pi = 2.0 * pi;
-    //constexpr static double two_π  = two_pi;
+    constexpr static double two_pi = static_cast<double>(2.0 * pi);
 }
 
 #endif

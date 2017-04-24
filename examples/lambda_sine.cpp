@@ -22,6 +22,19 @@ This file is part of zaudio.
 
 int main(int argc, char** argv)
 {
+    double freq = 440.0;
+    if(argc > 1)
+    {
+        try{
+            freq = std::stod(argv[1]);
+        }
+        catch(std::exception& e)
+        {
+            std::cerr<<"No conversion possible from argument \""<<argv[1]<<"\" to type \"double\""<<std::endl;
+            std::cerr<<"Using default frequency: "<<freq<<std::endl;
+        }
+    }
+
     try
     {
         //bring the needed zaudio components into scope
@@ -50,7 +63,7 @@ int main(int argc, char** argv)
         auto&& params = make_stream_params<sample_type>(44100,512,0,2);
 
         //setup to generate a sine wave
-        sample_type hz = 440.0;
+        sample_type hz = static_cast<sample_type>(freq);
         sample_type phs = 0;
         sample_type stp = hz / params.sample_rate() * two_pi;
 
@@ -78,7 +91,7 @@ int main(int argc, char** argv)
         //start the stream
         start_stream(stream);
         //run for 1 second
-        thread_sleep(std::chrono::seconds(1));
+        std::cin.get();
         //stop the stream
         stop_stream(stream);
     }
